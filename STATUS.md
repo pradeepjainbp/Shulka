@@ -5,18 +5,19 @@
 ## Current state
 
 **Phase:** Phase 0 — Setup
-**Status:** In progress — P0-02 done
-**Last updated:** 2026-05-17
-**Last actor:** Sonnet (P0-02 — repo config files + first commit)
+**Status:** In progress — P0-03 done
+**Last updated:** 2026-05-18
+**Last actor:** Sonnet (P0-03 — Drizzle + Neon + audit foundation)
 
 ## Active ticket
 
-**P0-03 — Cloudflare Pages + Neon + R2 + KV + Drizzle + audit foundation + backups** (next to claim)
+**P0-04 — DNS: `shulka.pradeepjainbp.in` → Cloudflare Pages** (next to claim)
 
 ## Recent shipped
 
-- P0-01 — monorepo + tooling (Next.js 16, Biome, Vitest, Playwright, CI)
-- P0-02 — repo config files (.gitignore, .env.example, LICENSE×2, CONTRIBUTING.md, README.md, .gitattributes) + first git commit
+- P0-01 — monorepo + tooling
+- P0-02 — repo config files + first git commit
+- P0-03 — packages/db (Drizzle + Neon), audit tables + triggers live, shulka_app role, cron stub, health route, CF Pages build fixed
 
 ## Blockers
 
@@ -37,7 +38,7 @@
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (2/9 tickets — P0-01 ✓ P0-02 ✓)
+- [ ] Phase 0 — Setup (3/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)

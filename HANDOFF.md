@@ -5,6 +5,48 @@
 
 ---
 
+## Session: 2026-05-18 — P0-03 Drizzle + Neon + audit foundation (Sonnet)
+
+### What this session did
+
+- Created `packages/db/` — Drizzle ORM + Neon HTTP driver, `drizzle.config.ts`, `src/client.ts`, schema files for `users`, `audit_events`, `rule_resolutions`.
+- `audit_events` and `rule_resolutions` use `clock_timestamp()` default (not `now()`).
+- Migration `0000_grey_spot.sql` generated via `drizzle-kit generate`, then extended with immutability triggers + `shulka_app` role grants.
+- Migration applied and verified live on Neon (Singapore, Postgres 17).
+- Immutability triggers confirmed: `BEFORE UPDATE OR DELETE` on both audit tables raise exception.
+- `shulka_app` role confirmed created with INSERT/SELECT-only on audit tables.
+- `apps/web/app/api/health/route.ts` — edge route returning `{ status: 'ok', db: { ok: 1 } }`.
+- `apps/workers/cron/db-backup.ts` + `wrangler.toml` — nightly R2 heartbeat stub (daily at 06:30 IST).
+- `next.config.ts` — added `turbopack.root` fix for monorepo CF Pages builds.
+- Pushed to GitHub (`main`); CF Pages auto-build triggered with turbopack fix.
+- `.env.local` populated: Neon pooled + unpooled URLs, Cloudflare account ID, KV namespace ID, R2 keys.
+
+### What's next
+
+**P0-04 — DNS: `shulka.pradeepjainbp.in` → Cloudflare Pages.**
+
+Before starting: confirm the CF Pages build triggered by this session's push succeeded (check `shulka.pages.dev`). If it failed, check the build log — the turbopack fix should resolve it, but may need a `wrangler.toml` at `apps/web/` for edge runtime compat flags.
+
+P0-04 itself is purely DNS config in Cloudflare dashboard — no code. Pradeep adds a CNAME record pointing `shulka` subdomain to the Pages project, then verifies HTTPS works.
+
+### Open questions for Pradeep
+
+- Did the CF Pages build pass after the push? Check `shulka.pages.dev` in browser.
+- Still need `AUTH_SECRET` in `.env.local` — run `openssl rand -hex 32` to generate one (needed for P0-08).
+- Fix git identity before next commit: `git config --global user.email "pradeepjainbp@gmail.com"` and `git config --global user.name "Pradeep Jain"`.
+
+### Notes / context
+
+- Neon free tier: 6-hour PITR window, Singapore region (Mumbai not available on free tier). Documented in README.md.
+- `shulka_app` role is NOLOGIN — the application connects as `neondb_owner` for now. A login password for `shulka_app` should be set before production launch (P0-03 scope technically, but Neon free tier requires special handling for role passwords).
+- The `drizzle/meta/` directory is gitignored by default — added `packages/db/drizzle/meta/` to `.gitignore` explicitly.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No LLM computed any rupee. DB touched only for schema setup. No paid services used (Neon + Cloudflare free tier only).
+
+---
+
 ## Session: 2026-05-17 — P0-02 Repo config files (Sonnet)
 
 ### What this session did
