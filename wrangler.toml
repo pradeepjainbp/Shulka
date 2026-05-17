@@ -1,0 +1,8 @@
+name = "shulka"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "apps/web/.open-next"
+
+[[kv_namespaces]]
+binding = "NEXT_CACHE_WORKERS_KV"
+id = "bad64cb90fbb41a3b20feede49dd586b"
