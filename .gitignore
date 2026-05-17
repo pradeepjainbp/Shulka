@@ -1,0 +1,76 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+apps/web/.next/
+apps/web/out/
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+# Allow only the example file
+!.env.example
+
+# Secrets / credentials
+*.pem
+*.key
+*.p12
+*.pfx
+serviceAccountKey.json
+google-services.json
+GoogleService-Info.plist
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Drizzle
+packages/db/drizzle/meta/
+
+# Cloudflare
+.wrangler/
+
+# Capacitor / Android
+apps/android/.gradle/
+apps/android/app/build/
+apps/android/local.properties
+apps/android/.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Test / coverage
+coverage/
+playwright-report/
+test-results/
+.vitest-cache/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Playwright
+/e2e-results/
