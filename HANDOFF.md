@@ -5,6 +5,52 @@
 
 ---
 
+## Session: 2026-05-18 — P0-04 runtime fix: CF Pages 500 resolved, site confirmed live (Sonnet)
+
+### What this session did
+
+Debugged the "Internal Server Error" on `shulka.pradeepjainbp.in` after P0-04 was declared done.
+
+**Root cause:** Next.js's `require-hook.js` (compiled into the OpenNext bundle) calls `require('module')` then reads `mod.prototype.require`. CF Workers' `nodejs_compat` implementation of the `module` built-in does NOT expose `Module.prototype`, so `mod.prototype` is `undefined` → `TypeError: Cannot read properties of undefined (reading 'require')`.
+
+**Fixes applied:**
+- Added `apps/web/scripts/patch-require-hook.mjs` — guards all `mod.prototype` accesses in `require-hook.js` with null checks before OpenNext bundles the handler (same pattern as existing `patch-handler.mjs`).
+- Updated `build:cf` in `apps/web/package.json` to run `node scripts/patch-require-hook.mjs` between the two existing steps.
+- Also removed a dead `mv .open-next/worker.js .open-next/_worker.js` step (it was no longer needed in v1.19.10)… then added it back — OpenNext still outputs `worker.js`; CF Pages Advanced Mode requires `_worker.js`.
+
+**Also fixed along the way (earlier in session chain):**
+- Removed `turbopack: { root }` from `next.config.ts` (Next.js 16 uses Turbopack by default; OpenNext requires webpack)
+- Added `--webpack` flag to `next build` in `build` + `build:cf` scripts
+- Removed `export const runtime = 'edge'` from `/api/health/route.ts` (OpenNext+webpack rejects edge routes not separately defined)
+- Updated `wrangler.toml` `compatibility_date` to `2025-04-01`
+
+**Confirmed live:** `shulka.pradeepjainbp.in` and `shulka.pages.dev` both render the Shulka page ✓
+
+### What's next
+
+**P0-05 — Design tokens + Geist font + base layout.**
+
+Spec: `packages/design-tokens` with locked palette, Geist + Geist Mono via `next/font`, app shell with header + sidebar/bottom-nav per breakpoint. A `/styleguide` route shows tokens, type scale, primary button, input, card.
+
+Read `DESIGN_SYSTEM.md` before starting — all tokens, motion specs, and component decisions are locked there.
+
+### Open questions for Pradeep
+
+- Verify `https://shulka.pradeepjainbp.in/api/health` returns `{"status":"ok"}` — confirms DATABASE_URL env var is wired to the live site.
+- Fix git identity: `git config --global user.email "pradeepjainbp@gmail.com"` + `git config --global user.name "Pradeep Jain"` (commits still show `jainpr@dotdashmdp.com`).
+
+### Notes / context
+
+- The three patch scripts in `apps/web/scripts/` run in sequence before `opennextjs-cloudflare build`. They patch Next.js source files in `node_modules/next/dist/server/` before OpenNext bundles them. CF Pages CI installs fresh node_modules each build so the patches always run on clean source.
+- The `mv .open-next/worker.js .open-next/_worker.js` step at the end of `build:cf` is required. OpenNext v1.19.x outputs `worker.js`; CF Pages Advanced Mode looks for `_worker.js` as the worker entry point.
+- `wrangler.toml` `compatibility_date` is now `2025-04-01` and `compatibility_flags = ["nodejs_compat"]`.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No LLM computed any rupee. No financial mutations. No paid services used.
+
+---
+
 ## Session: 2026-05-18 — P0-03 + P0-04: infra, DB, DNS, CF Pages live (Sonnet)
 
 ### What this session did

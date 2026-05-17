@@ -7,7 +7,7 @@
 **Phase:** Phase 0 — Setup
 **Status:** In progress — P0-04 done
 **Last updated:** 2026-05-18
-**Last actor:** Sonnet (P0-03 + P0-04 — infra + DNS + CF Pages live)
+**Last actor:** Sonnet (P0-04 runtime fix — `shulka.pradeepjainbp.in` confirmed loading)
 
 ## Active ticket
 
