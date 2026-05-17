@@ -5,17 +5,18 @@
 ## Current state
 
 **Phase:** Phase 0 — Setup
-**Status:** In progress — P0-01 done
-**Last updated:** 2026-05-06
-**Last actor:** Sonnet (P0-01 — monorepo + tooling)
+**Status:** In progress — P0-02 done
+**Last updated:** 2026-05-17
+**Last actor:** Sonnet (P0-02 — repo config files + first commit)
 
 ## Active ticket
 
-**P0-02 — Repo config files** (next to claim)
+**P0-03 — Cloudflare Pages + Neon + R2 + KV + Drizzle + audit foundation + backups** (next to claim)
 
 ## Recent shipped
 
-None yet. Project planning complete; codebase is empty.
+- P0-01 — monorepo + tooling (Next.js 16, Biome, Vitest, Playwright, CI)
+- P0-02 — repo config files (.gitignore, .env.example, LICENSE×2, CONTRIBUTING.md, README.md, .gitattributes) + first git commit
 
 ## Blockers
 
@@ -36,7 +37,7 @@ None yet. Project planning complete; codebase is empty.
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (1/9 tickets — P0-01 ✓)
+- [ ] Phase 0 — Setup (2/9 tickets — P0-01 ✓ P0-02 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)

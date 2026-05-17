@@ -5,6 +5,47 @@
 
 ---
 
+## Session: 2026-05-17 — P0-02 Repo config files (Sonnet)
+
+### What this session did
+
+- Created `.gitignore` — covers node_modules, .next, dist, all .env* variants (except .env.example), secrets patterns, OS files, editor files, Playwright/Vitest output, .wrangler/, Capacitor/Android build dirs.
+- Created `.gitattributes` — normalizes all text files to LF in repo; binary files excluded.
+- Created `.env.example` — full key inventory for all Phase 0 services: Neon (pooled + unpooled), Auth.js, Google OAuth, Cloudflare (R2, KV, account), Resend, Sentry, CF Web Analytics beacon, app URL.
+- Created `LICENSE` at root — proprietary all-rights-reserved (Pradeep Jain, 2026).
+- Created `rules/` directory with `rules/LICENSE` — CC0 1.0 public domain (applies only to /rules/).
+- Created `CONTRIBUTING.md` — scope-limited, bug report format, GST rule citation requirement.
+- Updated `README.md` — local setup, commands table, DB recovery window, corrected license section.
+- Added `repo-config` CI job to `.github/workflows/ci.yml` — asserts all required files exist.
+- Made **first git commit** (`27f9742`) — 52 files, all of P0-01 + P0-02.
+
+### What's next
+
+**P0-03 — Cloudflare Pages + Neon + R2 + KV + Drizzle + audit foundation + backups.**
+
+Pradeep must have ready before starting:
+- Cloudflare Pages project linked to `pradeepjainbp/Shulka` on GitHub
+- Neon DB created (AWS Mumbai, ap-south-1)
+- R2 bucket + KV namespace created
+- All credentials ready for `.env.local`
+
+### Open questions for Pradeep
+
+- Git committer identity shows `jainpr@dotdashmdp.com` — run `git config --global user.email "pradeepjainbp@gmail.com"` and `git config --global user.name "Pradeep Jain"` to correct for future commits.
+- Is the GitHub remote (`pradeepjainbp/Shulka`) ready to push to? P0-03 needs a push to trigger CF Pages auto-deploy.
+
+### Notes / context
+
+- `.gitattributes` added proactively (not in P0-02 spec) to eliminate CRLF warnings on Windows. Zero-risk.
+- `rules/` directory created now with `.gitkeep` — GST rule files added in rule-engine phase. CC0 license in place from day one.
+- CI `repo-config` job runs before lint/typecheck — fast-fails if a required file is accidentally removed.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. Files only — no code. No LLM computed any rupee. No DB touched. No paid services used.
+
+---
+
 ## Session: 2026-05-06 — P0-01 Initialize monorepo + tooling (Sonnet)
 
 ### What this session did
