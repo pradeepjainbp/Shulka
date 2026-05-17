@@ -5,6 +5,58 @@
 
 ---
 
+## Session: 2026-05-18 — P0-03 + P0-04: infra, DB, DNS, CF Pages live (Sonnet)
+
+### What this session did
+
+**P0-03 — Cloudflare + Neon + Drizzle + audit foundation:**
+- `packages/db/` created: Drizzle ORM + Neon HTTP driver, `drizzle.config.ts`, `src/client.ts`
+- Schema: `users`, `audit_events` (`clock_timestamp()`), `rule_resolutions` (`clock_timestamp()`)
+- Migration `0000_grey_spot.sql` applied to Neon — tables, indexes, immutability triggers, `shulka_app` role
+- Verified live: 3 tables ✓, triggers ✓, `shulka_app` role ✓
+- `apps/web/app/api/health/route.ts` — edge route returning DB connectivity status
+- `apps/workers/cron/db-backup.ts` + `wrangler.toml` — nightly R2 heartbeat stub
+- `.env.local` populated: Neon URLs, Cloudflare account ID + KV namespace ID + R2 keys
+- Infra created: Neon DB (Singapore), CF Pages project, R2 bucket `shulka-prod`, KV namespace `shulka-cache`
+
+**P0-04 — DNS + CF Pages deployment:**
+- DNS: CNAME `shulka` → `shulka.pages.dev` added to `pradeepjainbp.in` (Proxied)
+- Custom domain `shulka.pradeepjainbp.in` added to CF Pages project (SSL auto-provisioned)
+- CF Pages build: went through 3 iterations to get working:
+  1. `@cloudflare/next-on-pages` → doubled path bug in pnpm monorepo
+  2. `outputFileTracingRoot` fix → still conflicted with Vercel CLI internals
+  3. **Switched to OpenNext (`@opennextjs/cloudflare`)** — build succeeds ✓
+- Final build setup: `build:cf` script in `apps/web/package.json`, `wrangler.toml` + `open-next.config.ts` in `apps/web/`, output dir `apps/web/.open-next`
+- **Build passing. Site live.**
+
+### What's next
+
+**P0-05 — Design tokens + Geist font + base layout.**
+
+Spec: `packages/design-tokens` with locked palette, Geist + Geist Mono via `next/font`, app shell with header + sidebar/bottom-nav per breakpoint. A `/styleguide` route shows tokens, type scale, primary button, input, card.
+
+Read `DESIGN_SYSTEM.md` before starting — all tokens, motion specs, and component decisions are locked there.
+
+### Open questions for Pradeep
+
+- Verify `https://shulka.pradeepjainbp.in` loads in browser (may take a few minutes for SSL cert to propagate after custom domain setup).
+- Verify `https://shulka.pradeepjainbp.in/api/health` returns `{"status":"ok"}` (needs `DATABASE_URL` env var set in CF Pages dashboard under Settings → Environment variables).
+- Fix git identity: `git config --global user.email "pradeepjainbp@gmail.com"` + `git config --global user.name "Pradeep Jain"`
+
+### Notes / context
+
+- **OpenNext adapter** (`@opennextjs/cloudflare` v1.19.10) is now the build system. `@cloudflare/next-on-pages` is deprecated by Cloudflare. Do not revert.
+- **Neon region is Singapore** (ap-southeast-1), not Mumbai — Mumbai not available on free tier. Documented in README.md. PITR window is 6 hours on free tier.
+- `DATABASE_URL` env var must be added to CF Pages dashboard (Settings → Environment variables) for the `/api/health` edge route to work in production. Use the pooled connection string.
+- `shulka_app` role exists but is NOLOGIN — app currently connects as `neondb_owner`. A proper login role for `shulka_app` is a pre-production hardening item, not a Phase 0 blocker.
+- `apps/web/wrangler.toml` has `NEXT_CACHE_WORKERS_KV` binding wired to the KV namespace. This is used by OpenNext for caching.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No LLM computed any rupee. DB schema only — no financial mutations. All services on free tier.
+
+---
+
 ## Session: 2026-05-18 — P0-03 Drizzle + Neon + audit foundation (Sonnet)
 
 ### What this session did

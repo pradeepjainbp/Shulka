@@ -19,7 +19,7 @@ cp .env.example .env.local
 pnpm dev        # http://localhost:3000
 ```
 
-**Prerequisites:** Node.js ≥ 20, pnpm ≥ 9, Cloudflare account (free), Neon account (free, AWS Mumbai region).
+**Prerequisites:** Node.js ≥ 20, pnpm ≥ 9, Cloudflare account (free), Neon account (free).
 
 ## Commands
 
@@ -35,7 +35,12 @@ pnpm dev        # http://localhost:3000
 
 ## Database
 
-Neon Postgres · AWS Mumbai (ap-south-1) · PITR enabled (7-day recovery window on free tier).
+Neon Postgres · Singapore (ap-southeast-1) · PITR enabled · 6-hour recovery window (free tier limit).
+
+## Deployment
+
+Production: `https://shulka.pradeepjainbp.in` (Cloudflare Pages, auto-deploys from `main`)  
+Build adapter: OpenNext (`@opennextjs/cloudflare`)
 
 ## For developers (and Claude Code)
 
@@ -58,7 +63,7 @@ Every Claude Code session must:
 
 ## Tech stack (one-liner)
 
-Next.js 14 + Tailwind + shadcn/ui + Tremor + Framer Motion · Cloudflare Pages + Workers + R2 + KV · Neon Postgres (AWS Mumbai) · Drizzle ORM · Auth.js (Google + magic-link via Resend) · Gemini 2.5 Flash for OCR/narration · Capacitor for Android/iOS · pnpm monorepo · Biome · Vitest + Playwright
+Next.js 16 + Tailwind + shadcn/ui + Tremor + Framer Motion · Cloudflare Pages (OpenNext) + Workers + R2 + KV · Neon Postgres (Singapore) · Drizzle ORM · Auth.js v5 (Google + magic-link via Resend) · Gemini 2.5 Flash for OCR/narration · Capacitor for Android/iOS · pnpm monorepo · Biome · Vitest + Playwright
 
 Total monthly fixed cost at MVP: **₹0**.
 
