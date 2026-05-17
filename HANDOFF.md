@@ -26,8 +26,9 @@
   1. `@cloudflare/next-on-pages` → doubled path bug in pnpm monorepo
   2. `outputFileTracingRoot` fix → still conflicted with Vercel CLI internals
   3. **Switched to OpenNext (`@opennextjs/cloudflare`)** — build succeeds ✓
-- Final build setup: `build:cf` script in `apps/web/package.json`, `wrangler.toml` + `open-next.config.ts` in `apps/web/`, output dir `apps/web/.open-next`
-- **Build passing. Site live.**
+- Final build setup: `build:cf` script in `apps/web/package.json`, `open-next.config.ts` in `apps/web/`, root-level `wrangler.toml` with `pages_build_output_dir = "apps/web/.open-next"`, output dir `apps/web/.open-next`
+- **Build passing. Site deployed. `https://shulka.pradeepjainbp.in` is live.**
+- Key lesson: CF Pages looks for `wrangler.toml` at repo root only — placing it in `apps/web/` caused "No Wrangler configuration file found" and silent deployment failures.
 
 ### What's next
 
