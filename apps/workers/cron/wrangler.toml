@@ -1,0 +1,11 @@
+name = "shulka-db-backup"
+main = "db-backup.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[triggers]
+crons = ["0 1 * * *"]  # 01:00 UTC = 06:30 IST daily
+
+[[r2_buckets]]
+binding = "BACKUP_BUCKET"
+bucket_name = "shulka-prod"
