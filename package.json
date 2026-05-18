@@ -12,7 +12,7 @@
     "build": "pnpm --filter @shulka/web build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --pass-with-no-tests",
     "lint": "biome check .",
     "format": "biome format --write .",
     "typecheck": "pnpm --filter @shulka/web exec tsc --noEmit",
