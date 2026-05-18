@@ -5,13 +5,13 @@
 ## Current state
 
 **Phase:** Phase 0 — Setup
-**Status:** In progress — P0-05 in progress
+**Status:** In progress — P0-05 done
 **Last updated:** 2026-05-18
-**Last actor:** Sonnet (P0-05 design tokens + base layout)
+**Last actor:** Sonnet (P0-05 design tokens + Geist + AppShell + styleguide)
 
 ## Active ticket
 
-**P0-05 — Design tokens + Geist font + base layout** (in progress)
+**P0-06 — i18n (next-intl) + PWA scaffold** (next to claim)
 
 ## Recent shipped
 
@@ -19,6 +19,7 @@
 - P0-02 — repo config files + first git commit
 - P0-03 — packages/db (Drizzle + Neon), audit tables + triggers live, shulka_app role, cron stub, health route
 - P0-04 — DNS CNAME set, CF Pages build passing (OpenNext adapter), `shulka.pradeepjainbp.in` live
+- P0-05 — packages/design-tokens, Tailwind config, AppShell (header+sidebar+bottom-nav), /styleguide route
 
 ## Blockers
 
@@ -39,7 +40,7 @@
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (4/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓)
+- [ ] Phase 0 — Setup (5/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)

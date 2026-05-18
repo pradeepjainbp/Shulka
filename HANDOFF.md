@@ -5,6 +5,49 @@
 
 ---
 
+## Session: 2026-05-18 — P0-05: design tokens + Geist font + AppShell + styleguide (Sonnet)
+
+### What this session did
+
+- Created `packages/design-tokens/` — locked palette, typography scale, spacing, radius, shadow, motion tokens per DESIGN_SYSTEM.md. All values are `as const` TypeScript exports.
+- Installed Tailwind CSS + PostCSS in `apps/web`; `tailwind.config.ts` extends all Shulka tokens (colors, radius, font families). Config imports tokens via relative path (Tailwind's config loader runs before TS path resolution).
+- Geist + Geist_Mono loaded via `next/font/google` with CSS variables `--font-geist-sans` / `--font-geist-mono` applied to `<html>`. Body gets `bg-surface text-ink font-sans antialiased`.
+- Created `apps/web/components/shell/AppShell.tsx` — responsive shell: sticky header (Shulka logo + avatar placeholder), 240px sidebar on desktop, 60px icon rail on tablet (768–1023px), bottom nav on mobile (≤767px). Pure server component, Tailwind only.
+- Created `apps/web/app/styleguide/page.tsx` — visual smoke test at `/styleguide` showing color swatches, type scale, primary + secondary buttons, input, card with shadow, status pills (paid/pending/overdue/draft), shadow scale.
+- Updated `apps/web/app/page.tsx` to use `AppShell` with cream background.
+- Fixed pre-existing Biome lint issues across the codebase (import sorting in db schema files, `useLiteralKeys` in drizzle.config + client.ts + health route, `noNonNullAssertion` in health route). Added `.wrangler` and `.open-next` to `biome.json` ignore list (generated files were flooding lint output).
+
+**Build:** `pnpm --filter @shulka/web build` — clean, 4 routes. Lint clean. Typecheck clean. Tests pass (1 smoke test).
+
+### What's next
+
+**P0-06 — i18n (next-intl) + PWA scaffold.**
+
+Spec: `next-intl` configured with `en` as only locale; App Router locale routing via `[locale]/...` segment; `packages/i18n/` for messages. `manifest.json` + service worker via `next-pwa` + Shulka icon set (placeholder). PWA install prompt after 3rd visit.
+
+Read `PHASES.md` §P0-06 before starting — acceptance criteria include `/en/...` routing, service worker in prod build, and Chrome "Install Shulka" prompt.
+
+**Important for P0-06:** After the `[locale]/...` routing change, the AppShell and all routes move into `apps/web/app/[locale]/`. The styleguide and health route stay at root or also move — check PHASES.md spec carefully.
+
+### Open questions for Pradeep
+
+- Push when ready: `git push origin main` to deploy P0-05 to CF Pages. The `/styleguide` route will be accessible at `https://shulka.pradeepjainbp.in/styleguide` after deploy.
+- Verify `/api/health` returns `{"status":"ok"}` in production (confirms DATABASE_URL env var is set in CF Pages dashboard). The route now returns a clean 500 JSON if the env var is missing instead of crashing.
+- Fix git identity: `git config --global user.email "pradeepjainbp@gmail.com"` + `git config --global user.name "Pradeep Jain"` (commits still show `jainpr@dotdashmdp.com`).
+
+### Notes / context
+
+- `tailwind.config.ts` uses a relative import `../../packages/design-tokens/src/index` — not the `@shulka/design-tokens` alias. This is intentional: Tailwind's config runs in Node before TS path aliases are resolved. In-app imports (components, pages) use `@shulka/design-tokens` via the tsconfig alias.
+- The styleguide page is a dev tool — no auth, no nav link. Access directly at `/styleguide`.
+- No `'use client'` anywhere in P0-05 code — all server components.
+- Biome `noConsoleLog` warnings remain in `patch-handler.mjs` and `patch-require-hook.mjs` (they are intentional status messages in build scripts, not prod code). These are warnings, not errors — lint passes.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No financial code touched. No LLM computed any rupee. No paid services used.
+
+---
+
 ## Session: 2026-05-18 — P0-04 runtime fix: CF Pages 500 resolved, site confirmed live (Sonnet)
 
 ### What this session did
