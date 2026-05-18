@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-07 — shadcn/ui + Tremor + Sonner + Lucide installed and themed** (in_progress)
+**P0-08 — Auth.js v5: Google OAuth + Email magic link via Resend** (next to claim)
 
 ## Recent shipped
 
@@ -21,6 +21,7 @@
 - P0-04 — DNS CNAME set, CF Pages build passing (OpenNext adapter), `shulka.pradeepjainbp.in` live
 - P0-05 — packages/design-tokens, Tailwind config, AppShell (header+sidebar+bottom-nav), /styleguide route
 - P0-06 — next-intl [locale] routing, packages/i18n, next-pwa service worker, PWA manifest, CF cache fix
+- P0-07 — shadcn/ui (10 components), Sonner, Tremor charts, Lucide; /en/styleguide updated
 
 ## Blockers
 
@@ -41,7 +42,7 @@
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (6/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓ P0-06 ✓)
+- [ ] Phase 0 — Setup (7/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓ P0-06 ✓ P0-07 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)

@@ -5,6 +5,57 @@
 
 ---
 
+## Session: 2026-05-18 — P0-07: shadcn/ui + Sonner + Tremor + Lucide (Sonnet)
+
+### What this session did
+
+- Installed and manually wrote 10 shadcn/ui-style components in `apps/web/components/ui/`:
+  `button` (CVA, 5 variants × 4 sizes), `input`, `card` (Header/Title/Description/Content/Footer),
+  `dialog` (Radix), `badge` (6 variants), `separator`, `avatar` (Radix), `tabs` (Radix),
+  `tooltip` (Radix), `skeleton`.
+- Created `apps/web/lib/utils.ts` — `cn()` helper (clsx + tailwind-merge).
+- Added Sonner `<Toaster>` to `app/[locale]/layout.tsx` with Shulka token class names.
+- Added Tremor CSS variables to `globals.css` mapped to Shulka palette (primary `#0F5C3F`, surface `#FAF7EE`, etc.).
+- Added Tremor dist path to Tailwind content scan in `tailwind.config.ts`.
+- Rewrote `app/[locale]/styleguide/page.tsx` as `'use client'` — 11 sections: Color Palette, Type Scale, Buttons, Input, Card, Badge, Dialog, Tabs, Tooltip, Avatar, Skeleton, Toast (3 variants), LineChart + BarChart (Tremor), Separator.
+- All deps: `lucide-react`, `sonner`, `@tremor/react`, `recharts`, `class-variance-authority`, `clsx`, `tailwind-merge`, 6 Radix UI primitives.
+
+**Build:** 4 routes clean. Lint: 64 files, no issues. Typecheck: clean. Tests: 1/1.
+
+### What's next
+
+**P0-08 — Auth.js v5: Google OAuth + Email magic-link via Resend.**
+
+This is the highest-risk ticket in Phase 0. Read ADR-14 in DECISIONS.md before starting.
+
+**⚠ Critical constraints for P0-08 (DO NOT SKIP):**
+- **JWT session strategy only** — `strategy: 'jwt'`. Auth.js v5 database session strategy is confirmed broken on CF Workers edge (multiple GitHub issues). Do not use the Drizzle session adapter. Do not attempt `strategy: 'database'`.
+- Google OAuth client IDs must be in `.env.local` before starting. Pradeep has them ready (confirmed in STATUS.md blockers).
+- Resend domain (`pradeepjainbp.in`) needs email verification in Resend dashboard before magic-link works in production.
+- Rate limiting on magic-link endpoint: KV-backed token bucket, 5/email/hr, 20/IP/hr (per PHASES.md spec).
+- A Playwright e2e test is REQUIRED per Sacred Rule 10 — signs in via magic-link with mocked Resend webhook, asserts `/me` returns user, signs out, asserts 401.
+- `/me` API must use Zod schema from `packages/shared-types/src/api/me.ts` (create this file as part of P0-08).
+
+### Open questions for Pradeep
+
+- Push: `git push origin main` — deploy P0-07 to CF Pages. Verify `/en/styleguide` shows all components and charts at `https://shulka.pradeepjainbp.in/en/styleguide`.
+- Before P0-08 starts: confirm Google OAuth client ID + secret are ready in `.env.local`. Also confirm Resend API key is in `.env.local` (for magic-link testing).
+- Replace placeholder icons in `apps/web/public/icons/` with real Shulka PNGs (192×192 and 512×512) before Phase 8 launch.
+
+### Notes / context
+
+- `dialog.tsx`, `avatar.tsx`, `tabs.tsx`, `tooltip.tsx`, `separator.tsx` all have `'use client'` — they use Radix hooks. This is correct.
+- The styleguide page is `'use client'` to support Dialog open/close state and Sonner `toast()` calls. This is intentional for a dev tool.
+- Lucide React is installed but no icons are imported in the styleguide yet — they'll be used in P0-08+ screens. The install is confirmed; use `import { IconName } from 'lucide-react'` anywhere.
+- Tremor does NOT have a v3 TypeScript error with React 19 in this setup — the peer dep warning was suppressed and the build is clean.
+- `apps/web/AGENTS.md` was fixed last session — it no longer contains misleading instructions.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No financial code touched. No LLM computed any rupee. No paid services used.
+
+---
+
 ## Session: 2026-05-18 — P0-06: i18n (next-intl) + PWA scaffold (Sonnet)
 
 ### What this session did
