@@ -1,8 +1,12 @@
+import path from 'node:path'
 import type { Config } from 'tailwindcss'
 import { colors, radius } from '../../packages/design-tokens/src/index'
 
 const config: Config = {
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: [
+    path.join(__dirname, './app/**/*.{ts,tsx}'),
+    path.join(__dirname, './components/**/*.{ts,tsx}'),
+  ],
   theme: {
     extend: {
       colors: {

@@ -44,7 +44,8 @@
       "build",
       "*.min.js",
       "playwright-report",
-      "test-results"
+      "test-results",
+      "**/next-env.d.ts"
     ]
   }
 }
