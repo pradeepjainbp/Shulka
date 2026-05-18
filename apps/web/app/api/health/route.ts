@@ -3,7 +3,13 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const sql = neon(process.env['DATABASE_URL']!)
+    const url = process.env.DATABASE_URL
+    if (!url)
+      return NextResponse.json(
+        { status: 'error', message: 'DATABASE_URL not set' },
+        { status: 500 },
+      )
+    const sql = neon(url)
     const result = await sql`SELECT 1 AS ok`
     return NextResponse.json({ status: 'ok', db: result[0] })
   } catch (err) {

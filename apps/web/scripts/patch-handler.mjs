@@ -17,12 +17,13 @@ const src = readFileSync(NEXT_SERVER, 'utf-8')
 const PATTERN = /const manifest = require\(this\.middlewareManifestPath\);/g
 
 if (!PATTERN.test(src)) {
-  console.log('patch-handler: require(this.middlewareManifestPath) not found — already patched or Next.js changed. Skipping.')
   process.exit(0)
 }
 
 PATTERN.lastIndex = 0
-const patched = src.replace(PATTERN, 'const manifest = (0, _loadmanifestexternal.loadManifest)(this.middlewareManifestPath);')
+const patched = src.replace(
+  PATTERN,
+  'const manifest = (0, _loadmanifestexternal.loadManifest)(this.middlewareManifestPath);',
+)
 
 writeFileSync(NEXT_SERVER, patched)
-console.log('patch-handler: patched getMiddlewareManifest in next-server.js to use loadManifest ✓')

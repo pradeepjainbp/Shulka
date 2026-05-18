@@ -1,5 +1,5 @@
-import { index, jsonb, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { sql } from 'drizzle-orm'
+import { index, jsonb, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
 
 // clock_timestamp() per ARCHITECTURE.md §3 — NOT now() — order within a transaction matters
 export const auditEvents = pgTable(

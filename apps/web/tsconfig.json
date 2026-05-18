@@ -10,7 +10,8 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./*"],
-      "@shulka/shared-types": ["../../packages/shared-types/src/index.ts"]
+      "@shulka/shared-types": ["../../packages/shared-types/src/index.ts"],
+      "@shulka/design-tokens": ["../../packages/design-tokens/src/index.ts"]
     }
   },
   "include": [

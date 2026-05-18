@@ -5,13 +5,13 @@
 ## Current state
 
 **Phase:** Phase 0 — Setup
-**Status:** In progress — P0-04 done
+**Status:** In progress — P0-05 in progress
 **Last updated:** 2026-05-18
-**Last actor:** Sonnet (P0-04 runtime fix — `shulka.pradeepjainbp.in` confirmed loading)
+**Last actor:** Sonnet (P0-05 design tokens + base layout)
 
 ## Active ticket
 
-**P0-05 — Design tokens + Geist font + base layout** (next to claim)
+**P0-05 — Design tokens + Geist font + base layout** (in progress)
 
 ## Recent shipped
 
