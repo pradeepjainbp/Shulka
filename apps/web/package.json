@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
-    "build:cf": "next build --webpack && node scripts/patch-handler.mjs && node scripts/patch-require-hook.mjs && opennextjs-cloudflare build && mv .open-next/worker.js .open-next/_worker.js",
+    "build:cf": "next build --webpack && node scripts/patch-handler.mjs && node scripts/patch-require-hook.mjs && opennextjs-cloudflare build && mv .open-next/worker.js .open-next/_worker.js && cp -r .open-next/assets/. .open-next/",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
