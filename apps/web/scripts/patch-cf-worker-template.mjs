@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -12,8 +12,15 @@ function findTemplate(dir, depth = 0) {
     const entries = readdirSync(pnpmStore)
     const match = entries.find((e) => e.startsWith('@opennextjs+cloudflare@'))
     if (match) {
-      const candidate = path.join(pnpmStore, match, 'node_modules/@opennextjs/cloudflare/dist/cli/templates/worker.js')
-      try { statSync(candidate); return candidate } catch {}
+      const candidate = path.join(
+        pnpmStore,
+        match,
+        'node_modules/@opennextjs/cloudflare/dist/cli/templates/worker.js',
+      )
+      try {
+        statSync(candidate)
+        return candidate
+      } catch {}
     }
   } catch {}
   return findTemplate(path.dirname(dir), depth + 1)
@@ -49,4 +56,6 @@ if (!src.includes(TARGET)) {
 }
 
 writeFileSync(templatePath, src.replace(TARGET, PATCH))
-console.info('patch-cf-worker-template: added env.ASSETS static serving to OpenNext worker template ✓')
+console.info(
+  'patch-cf-worker-template: added env.ASSETS static serving to OpenNext worker template ✓',
+)
