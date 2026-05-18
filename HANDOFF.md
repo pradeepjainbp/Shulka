@@ -5,6 +5,65 @@
 
 ---
 
+## Session: 2026-05-18 — P0-08: Auth.js v5 + Google OAuth + magic-link + e2e (Sonnet)
+
+### What this session did
+
+- **DB migration** (`0001_nice_praxagora.sql`, applied to live Neon):
+  - Added `email_verified` and `image` columns to `users`
+  - Created `accounts` table (OAuth provider linking)
+  - Created `verification_tokens` table (magic-link tokens)
+- **`apps/web/auth.ts`** — Auth.js v5 `NextAuth` config: `DrizzleAdapter`, `strategy: 'jwt'`, Google + Resend providers. In `PLAYWRIGHT_TEST=true` mode, `sendVerificationRequest` captures the magic link URL to `globalThis.__playwrightLastMagicLinkUrl` instead of sending email.
+- **`/api/auth/[...nextauth]`** — Auth.js handler (GET + POST).
+- **`/api/me`** — Zod-validated endpoint returning `MeResponse`; 401 if no session.
+- **`/api/test/magic-link`** — test-only capture endpoint (returns 404 unless `PLAYWRIGHT_TEST=true`).
+- **`packages/shared-types/src/api/me.ts`** — `MeResponseSchema` + `MeResponse` type (id, email, name, image, role).
+- **`middleware.ts` updated** — KV-backed rate limiting on `POST /api/auth/signin/resend`: 5/email/hr, 20/IP/hr. In-memory fallback for local dev.
+- **Sign-in page** `/en/sign-in` — Google OAuth button + email magic-link form.
+- **Sign-out page** `/en/sign-out` — server action form that calls `signOut({ redirectTo: '/en' })`.
+- **`e2e/auth.spec.ts`** — full magic-link flow: submit email → capture URL from test endpoint → navigate to URL → assert `/api/me` returns user → sign out → assert 401.
+- **`playwright.config.ts`** updated — webServer uses `PLAYWRIGHT_TEST=true` env; activates when `e2e/` has test files.
+
+**All checks green:** build (8 routes), lint (75 files), typecheck, unit tests (1/1), e2e (1/1, 21s).
+
+### What's next
+
+**P0-09 — Cloudflare Web Analytics + Sentry hookup.** This is the final Phase 0 ticket.
+
+Spec:
+- Cloudflare Web Analytics: add the beacon script to the root layout.
+- Sentry: React error boundary in app shell + `withErrorReporting()` server-side wrapper on API routes.
+- Source maps uploaded in CF Pages build pipeline.
+- A "trip the boundary" verification script confirming both paths land in Sentry.
+
+Before starting P0-09: Pradeep needs a Sentry account + project created (sentry.io, free tier). Sentry DSN + auth token needed as env vars.
+
+**After P0-09, Phase 0 is complete.** Phase 0 done when: Pradeep can sign in at `shulka.pradeepjainbp.in`, see his name, sign out. All 9 tickets ✓.
+
+### Open questions for Pradeep
+
+- Push this commit to deploy P0-08. After deploy:
+  1. Add `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `RESEND_API_KEY`, `RESEND_FROM` to CF Pages → Settings → Variables and Secrets (they're only in `.env.local` right now, not in CF Pages dashboard).
+  2. Test Google sign-in at `https://shulka.pradeepjainbp.in/en/sign-in`.
+  3. Test magic-link with your Gmail — verify email arrives from `noreply@pradeepjainbp.in`.
+  4. Verify `/api/me` returns your user after sign-in.
+- Before P0-09: create a Sentry project at sentry.io (free tier). Note the DSN and generate an auth token.
+- `middleware.ts` deprecation: Next.js 16 shows a warning that `middleware.ts` is deprecated in favour of `proxy.ts`. The app works fine — this is a non-breaking deprecation. The next session touching middleware should rename the file and update the export name (`proxy` instead of `middleware`). Not urgent but document it.
+
+### Notes / context
+
+- **JWT strategy is the correct permanent choice** (not a fallback). Confirmed working. Do not revisit `strategy: 'database'`.
+- The `globalThis.__playwrightLastMagicLinkUrl` pattern is intentional — Next.js webpack bundles each route in its own module; `globalThis` is shared across all bundles in the same Node process, which `module`-level variables are not.
+- `apps/web/auth.ts` exports `getLastMagicLinkUrl()` — only called by the test endpoint. In production the endpoint returns 404.
+- Rate limiting in `middleware.ts` reads the request body via `request.clone().text()` — the clone is necessary because the body stream can only be consumed once.
+- `@cloudflare/workers-types` added to `apps/web/package.json` devDeps for `KVNamespace` type in middleware.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No financial computation. No LLM computed any rupee. Audit log untouched. All services on free tier.
+
+---
+
 ## Session: 2026-05-18 — P0-07: shadcn/ui + Sonner + Tremor + Lucide (Sonnet)
 
 ### What this session did

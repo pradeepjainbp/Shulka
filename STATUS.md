@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-08 — Auth.js v5: Google OAuth + Email magic link via Resend** (in_progress)
+**P0-09 — Cloudflare Web Analytics + Sentry hookup** (next to claim)
 
 ## Recent shipped
 
@@ -22,6 +22,7 @@
 - P0-05 — packages/design-tokens, Tailwind config, AppShell (header+sidebar+bottom-nav), /styleguide route
 - P0-06 — next-intl [locale] routing, packages/i18n, next-pwa service worker, PWA manifest, CF cache fix
 - P0-07 — shadcn/ui (10 components), Sonner, Tremor charts, Lucide; /en/styleguide updated
+- P0-08 — Auth.js v5 JWT, Google OAuth + magic-link, /api/me, KV rate limiting, e2e test
 
 ## Blockers
 
@@ -42,7 +43,7 @@
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (7/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓ P0-06 ✓ P0-07 ✓)
+- [ ] Phase 0 — Setup (8/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓ P0-06 ✓ P0-07 ✓ P0-08 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
