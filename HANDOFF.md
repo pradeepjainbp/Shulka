@@ -5,6 +5,59 @@
 
 ---
 
+## Session: 2026-05-18 — P0-06: i18n (next-intl) + PWA scaffold (Sonnet)
+
+### What this session did
+
+- Created `packages/i18n/` (`@shulka/i18n`) — English messages object with `app`, `nav`, `common` keys. `Messages` type exported for future locale additions.
+- Installed `next-intl ^3.26.3`; configured via `apps/web/i18n/request.ts` using `getRequestConfig`; wired into `next.config.ts` via `createNextIntlPlugin`.
+- Restructured `apps/web/app/` — home and styleguide routes moved into `app/[locale]/`. Root layout kept minimal (fonts, globals.css, manifest link). Locale layout wraps children with `NextIntlClientProvider`.
+- Created `apps/web/middleware.ts` — custom locale redirect middleware (CF Workers compatible). Skips `/api/`, `/_next/`, files with extensions. Redirects bare paths to `/en/...`.
+- Installed `next-pwa ^5.6.0`; service worker auto-registered. `public/manifest.json` with Shulka brand colors, `start_url: /en/`. Placeholder 1×1 PNG icons in `public/icons/`.
+- Added `public/_headers` — `Cache-Control: no-store` for `/sw.js` and `/workbox-*.js` (CF Pages would otherwise cache stale service workers across deploys).
+- Bumped `wrangler.toml` `compatibility_date` to `2025-05-05` (fixes FinalizationRegistry + Next.js 16.2.x CF Workers crash risk).
+- Updated `DECISIONS.md`: ADR-1 (Next.js version), ADR-2 (Neon region), ADR-3b (adapter switch), ADR-14 (JWT-only confirmed).
+- Updated `.gitignore`: added `apps/web/.open-next/`, `apps/web/public/sw.js`, `apps/web/public/workbox-*.js`.
+
+**Build:** 4 routes (`/_not-found`, `/[locale]`, `/[locale]/styleguide`, `/api/health`) + Middleware. Service worker generated. Lint clean. Typecheck clean. Tests 1/1.
+
+**Note on `AGENTS.md` trap:** `apps/web/AGENTS.md` contains misleading instructions ("This is NOT the Next.js you know — APIs may differ from training data"). The sub-agent was fooled into creating `proxy.ts` with `export function proxy(...)` instead of `middleware.ts`. Fixed manually. Ignore that file — standard Next.js conventions apply.
+
+### What's next
+
+**P0-07 — shadcn/ui + Tremor + Sonner + Lucide installed and themed.**
+
+Spec: All four libraries integrated and themed to Shulka tokens. A demo page proves Button, Input, Dialog, Card, Toast, LineChart, BarChart. `/styleguide` updated to show all components.
+
+Read `PHASES.md` §P0-07 and `DESIGN_SYSTEM.md` before starting — all component token mappings are locked there.
+
+**Important for P0-07:** The styleguide is now at `/en/styleguide` (not `/styleguide`). Update any internal links or redirect if needed.
+
+### Open questions for Pradeep
+
+- Push to deploy: `git push origin main`. After deploy, verify:
+  - `https://shulka.pradeepjainbp.in/en/` loads (redirected from `/`)
+  - `https://shulka.pradeepjainbp.in/en/styleguide` loads with styling
+  - Chrome shows "Install Shulka" prompt after a few page loads (PWA install heuristic)
+  - `manifest.json` validates at web.dev/measure or Chrome DevTools → Application → Manifest
+- Replace placeholder icons in `apps/web/public/icons/` with real 192×192 and 512×512 Shulka PNGs before Phase 8 launch (current icons are 1×1 pixel placeholders).
+- Verify `/api/health` returns `{"status":"ok"}` in production (DATABASE_URL must be set in CF Pages env vars).
+- Fix git identity: `git config --global user.email "pradeepjainbp@gmail.com"` + `git config --global user.name "Pradeep Jain"`.
+
+### Notes / context
+
+- `next-pwa@5.6.0` has no TypeScript declarations — imported via `require()` with manual type cast in `next.config.ts`. This is correct; do not add `@types/next-pwa`.
+- `next-intl@3.26.3` peer dep declares `next@^15` but works fine with Next.js 16. The semver warning in `pnpm install` is harmless.
+- The `apps/web/AGENTS.md` file contains a trap for AI agents. It claims Next.js conventions are different. They are not — ignore it entirely.
+- Service worker scope is `/` but `start_url` is `/en/`. This is intentional — the SW caches all routes under the origin, not just `/en/`.
+- `public/_headers` is a CF Pages feature: it applies response headers to matching paths in the static output. It does NOT require changes to `_worker.js`.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. Followed all 20. No financial code touched. No LLM computed any rupee. No paid services used.
+
+---
+
 ## Session: 2026-05-18 — P0-05: design tokens + Geist font + AppShell + styleguide (Sonnet)
 
 ### What this session did

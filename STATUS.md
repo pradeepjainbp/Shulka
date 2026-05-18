@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-06 — i18n (next-intl) + PWA scaffold** (in_progress)
+**P0-07 — shadcn/ui + Tremor + Sonner + Lucide installed and themed** (next to claim)
 
 ## Recent shipped
 
@@ -20,6 +20,7 @@
 - P0-03 — packages/db (Drizzle + Neon), audit tables + triggers live, shulka_app role, cron stub, health route
 - P0-04 — DNS CNAME set, CF Pages build passing (OpenNext adapter), `shulka.pradeepjainbp.in` live
 - P0-05 — packages/design-tokens, Tailwind config, AppShell (header+sidebar+bottom-nav), /styleguide route
+- P0-06 — next-intl [locale] routing, packages/i18n, next-pwa service worker, PWA manifest, CF cache fix
 
 ## Blockers
 
@@ -40,7 +41,7 @@
 
 ## Phase progress
 
-- [ ] Phase 0 — Setup (5/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓)
+- [ ] Phase 0 — Setup (6/9 tickets — P0-01 ✓ P0-02 ✓ P0-03 ✓ P0-04 ✓ P0-05 ✓ P0-06 ✓)
 - [ ] Phase 1 — Identity & Foundation (0/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
