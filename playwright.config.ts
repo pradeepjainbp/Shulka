@@ -1,4 +1,13 @@
+import { readdirSync } from 'node:fs'
 import { defineConfig, devices } from '@playwright/test'
+
+const hasTests = (() => {
+  try {
+    return readdirSync('./e2e').some((f) => f.endsWith('.ts') || f.endsWith('.js'))
+  } catch {
+    return false
+  }
+})()
 
 export default defineConfig({
   testDir: './e2e',
@@ -17,10 +26,12 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-  },
+  ...(hasTests && {
+    webServer: {
+      command: 'pnpm dev',
+      url: 'http://localhost:3000',
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+  }),
 })
