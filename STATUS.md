@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-06 — i18n (next-intl) + PWA scaffold** (next to claim)
+**P0-06 — i18n (next-intl) + PWA scaffold** (in_progress)
 
 ## Recent shipped
 

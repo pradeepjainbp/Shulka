@@ -16,7 +16,9 @@ Format:
 
 **Context:** Shulka must serve web, Android, and (later) iOS users. Solo developer. Free-tier infrastructure.
 
-**Decision:** Single Next.js 14 codebase. Capacitor wraps the production web build into Android (Phase 6) and iOS (Phase 10) shells. PWA support enabled Day 1 for installable web experience before native ships.
+**Decision:** Single Next.js codebase. Capacitor wraps the production web build into Android (Phase 6) and iOS (Phase 10) shells. PWA support enabled Day 1 for installable web experience before native ships.
+
+**Amendment (2026-05-18):** Originally specced as Next.js 14. P0-01 installed **Next.js 16.2.6** (latest stable). No API differences affected Phase 0 scope. All future work targets Next.js 16.
 
 **Consequences:**
 - ✅ ~60% effort savings vs separate native codebases.
@@ -36,12 +38,14 @@ Format:
 
 **Context:** Multi-tenant financial app with concurrent writes, ITC matching across thousands of supplier-buyer pairs, network-effect joins on shared invoice tables.
 
-**Decision:** Neon Postgres in AWS Mumbai region.
+**Decision:** Neon Postgres. Originally planned for AWS Mumbai region.
+
+**Amendment (2026-05-18):** **Neon free tier does not offer Mumbai (ap-south-1).** Actual region is **Singapore (ap-southeast-1)**. India-to-Singapore round-trip is ~60ms vs ~10ms Mumbai. Acceptable for MVP. Revisit if latency becomes a user complaint; Neon paid tier adds Mumbai.
 
 **Consequences:**
 - ✅ Real Postgres: row-level security, window functions for ageing/ITC, JSONB queries.
 - ✅ Branching for prod/dev workflows.
-- ✅ India residency.
+- ❌ Singapore region (not India-resident) — PITR window 6 hours on free tier.
 - ✅ Free tier 0.5 GB sufficient for MVP.
 - ❌ Slightly more ops than SQLite. Migration tooling required (we use Drizzle).
 
@@ -70,6 +74,24 @@ Format:
 - Vercel + Vercel Postgres — explicit rule: no Vercel hosting (cost, free-tier limits).
 - AWS Lambda + S3 + CloudFront — paid runtime APIs not aligned with free-tier-only.
 - Fly.io — alternative serverless container; not as cost-favorable for this use case.
+
+---
+
+## ADR-3b | 2026-05-18 | Switched CF Pages adapter from next-on-pages to OpenNext
+
+**Context:** P0-04 initially used `@cloudflare/next-on-pages` (Cloudflare's official adapter). In a pnpm monorepo it produced doubled path segments in asset URLs (`/_next/_next/static/...`), breaking all static asset loads. The issue is a known pnpm monorepo incompatibility with the adapter's asset path resolution.
+
+**Decision:** Switched to `@opennextjs/cloudflare` (OpenNext). Build succeeds; site deployed.
+
+**Consequences:**
+- ✅ Build passes in pnpm monorepo without path doubling.
+- ✅ OpenNext is actively maintained and has broader Next.js feature support.
+- ❌ OpenNext runs a second internal `next build --webpack` — any Node.js-incompatible code in `node_modules/next/dist/` must be patched before that build runs (see `apps/web/scripts/patch-*.mjs`).
+- ❌ OpenNext's `_worker.js` template has no `env.ASSETS.fetch()` logic — static assets return HTML in CF Pages Advanced Mode unless patched. Solved by `patch-cf-worker-template.mjs`.
+- ❌ OpenNext outputs `worker.js`; CF Pages Advanced Mode requires `_worker.js`. Solved by `mv` in `build:cf` script.
+
+**Alternatives considered:**
+- `@cloudflare/next-on-pages` — official Cloudflare adapter; broken in pnpm monorepos (doubled paths). Cloudflare themselves suggest OpenNext for Next.js App Router.
 
 ---
 
@@ -279,11 +301,11 @@ Revocation flow:
 
 ---
 
-## ADR-14 | 2026-05-02 | Auth.js v5 fallback — JWT-only sessions if edge-compat fails
+## ADR-14 | 2026-05-02 | Auth.js v5 — JWT-only sessions on CF Workers edge
 
-**Context:** Auth.js v5 + Drizzle adapter + Neon HTTP driver + Cloudflare Pages edge runtime is a known-ugly combination. The Drizzle adapter for Auth.js is community-maintained and has lagged Auth.js releases historically. There is real risk that the database-session strategy (Auth.js stores session in `sessions` table, looked up on every request) doesn't work cleanly on edge runtime.
+**Context:** Auth.js v5 + Drizzle adapter + Neon HTTP driver + Cloudflare Pages edge runtime is a known-incompatible combination. Multiple confirmed GitHub issues (#435, #483, #494 in opennextjs-cloudflare) show Auth.js database session strategy failing on CF Workers edge runtime.
 
-**Decision:** Before P0-08 (Auth.js ticket) begins, do a 30-minute throwaway POC confirming the full chain works end-to-end with Google OAuth. **If it does:** use database session strategy as planned. **If it does not:** fall back to `strategy: 'jwt'` (JWT-only sessions; no DB session lookup). Cost: cannot force-revoke a session; tokens stay valid until expiry. Acceptable at MVP — Auth.js JWTs are short-lived and revocation will be revisited if needed.
+**Decision (amended 2026-05-18):** Skip the POC — use **JWT session strategy only** (`strategy: 'jwt'`). Database session lookup on every request does not work reliably on CF Workers edge. The `users` and `accounts` tables are still created for OAuth account linking and identity; the `sessions` table is not used. Trade-off: cannot force-revoke a session; JWTs stay valid until expiry.
 
 The `users` and `accounts` tables are still created (for OAuth account linking and user identity); only the `sessions` table is conditionally unused.
 

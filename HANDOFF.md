@@ -29,18 +29,27 @@ Read `PHASES.md` §P0-06 before starting — acceptance criteria include `/en/..
 
 **Important for P0-06:** After the `[locale]/...` routing change, the AppShell and all routes move into `apps/web/app/[locale]/`. The styleguide and health route stay at root or also move — check PHASES.md spec carefully.
 
+**⚠ Known gotchas for P0-06 (researched 2026-05-18):**
+- **next-intl middleware on CF Workers:** Default next-intl middleware does not work reliably with OpenNext on CF Workers. You must write a custom `middleware.ts` that handles locale detection manually before delegating to next-intl. Do not assume the standard setup works.
+- **next-pwa service worker + CF cache:** Cloudflare caches `/sw.js` by default. The `_worker.js` must set `Cache-Control: no-store` for `/sw.js` and `/workbox-*.js` responses, or users will get stale service workers after deploys.
+
+**⚠ Known gotcha for P0-08 (Auth.js — do not forget):**
+- **JWT-only on CF Workers is not a fallback — it is the confirmed design.** Auth.js v5 database session strategy (Drizzle adapter + Neon HTTP + CF Workers edge) is confirmed broken across multiple GitHub issues. Wire `strategy: 'jwt'` from day one. Do not attempt database sessions. See ADR-14 in DECISIONS.md.
+
 ### Open questions for Pradeep
 
-- Push when ready: `git push origin main` to deploy P0-05 to CF Pages. The `/styleguide` route will be accessible at `https://shulka.pradeepjainbp.in/styleguide` after deploy.
-- Verify `/api/health` returns `{"status":"ok"}` in production (confirms DATABASE_URL env var is set in CF Pages dashboard). The route now returns a clean 500 JSON if the env var is missing instead of crashing.
+- Push when ready: `git push origin main` to deploy latest changes (ADR corrections + wrangler.toml compat date bump) to CF Pages.
+- Verify `/api/health` returns `{"status":"ok"}` in production (confirms DATABASE_URL env var is set in CF Pages dashboard).
 - Fix git identity: `git config --global user.email "pradeepjainbp@gmail.com"` + `git config --global user.name "Pradeep Jain"` (commits still show `jainpr@dotdashmdp.com`).
 
 ### Notes / context
 
+- `wrangler.toml` `compatibility_date` bumped to `2025-05-05` (was `2025-04-01`) — required to avoid FinalizationRegistry API errors on CF Workers with Next.js 16.2.x.
 - `tailwind.config.ts` uses a relative import `../../packages/design-tokens/src/index` — not the `@shulka/design-tokens` alias. This is intentional: Tailwind's config runs in Node before TS path aliases are resolved. In-app imports (components, pages) use `@shulka/design-tokens` via the tsconfig alias.
 - The styleguide page is a dev tool — no auth, no nav link. Access directly at `/styleguide`.
 - No `'use client'` anywhere in P0-05 code — all server components.
 - Biome `noConsoleLog` warnings remain in `patch-handler.mjs` and `patch-require-hook.mjs` (they are intentional status messages in build scripts, not prod code). These are warnings, not errors — lint passes.
+- DECISIONS.md updated this session: ADR-1 (Next.js version), ADR-2 (Neon region), ADR-3b (adapter switch), ADR-14 (JWT-only confirmed). All stale assumptions corrected.
 
 ### Sacred rules sanity check
 

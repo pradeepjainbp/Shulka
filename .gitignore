@@ -40,6 +40,11 @@ packages/db/drizzle/meta/
 
 # Cloudflare
 .wrangler/
+apps/web/.open-next/
+
+# next-pwa generated (built from source on deploy)
+apps/web/public/sw.js
+apps/web/public/workbox-*.js
 
 # Capacitor / Android
 apps/android/.gradle/
