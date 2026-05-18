@@ -1,6 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
+import { Toaster } from 'sonner'
 
 const locales = ['en']
 
@@ -14,5 +15,20 @@ export default async function LocaleLayout({
   const { locale } = await params
   if (!locales.includes(locale)) notFound()
   const messages = await getMessages()
-  return <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
+  return (
+    <NextIntlClientProvider messages={messages}>
+      {children}
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          classNames: {
+            toast: 'bg-raised border border-border text-ink shadow-md',
+            success: 'border-l-4 border-l-success',
+            error: 'border-l-4 border-l-error',
+            warning: 'border-l-4 border-l-warning',
+          },
+        }}
+      />
+    </NextIntlClientProvider>
+  )
 }

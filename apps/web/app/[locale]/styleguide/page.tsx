@@ -1,4 +1,38 @@
+'use client'
+
 import { colors, shadow, type as typeScale } from '@shulka/design-tokens'
+import { BarChart, LineChart } from '@tremor/react'
+import { toast } from 'sonner'
+import { AvatarFallback, AvatarImage, AvatarRoot } from '../../../components/ui/avatar'
+import { Badge } from '../../../components/ui/badge'
+import { Button } from '../../../components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../../../components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../../../components/ui/dialog'
+import { Input } from '../../../components/ui/input'
+import { Separator } from '../../../components/ui/separator'
+import { Skeleton } from '../../../components/ui/skeleton'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/tabs'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../../../components/ui/tooltip'
 
 type ColorEntry = { name: string; value: string }
 
@@ -45,14 +79,36 @@ const typeEntries: TypeEntry[] = [
   { name: 'number', classes: typeScale.number, sample: '18% GST — ₹1,234.56' },
 ]
 
-type StatusPill = { label: string; bg: string; text: string }
-
-const statusPills: StatusPill[] = [
-  { label: 'Paid', bg: 'bg-success/10', text: 'text-success' },
-  { label: 'Pending', bg: 'bg-warning/10', text: 'text-warning' },
-  { label: 'Overdue', bg: 'bg-error/10', text: 'text-error' },
-  { label: 'Draft', bg: 'bg-info/10', text: 'text-info' },
+const revenueData = [
+  { month: 'Nov', Revenue: 45000 },
+  { month: 'Dec', Revenue: 52000 },
+  { month: 'Jan', Revenue: 48000 },
+  { month: 'Feb', Revenue: 61000 },
+  { month: 'Mar', Revenue: 55000 },
+  { month: 'Apr', Revenue: 67000 },
 ]
+
+const gstData = [
+  { quarter: 'Q1', 'GST Collected': 18200, 'GST Paid': 14100 },
+  { quarter: 'Q2', 'GST Collected': 22400, 'GST Paid': 16300 },
+  { quarter: 'Q3', 'GST Collected': 19800, 'GST Paid': 15200 },
+  { quarter: 'Q4', 'GST Collected': 27600, 'GST Paid': 19500 },
+]
+
+const inrFormatter = (value: number) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(value)
+
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
+      {children}
+    </h2>
+  )
+}
 
 export default function StyleguidePage() {
   return (
@@ -61,14 +117,12 @@ export default function StyleguidePage() {
         Shulka Design System
       </h1>
       <p className="text-[15px] leading-[1.55] text-ink-muted mb-12">
-        Visual smoke test — P0-05 tokens &amp; base components
+        Visual smoke test — P0-07 shadcn/ui + Tremor + Sonner + Lucide
       </p>
 
       {/* Color Palette */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Color Palette
-        </h2>
+        <SectionHeading>Color Palette</SectionHeading>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {colorEntries.map((c) => (
             <div key={c.name} className="flex flex-col gap-2">
@@ -89,9 +143,7 @@ export default function StyleguidePage() {
 
       {/* Type Scale */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Type Scale
-        </h2>
+        <SectionHeading>Type Scale</SectionHeading>
         <div className="flex flex-col gap-6 bg-raised rounded-lg p-6 border border-border">
           {typeEntries.map((t) => (
             <div
@@ -109,80 +161,264 @@ export default function StyleguidePage() {
 
       {/* Buttons */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Buttons
-        </h2>
-        <div className="flex flex-wrap gap-4">
-          <button
-            type="button"
-            className="bg-primary text-white rounded-md px-4 py-2 text-[15px] font-medium
-              hover:bg-primary-700 transition-colors duration-[150ms] cursor-pointer"
-          >
-            Primary Button
-          </button>
-          <button
-            type="button"
-            className="border border-border bg-raised text-ink rounded-md px-4 py-2 text-[15px] font-medium
-              hover:bg-surface-alt transition-colors duration-[150ms] cursor-pointer"
-          >
-            Secondary Button
-          </button>
+        <SectionHeading>Buttons</SectionHeading>
+        <div className="flex flex-col gap-4">
+          {(['default', 'secondary', 'ghost', 'destructive', 'link'] as const).map((variant) => (
+            <div key={variant} className="flex flex-wrap items-center gap-3">
+              <span className="text-[12px] font-mono text-ink-muted w-24">{variant}</span>
+              <Button variant={variant} size="sm">
+                Small
+              </Button>
+              <Button variant={variant} size="default">
+                Default
+              </Button>
+              <Button variant={variant} size="lg">
+                Large
+              </Button>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Input */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Input
-        </h2>
-        <input
-          type="text"
-          placeholder="Enter GSTIN e.g. 27AAPFU0939F1ZV"
-          className="border border-border bg-raised rounded-md px-3 py-2 text-[15px] text-ink
-            placeholder:text-ink-disabled focus:outline-none focus:ring-2 focus:ring-primary/20
-            focus:border-primary transition-colors duration-[150ms] w-full max-w-sm"
-        />
+        <SectionHeading>Input</SectionHeading>
+        <div className="flex flex-col gap-4 max-w-sm">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-medium text-ink" htmlFor="gstin-input">
+              GSTIN
+            </label>
+            <Input id="gstin-input" placeholder="27AAPFU0939F1ZV" />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label className="text-[13px] font-medium text-ink-muted" htmlFor="disabled-input">
+              Disabled
+            </label>
+            <Input id="disabled-input" placeholder="Not editable" disabled />
+          </div>
+        </div>
       </section>
 
       {/* Card */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Card
-        </h2>
-        <div
-          className="bg-raised rounded-lg p-6 border border-border max-w-sm"
-          style={{ boxShadow: shadow.sm }}
-        >
-          <p className="text-[13px] leading-[1.5] text-ink-muted mb-1">Total GST Payable</p>
-          <p className="text-[28px] leading-none tracking-[-0.015em] font-semibold tabular-nums text-ink">
-            ₹18,540
-          </p>
-          <p className="text-[13px] leading-[1.5] text-ink-muted mt-2">15 Mar 2026</p>
+        <SectionHeading>Card</SectionHeading>
+        <Card className="max-w-sm" style={{ boxShadow: shadow.sm }}>
+          <CardHeader>
+            <CardTitle>Invoice #INV-001</CardTitle>
+            <CardDescription>Raised on 15 Mar 2026</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-[28px] leading-none tracking-[-0.015em] font-semibold tabular-nums text-ink">
+              ₹18,540
+            </p>
+            <p className="text-[13px] text-ink-muted mt-1">Total GST Payable</p>
+          </CardContent>
+          <CardFooter className="gap-2">
+            <Badge variant="success">Paid</Badge>
+            <span className="text-[12px] text-ink-muted">Due 22 Mar 2026</span>
+          </CardFooter>
+        </Card>
+      </section>
+
+      {/* Badge */}
+      <section className="mb-12">
+        <SectionHeading>Badge</SectionHeading>
+        <div className="flex flex-wrap gap-3">
+          <Badge variant="default">Default</Badge>
+          <Badge variant="secondary">Secondary</Badge>
+          <Badge variant="success">Paid</Badge>
+          <Badge variant="warning">Pending</Badge>
+          <Badge variant="error">Overdue</Badge>
+          <Badge variant="outline">Draft</Badge>
         </div>
       </section>
 
-      {/* Status Pills */}
+      {/* Dialog */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Status Pills
-        </h2>
+        <SectionHeading>Dialog</SectionHeading>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="secondary">Open Dialog</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm Invoice Send</DialogTitle>
+              <DialogDescription>
+                This will send Invoice #INV-001 to Acme Corp (acme@example.com). This action cannot
+                be undone once sent.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="ghost">Cancel</Button>
+              <Button variant="default">Send Invoice</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </section>
+
+      {/* Tabs */}
+      <section className="mb-12">
+        <SectionHeading>Tabs</SectionHeading>
+        <Tabs defaultValue="overview" className="max-w-lg">
+          <TabsList>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="invoices">Invoices</TabsTrigger>
+            <TabsTrigger value="reports">Reports</TabsTrigger>
+          </TabsList>
+          <TabsContent value="overview">
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-[15px] text-ink-muted">
+                  Overview content — summary metrics and recent activity will appear here.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="invoices">
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-[15px] text-ink-muted">
+                  Invoices list — all sales invoices with status filters will appear here.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="reports">
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-[15px] text-ink-muted">
+                  Reports — GSTR-1, GSTR-3B summaries and ITC reconciliation will appear here.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      {/* Tooltip */}
+      <section className="mb-12">
+        <SectionHeading>Tooltip</SectionHeading>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost">Hover me</Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>GST rule ID: CGST-2017-S9(1)</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </section>
+
+      {/* Avatar */}
+      <section className="mb-12">
+        <SectionHeading>Avatar</SectionHeading>
+        <div className="flex items-center gap-4">
+          <AvatarRoot>
+            <AvatarImage src="/placeholder-avatar.png" alt="Pradeep Jain" />
+            <AvatarFallback>PJ</AvatarFallback>
+          </AvatarRoot>
+          <AvatarRoot className="h-12 w-12">
+            <AvatarImage src="/placeholder-avatar.png" alt="Acme Corp" />
+            <AvatarFallback>AC</AvatarFallback>
+          </AvatarRoot>
+          <AvatarRoot className="h-8 w-8">
+            <AvatarImage src="/placeholder-avatar.png" alt="SM" />
+            <AvatarFallback>SM</AvatarFallback>
+          </AvatarRoot>
+        </div>
+      </section>
+
+      {/* Skeleton */}
+      <section className="mb-12">
+        <SectionHeading>Skeleton</SectionHeading>
+        <Card className="max-w-sm" style={{ boxShadow: shadow.sm }}>
+          <CardHeader>
+            <Skeleton className="h-5 w-32 mb-1" />
+            <Skeleton className="h-3.5 w-24" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-8 w-28 mb-2" />
+            <Skeleton className="h-3.5 w-20" />
+          </CardContent>
+          <CardFooter className="gap-2">
+            <Skeleton className="h-6 w-12 rounded-pill" />
+            <Skeleton className="h-3.5 w-24" />
+          </CardFooter>
+        </Card>
+      </section>
+
+      {/* Toast */}
+      <section className="mb-12">
+        <SectionHeading>Toast</SectionHeading>
         <div className="flex flex-wrap gap-3">
-          {statusPills.map((pill) => (
-            <span
-              key={pill.label}
-              className={`rounded-pill px-3 py-1 text-[12px] font-medium ${pill.bg} ${pill.text}`}
-            >
-              {pill.label}
-            </span>
-          ))}
+          <Button variant="default" onClick={() => toast.success('Invoice sent!')}>
+            Success Toast
+          </Button>
+          <Button variant="destructive" onClick={() => toast.error('Failed to send invoice.')}>
+            Error Toast
+          </Button>
+          <Button variant="secondary" onClick={() => toast.warning('Invoice is overdue.')}>
+            Warning Toast
+          </Button>
+        </div>
+      </section>
+
+      {/* Charts */}
+      <section className="mb-12">
+        <SectionHeading>Charts (Tremor)</SectionHeading>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card style={{ boxShadow: shadow.sm }}>
+            <CardHeader>
+              <CardTitle>Revenue — Last 6 Months</CardTitle>
+              <CardDescription>Monthly revenue in ₹</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <LineChart
+                data={revenueData}
+                index="month"
+                categories={['Revenue']}
+                colors={['emerald']}
+                valueFormatter={inrFormatter}
+                className="h-48"
+              />
+            </CardContent>
+          </Card>
+
+          <Card style={{ boxShadow: shadow.sm }}>
+            <CardHeader>
+              <CardTitle>GST — Quarterly</CardTitle>
+              <CardDescription>GST collected vs GST paid in ₹</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <BarChart
+                data={gstData}
+                index="quarter"
+                categories={['GST Collected', 'GST Paid']}
+                colors={['emerald', 'amber']}
+                valueFormatter={inrFormatter}
+                className="h-48"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Separator */}
+      <section className="mb-12">
+        <SectionHeading>Separator</SectionHeading>
+        <div className="flex flex-col gap-3 max-w-sm bg-raised rounded-lg border border-border p-4">
+          <p className="text-[15px] text-ink">Invoice #INV-001</p>
+          <Separator />
+          <p className="text-[15px] text-ink">Invoice #INV-002</p>
+          <Separator />
+          <p className="text-[15px] text-ink">Invoice #INV-003</p>
         </div>
       </section>
 
       {/* Shadows */}
       <section className="mb-12">
-        <h2 className="text-[24px] leading-[1.2] tracking-[-0.01em] font-medium text-ink mb-6">
-          Shadows
-        </h2>
+        <SectionHeading>Shadows</SectionHeading>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
           {(Object.entries(shadow) as [string, string][]).map(([name, value]) => (
             <div key={name} className="flex flex-col gap-3 items-center">

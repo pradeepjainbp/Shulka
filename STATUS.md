@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-07 — shadcn/ui + Tremor + Sonner + Lucide installed and themed** (next to claim)
+**P0-07 — shadcn/ui + Tremor + Sonner + Lucide installed and themed** (in_progress)
 
 ## Recent shipped
 

@@ -5,6 +5,18 @@
 :root {
   --background: #faf7ee;
   --foreground: #1b1f1d;
+
+  /* Tremor chart theming */
+  --tremor-brand: 15 92 63;
+  --tremor-brand-emphasis: 10 69 48;
+  --tremor-brand-subtle: 200 221 204;
+  --tremor-background-default: 250 247 238;
+  --tremor-background-subtle: 242 238 224;
+  --tremor-background-emphasis: 59 67 65;
+  --tremor-border-color: 229 223 208;
+  --tremor-content-default: 27 31 29;
+  --tremor-content-subtle: 123 135 132;
+  --tremor-content-emphasis: 27 31 29;
 }
 
 html {

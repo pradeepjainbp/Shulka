@@ -6,6 +6,7 @@ const config: Config = {
   content: [
     path.join(__dirname, './app/**/*.{ts,tsx}'),
     path.join(__dirname, './components/**/*.{ts,tsx}'),
+    path.join(__dirname, './node_modules/@tremor/react/dist/**/*.{js,jsx}'),
   ],
   theme: {
     extend: {
