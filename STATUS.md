@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P0-08 — Auth.js v5: Google OAuth + Email magic link via Resend** (next to claim)
+**P0-08 — Auth.js v5: Google OAuth + Email magic link via Resend** (in_progress)
 
 ## Recent shipped
 

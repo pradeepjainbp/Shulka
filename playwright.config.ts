@@ -28,10 +28,11 @@ export default defineConfig({
   ],
   ...(hasTests && {
     webServer: {
-      command: 'pnpm dev',
+      command: 'pnpm --filter @shulka/web exec next dev --webpack',
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
+      env: { PLAYWRIGHT_TEST: 'true' },
     },
   }),
 })

@@ -4,6 +4,8 @@
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,

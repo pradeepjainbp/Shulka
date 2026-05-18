@@ -17,6 +17,7 @@
     "drizzle-orm": "^0.41.0"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.30.0"
+    "drizzle-kit": "^0.30.0",
+    "next-auth": "^5.0.0-beta.25"
   }
 }
