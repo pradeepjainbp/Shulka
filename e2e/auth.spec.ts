@@ -1,6 +1,12 @@
 import { expect, test } from '@playwright/test'
 
+// Requires live DATABASE_URL + AUTH_SECRET + RESEND_API_KEY — not available in CI without secrets
 test.describe('magic-link auth flow', () => {
+  test.skip(
+    !process.env.DATABASE_URL,
+    'Skipped: DATABASE_URL not set (add GitHub secret to enable)',
+  )
+
   test('signs in via magic link, /me returns user, sign-out returns 401', async ({
     page,
     request,

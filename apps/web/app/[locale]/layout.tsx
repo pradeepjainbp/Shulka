@@ -18,9 +18,7 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   return (
     <NextIntlClientProvider messages={messages}>
-      <ErrorBoundary>
-        {children}
-      </ErrorBoundary>
+      <ErrorBoundary>{children}</ErrorBoundary>
       <Toaster
         position="bottom-right"
         toastOptions={{
