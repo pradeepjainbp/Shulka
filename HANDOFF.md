@@ -5,6 +5,83 @@
 
 ---
 
+## Session: 2026-05-19 — P1-01: Role selection + auth guard (Sonnet)
+
+### What this session did
+
+**P1-01 is complete.**
+
+- **DB migration `0002_stormy_wild_child.sql`** (applied to live Neon): `users.role` is now nullable. `null` means the user has not yet completed onboarding. Existing users keep their role values unchanged.
+
+- **`packages/db/src/schema/users.ts`** — `role` column changed from `.notNull().default('business_owner')` to nullable with no default. New sign-ups from Auth.js DrizzleAdapter now land with `role = null`.
+
+- **`packages/shared-types/src/api/me.ts`** — `MeResponseSchema.role` updated to `.nullable()` to accept null role from the DB.
+
+- **`apps/web/auth.ts`** — Extended JWT/session callbacks:
+  - `jwt` callback now fetches `role` from DB on sign-in (`user` object present) and stores it in the JWT token.
+  - `jwt` accepts `trigger === 'update'` with `{ role }` payload so the client-side `session.update({ role })` call refreshes the JWT after onboarding.
+  - `session` callback exposes `session.user.role` (typed `string | null`).
+  - Added `declare module 'next-auth'` augmentation so `session.user.role` is properly typed everywhere.
+
+- **`apps/web/app/api/me/route.ts`** — Added `PATCH` handler:
+  - Accepts `{ role: 'business_owner' | 'chartered_accountant' }` (Zod validated).
+  - Updates `users.role` and `users.updated_at` in DB.
+  - Returns `{ role }`. Wrapped with `withErrorReporting`.
+
+- **`apps/web/middleware.ts`** — Rewrote using Auth.js v5 `auth()` wrapper (`export default auth(fn)`) so `request.auth` carries the decoded JWT (no DB hit):
+  - **Auth guard**: unauthenticated users hitting any non-public path → redirect to `/en/sign-in`.
+  - **Onboarding guard**: authenticated users with `role === null` → redirect to `/en/onboarding/role` (unless already on `/en/onboarding`).
+  - Public paths: `/en/sign-in`, `/en/onboarding`, `/en/test` (test pages must remain accessible without auth).
+  - Rate limiting and locale redirect logic preserved unchanged.
+
+- **`apps/web/app/[locale]/onboarding/role/page.tsx`** — New client page:
+  - Two selection cards: "Business Owner" and "Chartered Accountant".
+  - On Continue: `PATCH /api/me` → `session.update({ role })` → `router.push('/en/dashboard')`.
+  - No shadcn Button import — uses plain Tailwind-styled button to avoid import overhead for a simple page.
+
+- **`apps/web/app/[locale]/dashboard/page.tsx`** — New server page (placeholder):
+  - Shows user name, email, and role label.
+  - Server-side redirect to `/en/sign-in` if no session (belt-and-suspenders; middleware handles this too).
+  - Placeholder "Dashboard coming soon" panel until Phase 2.
+
+**All checks green:** typecheck clean, lint clean, unit tests 1/1, e2e 2/2 passing (31s). Migration applied to live Neon.
+
+### What's next
+
+**P1-02 — Business entity creation.**
+
+Read PHASES.md §P1-02. Summary:
+- A signed-in user (business owner) creates one or more `businesses` rows.
+- Fields: name, GSTIN, PAN, address, state, type (proprietorship/partnership/LLP/Pvt Ltd), GST registration date.
+- GSTIN validated structurally + checksum (P1-03 does the deep util, but P1-02 needs at minimum a regex guard).
+- `businesses` table needs to be created — it does NOT exist yet (only `users`, `accounts`, `verification_tokens`, `audit_events`, `rule_resolutions`).
+- User can list and edit their own businesses.
+
+Suggested approach for P1-02:
+1. `schema-architect` for the `businesses` table migration.
+2. `api-builder` for `GET/POST /api/businesses` and `GET/PATCH /api/businesses/:id`.
+3. `ui-builder` for the business creation form page (`/en/onboarding/business` or `/en/businesses/new`).
+
+### Open questions for Pradeep
+
+1. **Onboarding flow continuation**: After role selection, the current flow goes straight to `/en/dashboard`. Should P1-02 chain directly — i.e., after role selection, redirect to `/en/onboarding/business` to force business creation before reaching the dashboard? Or is the dashboard OK as the landing page with a "Create your first business" prompt?
+
+2. **CA flow**: A CA user doesn't own a business — they manage clients' businesses. Should the onboarding skip the business creation step for CAs? (The PHASES.md spec for P1-02 says "a user (business owner) creates…" suggesting CAs are excluded.)
+
+3. **Push to production?** The live site at `shulka.pradeepjainbp.in/en` will now redirect unauthenticated visitors to sign-in (middleware auth guard is live once deployed). Confirm you want to deploy this.
+
+### Notes / context
+
+- The `jwt` callback in `auth.ts` now does a DB query on first sign-in to fetch `role`. This is a single `SELECT` on `users` and happens only once per new session (JWT is then cached in the cookie). Subsequent requests decode the cookie only — no DB hit.
+- `session.update({ role })` triggers the `jwt` callback with `trigger === 'update'`, which updates the token in the cookie. This is the Auth.js v5 recommended way to refresh session data after a profile update without forcing sign-out.
+- `/en/test/*` paths are public (no auth required) so the Playwright ErrorBoundary test page remains accessible. These paths are guarded by `NEXT_PUBLIC_PLAYWRIGHT_TEST === 'true'` in the page itself — they are no-ops in production.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. No financial computation. No audit log touched. No money fields. All services on free tier. DB migration is non-destructive (makes column nullable; existing data unchanged).
+
+---
+
 ## Session: 2026-05-19 — P0-09: CF Web Analytics + Sentry v10 (Sonnet)
 
 ### What this session did

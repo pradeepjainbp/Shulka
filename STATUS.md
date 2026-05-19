@@ -7,14 +7,15 @@
 **Phase:** Phase 0 — Setup
 **Status:** COMPLETE — all 9 tickets done
 **Last updated:** 2026-05-19
-**Last actor:** Sonnet (P0-09 CF Web Analytics + Sentry)
+**Last actor:** Sonnet (P1-01 role selection + auth guard)
 
 ## Active ticket
 
-**P1-01 — User profile + role selection** (next to claim)
+**P1-02 — Business entity creation** (next to claim)
 
 ## Recent shipped
 
+- P1-01 — Role selection onboarding, auth guard in middleware, PATCH /api/me, /en/dashboard
 - P0-01 — monorepo + tooling
 - P0-02 — repo config files + first git commit
 - P0-03 — packages/db (Drizzle + Neon), audit tables + triggers live, shulka_app role, cron stub, health route
@@ -41,7 +42,7 @@
 ## Phase progress
 
 - [x] Phase 0 — Setup (9/9 — all done ✓)
-- [ ] Phase 1 — Identity & Foundation (0/8)
+- [ ] Phase 1 — Identity & Foundation (1/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
 - [ ] Phase 4 — Summaries & Insights (0/6)
