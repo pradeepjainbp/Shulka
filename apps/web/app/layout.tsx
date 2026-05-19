@@ -16,6 +16,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0F5C3F" />
+        {process.env.NEXT_PUBLIC_CF_BEACON_TOKEN && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token": "${process.env.NEXT_PUBLIC_CF_BEACON_TOKEN}"}`}
+          />
+        )}
       </head>
       <body className="bg-surface text-ink font-sans antialiased">{children}</body>
     </html>

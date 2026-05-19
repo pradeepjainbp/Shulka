@@ -1,3 +1,4 @@
+import { withSentryConfig } from '@sentry/nextjs'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 
@@ -18,4 +19,16 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {}
 
-export default withPWA(withNextIntl(nextConfig))
+const combinedConfig = withPWA(withNextIntl(nextConfig))
+
+export default withSentryConfig(combinedConfig, {
+  // org + project auto-read from SENTRY_ORG / SENTRY_PROJECT env vars
+  // Only log Sentry build output in CI
+  silent: !process.env.CI,
+  // Upload wider set of source files so traces map correctly
+  widenClientFileUpload: true,
+  // Source maps are deleted after upload by default in v10
+  sourcemaps: { deleteSourcemapsAfterUpload: true },
+  telemetry: false,
+  webpack: { automaticVercelMonitors: false },
+})

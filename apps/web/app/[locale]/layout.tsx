@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
@@ -17,7 +18,9 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   return (
     <NextIntlClientProvider messages={messages}>
-      {children}
+      <ErrorBoundary>
+        {children}
+      </ErrorBoundary>
       <Toaster
         position="bottom-right"
         toastOptions={{

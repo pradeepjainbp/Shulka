@@ -1,11 +1,12 @@
 import { auth } from '@/auth'
+import { withErrorReporting } from '@/lib/with-error-reporting'
 import { db } from '@shulka/db'
 import { users } from '@shulka/db/schema'
 import { MeResponseSchema } from '@shulka/shared-types'
 import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 
-export async function GET() {
+export const GET = withErrorReporting(async () => {
   const session = await auth()
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -25,4 +26,4 @@ export async function GET() {
   })
 
   return NextResponse.json(me)
-}
+})
