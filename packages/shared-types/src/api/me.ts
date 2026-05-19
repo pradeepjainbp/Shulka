@@ -5,7 +5,9 @@ export const MeResponseSchema = z.object({
   email: z.string().email(),
   name: z.string().nullable(),
   image: z.string().nullable(),
-  role: z.enum(['business_owner', 'chartered_accountant', 'rule_contributor', 'reviewer', 'admin']),
+  role: z
+    .enum(['business_owner', 'chartered_accountant', 'rule_contributor', 'reviewer', 'admin'])
+    .nullable(),
 })
 
 export type MeResponse = z.infer<typeof MeResponseSchema>

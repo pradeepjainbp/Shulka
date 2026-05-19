@@ -1,10 +1,15 @@
 /// <reference types="@cloudflare/workers-types" />
 
+import { auth } from '@/auth'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { type NextRequest, NextResponse } from 'next/server'
+import type { NextAuthRequest } from 'next-auth'
+import { NextResponse } from 'next/server'
 
 const locales = ['en']
 const defaultLocale = 'en'
+
+// Public paths that don't require authentication
+const PUBLIC_PATHS = ['/en/sign-in', '/en/onboarding', '/en/test']
 
 // In-memory fallback for local dev (no KV available)
 const memRateLimit = new Map<string, { count: number; resetAt: number }>()
@@ -51,7 +56,7 @@ async function checkRateLimit(key: string, limit: number, windowMs: number): Pro
   return true
 }
 
-export async function middleware(request: NextRequest) {
+export default auth(async function middleware(request: NextAuthRequest) {
   const { pathname } = request.nextUrl
 
   // Rate limit: magic-link sign-in POST
@@ -85,6 +90,23 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  const session = request.auth
+  const isPublicPath = PUBLIC_PATHS.some((p) => pathname.startsWith(p))
+
+  // Auth guard: unauthenticated users can only access public paths
+  if (!session && !isPublicPath) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/en/sign-in'
+    return NextResponse.redirect(url)
+  }
+
+  // Onboarding guard: authenticated users with no role must complete onboarding
+  if (session && !session.user.role && !pathname.startsWith('/en/onboarding')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/en/onboarding/role'
+    return NextResponse.redirect(url)
+  }
+
   // Locale redirect
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
@@ -94,7 +116,7 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   url.pathname = `/${defaultLocale}${pathname}`
   return NextResponse.redirect(url)
-}
+})
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon).*)'],
