@@ -1,9 +1,8 @@
 /// <reference types="@cloudflare/workers-types" />
 
-import { auth } from '@/auth'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import type { NextAuthRequest } from 'next-auth'
-import { NextResponse } from 'next/server'
+import { getToken } from 'next-auth/jwt'
+import { type NextRequest, NextResponse } from 'next/server'
 
 const locales = ['en']
 const defaultLocale = 'en'
@@ -56,7 +55,7 @@ async function checkRateLimit(key: string, limit: number, windowMs: number): Pro
   return true
 }
 
-export default auth(async function middleware(request: NextAuthRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Rate limit: magic-link sign-in POST
@@ -90,18 +89,20 @@ export default auth(async function middleware(request: NextAuthRequest) {
     return NextResponse.next()
   }
 
-  const session = request.auth
+  // Decode JWT from cookie — no DB hit, no DrizzleAdapter import
+  const secret = process.env.AUTH_SECRET
+  const token = secret ? await getToken({ req: request, secret }) : null
   const isPublicPath = PUBLIC_PATHS.some((p) => pathname.startsWith(p))
 
   // Auth guard: unauthenticated users can only access public paths
-  if (!session && !isPublicPath) {
+  if (!token && !isPublicPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/en/sign-in'
     return NextResponse.redirect(url)
   }
 
   // Onboarding guard: authenticated users with no role must complete onboarding
-  if (session && !session.user.role && !pathname.startsWith('/en/onboarding')) {
+  if (token && !token.role && !pathname.startsWith('/en/onboarding')) {
     const url = request.nextUrl.clone()
     url.pathname = '/en/onboarding/role'
     return NextResponse.redirect(url)
@@ -116,7 +117,7 @@ export default auth(async function middleware(request: NextAuthRequest) {
   const url = request.nextUrl.clone()
   url.pathname = `/${defaultLocale}${pathname}`
   return NextResponse.redirect(url)
-})
+}
 
 export const config = {
   matcher: ['/((?!_next/static|_next/image|favicon).*)'],
