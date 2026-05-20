@@ -5,6 +5,56 @@
 
 ---
 
+## Session: 2026-05-20 — P1-04: Party directory (Sonnet)
+
+### What this session did
+
+**P1-04 is complete (code). Migration pending apply — see critical note below.**
+
+- **`packages/db/src/schema/parties.ts`** — `partyKindEnum` ('customer'|'supplier'|'both'), `parties` table. Fields: id, businessId FK, name, legalName, externalGstin, linkedBusinessId FK (nullable, for network-effect), phone, email, address jsonb, partyKind enum, timestamps, deletedAt. Indexes: unique(businessId, externalGstin), businessId idx, linkedBusinessId idx.
+
+- **`packages/db/drizzle/0004_lumpy_hex.sql`** — migration generated. **NOT YET APPLIED** — Neon DNS unreachable from the machine at commit time (ENOTFOUND). Must apply before using the feature live: `cd packages/db && DATABASE_URL_UNPOOLED=<see .env.local> pnpm db:migrate`
+
+- **`packages/shared-types/src/api/parties.ts`** — `PartyResponseSchema` (Zod): id, businessId, name, legalName, externalGstin, linkedBusinessId, isOnShulka (derived bool), phone, email, address, partyKind, timestamps.
+
+- **`apps/web/app/api/businesses/[id]/parties/route.ts`** — `GET /api/businesses/:id/parties` (list with optional `?q=` ilike filter on name + GSTIN) + `POST` (create, network-effect GSTIN lookup, sets linkedBusinessId if GSTIN matches an existing business).
+
+- **`apps/web/app/api/businesses/[id]/parties/[partyId]/route.ts`** — `GET` single party + `PATCH` (ownership re-checked, network-effect re-runs if externalGstin in payload).
+
+- **`apps/web/components/PartyList.tsx`** — client component; search bar filters on name + GSTIN client-side (re-fetches on ?q= server search not wired — uses fetch on first render, then filters locally). "On Shulka" green pill vs "External" muted pill. Clicking a row is placeholder (will link to party detail in future ticket).
+
+- **`apps/web/components/PartyForm.tsx`** — add-party form; businessId prop; GSTIN validation with CheckCircle2/AlertTriangle icons; shows "On Shulka" success banner for 1.8s then redirects if linkedBusinessId in response.
+
+- **`apps/web/app/[locale]/businesses/[id]/parties/page.tsx`** — server component; ownership check; renders header + "Add Party" button + PartyList.
+
+- **`apps/web/app/[locale]/businesses/[id]/parties/new/page.tsx`** — thin server wrapper rendering PartyForm.
+
+- **`apps/web/app/[locale]/businesses/page.tsx`** — updated: "→ Parties" link added to each business card.
+
+- **`apps/web/components/EditBusinessForm.tsx`** — "Manage Parties →" link added to the edit page.
+
+### What's next
+
+**P1-05** — next ticket in Phase 1. Run `/start` to get the brief.
+
+**Critical before testing live:** Apply migration 0004 to Neon. Command:
+```
+cd packages/db
+# Set DATABASE_URL_UNPOOLED from .env.local
+pnpm db:migrate
+```
+
+### Open questions for Pradeep
+
+- PartyList currently does local client-side filtering after the initial fetch. Should we wire up server-side `?q=` search (fetch on keystroke) for large party lists, or is local filtering fine for now?
+- Party detail/edit page is not yet built. Should P1-05 include that, or defer to when invoicing needs it?
+
+### Sacred rules sanity check
+
+No financial computation. No audit log mutation (parties are not financial records). No money fields. All services on free tier. DB migration is additive (new table + enum). GSTIN network-effect lookup is read-only.
+
+---
+
 ## Session: 2026-05-20 — P1-03: GSTIN validator (Sonnet)
 
 ### What this session did
