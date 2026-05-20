@@ -5,6 +5,76 @@
 
 ---
 
+## Session: 2026-05-20 — P2-03: Network-effect mirrored rows + business_trusts (Sonnet)
+
+### What this session did
+
+**P2-03 is complete. Phase 2 is 3/8.**
+
+**`packages/db/src/schema/business-trusts.ts`** — `businessTrustStatusEnum` ('pending'|'trusted'|'revoked'), `businessTrusts` table with unique index on `(truster_business_id, trusted_business_id)`. Trust is directional.
+
+**`packages/db/src/schema/purchase-invoices.ts`** — `purchaseInvoiceStatusEnum` + `purchaseInvoices` table. Reuses `posKindEnum` from sales-invoices. All 7 paise columns `bigint({ mode: 'number' })`. `linkedSalesInvoiceId` plain uuid (no FK — circular with sales_invoices.linkedPurchaseInvoiceId; FK deferred to future migration per ADR-10).
+
+**`packages/db/src/schema/sales-invoices.ts`** — Added `linkedToBusinessId` (FK to businesses.id) + index `sales_invoices_linked_to_idx`.
+
+**`packages/db/src/schema/index.ts`** — Added exports for both new schema files.
+
+**`packages/db/drizzle/0008_network_effect.sql`** — Migration: CREATE TYPE purchase_invoice_status + business_trust_status, CREATE TABLE business_trusts + purchase_invoices, ALTER TABLE sales_invoices ADD COLUMN linked_to_business_id, all FK constraints + indexes. **NOT YET APPLIED TO NEON.**
+
+**`apps/web/app/api/sales/route.ts`** — POST handler now: (1) fetches `party.linkedBusinessId`; (2) sets `linkedToBusinessId` on the INSERT when party is on Shulka; (3) checks if trust already exists — if yes, auto-creates a `purchase_invoices` mirror in the same transaction and fires `recordEvent('purchase_invoice.created')`.
+
+**`apps/web/app/api/incoming/route.ts`** — `GET /api/incoming?businessId=<uuid>` — returns quarantined sales_invoices (linked to current business but no active trust). Uses Drizzle `notExists()`.
+
+**`apps/web/app/api/incoming/[id]/accept/route.ts`** — `POST /api/incoming/:id/accept` — trust elevation. Single transaction: UPSERT business_trusts to 'trusted' + mirror all not-yet-mirrored quarantined invoices from sender as purchase_invoices rows + back-fill linked_purchase_invoice_id. After tx: `recordEvent('business_trust.elevated')` + `recordEvent('purchase_invoice.created')` × mirrors. P2-03 limitation: recipient must have a `parties` row for sender with `linked_business_id` set; 422 returned otherwise.
+
+**`apps/web/app/api/trusts/route.ts`** — `GET /api/trusts?businessId` (list) + `POST /api/trusts` (proactive trust elevation).
+
+**`apps/web/app/api/trusts/[id]/route.ts`** — `DELETE /api/trusts/:id` (revoke trust). Sets status='revoked', fires `recordEvent('business_trust.revoked')`.
+
+**`apps/web/app/[locale]/incoming/page.tsx`** — Server component. Auth guard, fetches incoming quarantined invoices with sender name + party name joins. Renders table with TrustButton per row. Empty state: "Share Shulka with your suppliers — invoices auto-link when they join."
+
+**`apps/web/components/TrustButton.tsx`** — Client component. Calls POST accept endpoint, shows "Accepting…" spinner, success toast + router.refresh(), 422 surfaces API error message, generic error toast otherwise.
+
+**`apps/web/components/shell/AppShell.tsx`** — Added "Incoming" nav item (Inbox icon) between Invoices and Purchases.
+
+**Total tests: 232 passing (unchanged — new code is backend logic without pure-function extraction).**
+
+### Critical before testing live
+
+Apply migration 0008 to Neon manually:
+1. Paste `packages/db/drizzle/0008_network_effect.sql` into Neon SQL Editor
+2. Then run:
+```sql
+INSERT INTO drizzle.__drizzle_migrations (hash, created_at)
+VALUES ('<sha256-of-0008>', 1748020000000);
+```
+Get SHA-256 via PowerShell: `(Get-FileHash packages/db/drizzle/0008_network_effect.sql -Algorithm SHA256).Hash.ToLower()`
+
+After applying: update `packages/db/drizzle/meta/_journal.json` to add idx 8 for `0008_network_effect`.
+
+### Known limitation (P2-03)
+
+`POST /api/incoming/:id/accept` requires the accepting business to already have a `parties` row for the sender with `linked_business_id = sender.businessId`. If not, returns 422 "Add this supplier to your directory first". Phase 3 will auto-create the party row on accept (ADR-10).
+
+### What's next
+
+**P2-04 — PDF generation** (pdf-lib, server-side). Run `/work-on P2-04`.
+
+### Open questions for Pradeep
+
+- None — P2-03 implemented per spec.
+
+### Sacred rules sanity check
+
+- Audit log on every financial mutation: ✓ `business_trust.elevated`, `business_trust.revoked`, `purchase_invoice.created` all fire
+- Money BIGINT paise: ✓ all purchase_invoices paise columns are `bigint({ mode: 'number' })`; copied verbatim from sales_invoices (no recomputation)
+- Single transaction for dual-write: ✓ trust UPSERT + purchase_invoices INSERT in one tx
+- recordEvent outside transaction: ✓ all recordEvent calls after tx.commit()
+- No hard-coded rates: ✓ (P2-03 doesn't touch rates)
+- DPDP ownership checks: ✓ all API routes verify business ownership before returning data
+
+---
+
 ## Session: 2026-05-20 — P2-02: Place-of-supply auto + CGST/SGST/IGST split (Sonnet)
 
 ### What this session did

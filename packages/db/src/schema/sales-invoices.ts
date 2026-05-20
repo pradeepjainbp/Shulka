@@ -64,6 +64,11 @@ export const salesInvoices = pgTable(
     // will be added via ALTER TABLE in the P3 migration (ADR-10 network-effect linkage).
     linkedPurchaseInvoiceId: uuid('linked_purchase_invoice_id'),
 
+    // Network-effect: the business whose purchase-side receives this invoice.
+    // Populated when a supplier shares their sales invoice to a buyer on the network.
+    // Indexed for fast /api/incoming queries (ADR-10).
+    linkedToBusinessId: uuid('linked_to_business_id').references(() => businesses.id),
+
     // Cancellation / reversal fields (ADR-9)
     cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
     cancelledByUserId: uuid('cancelled_by_user_id').references(() => users.id),
@@ -88,6 +93,7 @@ export const salesInvoices = pgTable(
     index('sales_invoices_business_status_idx').on(t.businessId, t.status),
     index('sales_invoices_party_idx').on(t.partyId),
     index('sales_invoices_business_id_idx').on(t.businessId),
+    index('sales_invoices_linked_to_idx').on(t.linkedToBusinessId),
   ],
 )
 

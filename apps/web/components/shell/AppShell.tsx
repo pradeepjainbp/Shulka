@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 const navItems = [
   { label: 'Dashboard', href: '/' },
   { label: 'Invoices', href: '/invoices' },
+  { label: 'Incoming', href: '/incoming' },
   { label: 'Purchases', href: '/purchases' },
   { label: 'Insights', href: '/insights' },
   { label: 'Settings', href: '/settings' },
@@ -11,6 +12,7 @@ const navItems = [
 const mobileLabels: Record<string, string> = {
   Dashboard: 'Home',
   Invoices: 'Inv',
+  Incoming: 'Inbox',
   Purchases: 'Purch',
   Insights: 'Stats',
   Settings: 'Setup',

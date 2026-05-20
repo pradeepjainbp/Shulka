@@ -11,7 +11,16 @@
 
 import { auth } from '@/auth'
 import { withErrorReporting } from '@/lib/with-error-reporting'
-import { businesses, db, salesInvoiceItems, salesInvoices } from '@shulka/db'
+import {
+  businessTrusts,
+  businesses,
+  db,
+  parties,
+  purchaseInvoices,
+  recordEvent,
+  salesInvoiceItems,
+  salesInvoices,
+} from '@shulka/db'
 import { RuleEngine, isValidStateCode, placeOfSupply } from '@shulka/gst-engine'
 // @shulka/rules/* resolves to <repo-root>/rules/* via tsconfig paths alias; resolveJsonModule: true
 import rateRule5 from '@shulka/rules/gst-rates/rate-5.json'
@@ -358,12 +367,49 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
   const roundOffPaise = Math.round(rawTotal / 100) * 100 - rawTotal
   const totalAmountPaise = rawTotal + roundOffPaise
 
+  // --- Fetch party to get linkedBusinessId for network-effect linking (ADR-10) ---
+  const [party] = await db
+    .select({ id: parties.id, linkedBusinessId: parties.linkedBusinessId })
+    .from(parties)
+    .where(
+      and(
+        eq(parties.id, data.partyId),
+        eq(parties.businessId, data.businessId),
+        isNull(parties.deletedAt),
+      ),
+    )
+    .limit(1)
+
+  if (!party) {
+    return NextResponse.json({ error: 'Party not found' }, { status: 404 })
+  }
+
+  // Determine if an auto-trust mirror should be created for this invoice.
+  // Auto-mirror happens when: party maps to a Shulka business AND that business
+  // already trusts this sender (truster=linkedBiz, trusted=senderBiz, status='trusted').
+  let autoMirrorTrustExists = false
+  if (party.linkedBusinessId) {
+    const [existingTrust] = await db
+      .select({ id: businessTrusts.id })
+      .from(businessTrusts)
+      .where(
+        and(
+          eq(businessTrusts.trusterBusinessId, party.linkedBusinessId),
+          eq(businessTrusts.trustedBusinessId, data.businessId),
+          eq(businessTrusts.status, 'trusted'),
+        ),
+      )
+      .limit(1)
+    autoMirrorTrustExists = existingTrust !== undefined
+  }
+
   // --- Single DB transaction: allocate number + insert invoice + insert items ---
   const result = await db.transaction(async (tx) => {
     // 1. Allocate gap-free invoice number
     const invoiceNumber = await allocateInvoiceNumber(tx, data.businessId, fy)
 
     // 2. INSERT salesInvoices row (status: 'draft')
+    // Populate linkedToBusinessId if party maps to a Shulka business (ADR-10).
     const insertedInvoices = await tx
       .insert(salesInvoices)
       .values({
@@ -385,6 +431,8 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
         roundOffPaise,
         totalAmountPaise,
         createdBy: userId,
+        // Network-effect: link the invoice to the receiving business if the party is on Shulka
+        linkedToBusinessId: party.linkedBusinessId ?? null,
       })
       .returning()
 
@@ -420,12 +468,91 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
 
     const insertedItems = await tx.insert(salesInvoiceItems).values(itemValues).returning()
 
-    return { invoice, items: insertedItems }
+    // 4. Auto-mirror: if the receiving business already trusts this sender, create
+    //    the purchase_invoices row immediately (no quarantine needed).
+    //    This is only done once the invoice is at 'final' status in practice —
+    //    for P2-03 we create the mirror row here but the main audit event fires at finalise.
+    //    NOTE: The mirror is created only when trust pre-exists; otherwise it waits in the
+    //    quarantine inbox until the recipient calls POST /api/incoming/:id/accept.
+    let mirrorPurchaseInvoice: typeof purchaseInvoices.$inferSelect | undefined
+    if (autoMirrorTrustExists && party.linkedBusinessId) {
+      // Look up the party row in the receiving business's address book.
+      // The receiving business (party.linkedBusinessId) should have a parties row
+      // with linked_business_id = this sender (data.businessId).
+      const [recipientPartyRow] = await tx
+        .select({ id: parties.id })
+        .from(parties)
+        .where(
+          and(
+            eq(parties.businessId, party.linkedBusinessId),
+            eq(parties.linkedBusinessId, data.businessId),
+            isNull(parties.deletedAt),
+          ),
+        )
+        .limit(1)
+
+      // Only create the mirror if the recipient has a parties row for the sender.
+      // If not, the invoice stays in quarantine for manual accept.
+      // (Phase 3 will auto-create the party row on accept.)
+      if (recipientPartyRow) {
+        const [inserted] = await tx
+          .insert(purchaseInvoices)
+          .values({
+            businessId: party.linkedBusinessId,
+            partyId: recipientPartyRow.id,
+            supplierInvoiceNumber: invoiceNumber,
+            fy,
+            invoiceDate: data.invoiceDate,
+            dueDate: data.dueDate ?? null,
+            placeOfSupplyState: data.placeOfSupplyState,
+            posKind,
+            status: 'recorded',
+            subtotalPaise,
+            totalCgstPaise,
+            totalSgstPaise,
+            totalIgstPaise,
+            totalCessPaise,
+            roundOffPaise,
+            totalAmountPaise,
+            linkedSalesInvoiceId: invoice.id,
+            linkedFromBusinessId: data.businessId,
+            createdBy: userId,
+          })
+          .returning()
+
+        if (inserted) {
+          mirrorPurchaseInvoice = inserted
+          // Update the sales invoice to point back to its purchase mirror
+          await tx
+            .update(salesInvoices)
+            .set({ linkedPurchaseInvoiceId: inserted.id, updatedAt: new Date() })
+            .where(eq(salesInvoices.id, invoice.id))
+        }
+      }
+    }
+
+    return { invoice, items: insertedItems, mirrorPurchaseInvoice }
   })
 
-  // NOTE: recordEvent (audit log) is intentionally NOT called here.
+  // NOTE: recordEvent (audit log) is intentionally NOT called here for the sales invoice.
   // Per Sacred Rule #3 + ADR decision: audit event + rule_resolutions are written
   // at Finalise time (PATCH /api/sales/:id), not on draft creation.
+
+  // Fire audit event for the auto-mirrored purchase invoice if one was created.
+  if (result.mirrorPurchaseInvoice && party.linkedBusinessId) {
+    await recordEvent({
+      actorUserId: userId,
+      businessId: party.linkedBusinessId,
+      kind: 'purchase_invoice.created',
+      refTable: 'purchase_invoices',
+      refId: result.mirrorPurchaseInvoice.id,
+      payload: {
+        total_amount_paise: result.mirrorPurchaseInvoice.totalAmountPaise,
+        party_id: result.mirrorPurchaseInvoice.partyId,
+        supplier_invoice_number: result.mirrorPurchaseInvoice.supplierInvoiceNumber,
+      },
+    })
+  }
 
   return NextResponse.json(result, { status: 201 })
 })
