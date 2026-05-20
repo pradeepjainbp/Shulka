@@ -5,6 +5,73 @@
 
 ---
 
+## Session: 2026-05-20 — P2-01: Sales invoice schema + create form (Sonnet)
+
+### What this session did
+
+**P2-01 is complete. Phase 2 has started (1/8).**
+
+**Two key user decisions made this session:**
+1. **Two-step flow**: Save as Draft first → explicit Finalise button triggers dual-write
+2. **Place of supply**: editable dropdown, pre-filled from party GSTIN prefix
+
+**`packages/db/src/schema/sales-invoices.ts`** — `salesInvoiceStatusEnum` ('draft'|'final'|'cancelled'), `salesInvoices` table. All money as `bigint({ mode: 'number' })` paise. `linkedPurchaseInvoiceId` is a plain uuid (no FK — purchase_invoices table comes in Phase 3). Self-referential `reversedByInvoiceId`. 4 indexes including `unique(business_id, fy, invoice_number)`.
+
+**`packages/db/src/schema/sales-invoice-items.ts`** — `salesInvoiceItems` table. `quantity` and `*_rate_pct` as `numeric` (fractional). `ON DELETE RESTRICT` from parent invoice.
+
+**`packages/db/drizzle/0006_sales_invoices.sql`** — migration. **NOT YET APPLIED TO NEON.**
+- SHA-256: `53796f25cbd91d7e2a9425b7e79f58e79d9b242d698f57ae092e666929facc23`
+- `when` in `_journal.json`: `1748000000000`
+
+**`apps/web/app/api/sales/route.ts`** — `GET /api/sales?businessId=...` (list) + `POST /api/sales` (create draft). Server computes all paise (Sacred Rule). Gap-free invoice number via `count(*)::int` inside transaction (format: `INV-2026-27-0001`). Validates CGST/SGST vs IGST consistency via `placeOfSupply()`. RuleEngine validates GST rates. No audit/rule_resolutions written for draft — deferred to Finalise.
+
+**`apps/web/app/api/sales/[id]/route.ts`** — `GET /api/sales/:id` (single + items) + `PATCH /api/sales/:id` with `{ action: 'finalise' }`. Finalise runs single transaction: UPDATE status→final + INSERT rule_resolutions (one per item×non-zero tax component) + `recordEvent('sales_invoice.created')`. Full dual-write per ARCHITECTURE.md §3.
+
+**`apps/web/components/SalesInvoiceForm.tsx`** — client component. Party selector (derives PoS state from GSTIN prefix), invoice date, due date, editable PoS state dropdown (all 36 GST state codes). Line-item repeater with `<HsnSearch>`, qty/unit/price/discount/GST rate. Live tax preview (CGST+SGST vs IGST based on state comparison). Draft auto-save to `localStorage` with restore banner. `Save as Draft` button.
+
+**`apps/web/app/[locale]/sales/new/page.tsx`** — server component, auth guard, fetches business + parties, renders form.
+
+**`apps/web/app/[locale]/sales/page.tsx`** — invoice list page. Joins parties for name. Status pills (draft=gray, final=emerald, cancelled=red). Empty state with CTA.
+
+**`apps/web/src/__tests__/sales-invoice-logic.test.ts`** — 28 pure-function tests: `getCurrentFY` (10), `computeItemPaise` (10), `computeRoundOff` (8).
+
+**Total tests: 219 passing, 1 skipped.**
+
+### What's next
+
+**P2-02 — Place-of-supply override UI + CGST/SGST/IGST split display**
+
+Per PHASES.md, P2-02 adds the ability to explicitly override the derived place-of-supply (e.g. for deemed exports, SEZ transactions). P2-01 already shows the editable dropdown — P2-02 may just need a visual enhancement (show CGST+SGST split clearly vs IGST on the invoice summary), SEZ flags on the party form, and testing override scenarios.
+
+Key context for next session:
+- The `SalesInvoiceForm` already has the PoS dropdown editable and derives tax type from state comparison. P2-02 adds SEZ flags and explicit override reason.
+- `placeOfSupply()` engine already supports `isSupplierSez` and `isRecipientSez` flags.
+- The invoice detail page (`/en/sales/:id`) does not exist yet — currently after Save, user lands on the list page.
+
+### Critical before testing live
+Apply migration 0006 to Neon manually:
+1. Paste `packages/db/drizzle/0006_sales_invoices.sql` into Neon SQL Editor
+2. Then run:
+```sql
+INSERT INTO drizzle.__drizzle_migrations (hash, created_at)
+VALUES ('53796f25cbd91d7e2a9425b7e79f58e79d9b242d698f57ae092e666929facc23', 1748000000000);
+```
+
+### Open questions for Pradeep
+
+- The Finalise button is wired in the form (`handleFinalise` posts PATCH with `{ action: 'finalise' }`), but it navigates to `/en/sales` (list) after finalise — there's no invoice detail page yet. Should P2-02 build the detail page, or is the list page fine for now?
+
+### Sacred rules sanity check
+
+- Server computes every rupee: ✓ all paise computed server-side in both POST and PATCH handlers
+- Money is BIGINT paise: ✓ all columns `bigint({ mode: 'number' })`; `numeric` only for rates/qty
+- Audit log on finalise: ✓ `recordEvent('sales_invoice.created')` called in PATCH finalise transaction
+- rule_resolutions written at finalise: ✓ per ARCHITECTURE.md §3 dual-write spec
+- No hard-coded rates: ✓ RuleEngine validates all rates; `biome-ignore` on the JSON import cast is documented
+- Draft auto-save: ✓ localStorage with restore banner per Sacred Rule 19
+
+---
+
 ## Session: 2026-05-20 — P1-08: Audit log helper + payload schemas (Sonnet)
 
 ### What this session did
