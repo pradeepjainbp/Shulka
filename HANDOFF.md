@@ -5,6 +5,50 @@
 
 ---
 
+## Session: 2026-05-20 — P1-05: HSN/SAC code search (Sonnet)
+
+### What this session did
+
+**P1-05 is complete.**
+
+- **`rules/hsn-codes/master.json`** — 633 entries: 420 HSN codes (all 21 GST sections, with 6-digit sub-headings for electronics/pharma/textiles) + 213 SAC codes (construction, transport, hospitality, finance, IT, healthcare, professional services, government). Biome-formatted.
+
+- **`packages/shared-types/src/hsn.ts`** — `HsnEntry { code: string; description: string; type: 'HSN' | 'SAC' }`. Exported from shared-types index.
+
+- **`apps/web/components/HsnSearch.tsx`** — `'use client'` autocomplete. Fuse.js instance built once at module level (synchronous, no per-render cost). 50ms debounce. Min 2 chars to trigger search. Up to 30 results, max 8 rows visible (scrollable). Keyboard nav (ArrowUp/ArrowDown/Enter/Escape). ARIA combobox pattern (`role="combobox"` on input, `role="listbox"` on dropdown, `role="option"` on rows). Clear (×) button. Hydration skeleton (3 shimmer rows). `onMouseDown` + `e.preventDefault()` prevents blur racing the click. Outside-click listener closes dropdown.
+
+- **`apps/web/components/HsnSearchDemo.tsx`** — client wrapper holding `useState<HsnEntry | null>`, renders HsnSearch + selection detail card.
+
+- **`apps/web/app/[locale]/hsn/page.tsx`** — public server component at `/en/hsn`. No auth guard.
+
+- **`apps/web/next.config.ts`** — webpack alias `@shulka/rules` → `../../rules/` so the bundler resolves the JSON import at build time.
+
+- **`apps/web/tsconfig.json`** — added `@shulka/rules/*` path alias for TS resolution.
+
+- **`biome.json`** — disabled `a11y/useSemanticElements` project-wide (the rule incorrectly flags `role="listbox"` on a `div` and suggests `<select>`, which cannot render custom-styled rows — any combobox/menu will hit this).
+
+- **`apps/web/package.json`** — added `"fuse.js": "^7.1.0"`.
+
+### What's next
+
+**P1-06 — Rule engine skeleton + scheme_elections + load-time invariants.** This is the most complex Phase 1 ticket. Key requirements:
+- `packages/gst-engine/src/engine.ts` — `RuleEngine.load('/rules/')`, indexes by `(domain, key, effective_from)`, `resolveRule(...)` returns `{ rule, source_citation, rule_id }`
+- HSN master lazy-loaded from R2 in P1-06 (not bundled with worker)
+- `scheme_elections` DB table + migration
+- Load-time invariants: rule overlap → panic, duplicate rule_id → panic, hash mismatch → panic, broken supersedes chain → panic
+- 10 seeded rules: GST rates (5/12/18/28), composition threshold ₹1.5Cr, e-inv threshold ₹5Cr, inter/intra-state PoS, blocked credits §17(5)
+- `gst-engineer` sub-agent is the right choice for this ticket
+
+### Open questions for Pradeep
+
+None outstanding.
+
+### Sacred rules sanity check
+
+No financial computation. No money fields. No audit log needed. Static JSON + client-side search only. No DB changes. Free tier only (fuse.js is a client-side npm package, no runtime cost).
+
+---
+
 ## Session: 2026-05-20 — P1-04: Party directory (Sonnet)
 
 ### What this session did
