@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-02 — Business entity creation** (next to claim)
+**P1-02 — Business entity creation** (in_progress)
 
 ## Recent shipped
 
