@@ -1,3 +1,5 @@
 export { db } from './client'
 export type { Db } from './client'
 export * from './schema/index'
+export { recordEvent } from './record-event'
+export type { RecordEventInput } from './record-event'

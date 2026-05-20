@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import { withErrorReporting } from '@/lib/with-error-reporting'
-import { businesses, db } from '@shulka/db'
+import { businesses, db, recordEvent } from '@shulka/db'
 import { isValidGstin } from '@shulka/gst-engine'
 import { BusinessResponseSchema } from '@shulka/shared-types'
 import { and, desc, eq, isNull } from 'drizzle-orm'
@@ -98,6 +98,17 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
     .returning()
   const row = inserted[0]
   if (!row) return NextResponse.json({ error: 'Insert failed' }, { status: 500 })
+
+  await recordEvent({
+    actorUserId: userId,
+    businessId: row.id,
+    kind: 'business.created',
+    refTable: 'businesses',
+    refId: row.id,
+    payload: {
+      fields_changed: Object.keys(data).filter((k) => data[k as keyof typeof data] !== undefined),
+    },
+  })
 
   const response = BusinessResponseSchema.parse({
     id: row.id,

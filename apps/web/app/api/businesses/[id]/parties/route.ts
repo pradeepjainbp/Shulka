@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import { withErrorReporting } from '@/lib/with-error-reporting'
-import { businesses, db, parties } from '@shulka/db'
+import { businesses, db, parties, recordEvent } from '@shulka/db'
 import { isValidGstin } from '@shulka/gst-engine'
 import { PartyResponseSchema } from '@shulka/shared-types'
 import { and, desc, eq, ilike, isNull, or } from 'drizzle-orm'
@@ -148,6 +148,17 @@ export const POST = withErrorReporting(async (req: NextRequest, ctx: unknown) =>
 
   const row = inserted[0]
   if (!row) return NextResponse.json({ error: 'Insert failed' }, { status: 500 })
+
+  await recordEvent({
+    actorUserId: userId,
+    businessId: id,
+    kind: 'party.created',
+    refTable: 'parties',
+    refId: row.id,
+    payload: {
+      fields_changed: Object.keys(data).filter((k) => data[k as keyof typeof data] !== undefined),
+    },
+  })
 
   return NextResponse.json(toPartyResponse(row), { status: 201 })
 })

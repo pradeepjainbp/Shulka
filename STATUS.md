@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-08 — Audit log helper + payload schemas** (pending)
+**P1-08 — Audit log helper + payload schemas** (in_progress)
 
 ## Recent shipped
 
