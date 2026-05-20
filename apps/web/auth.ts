@@ -2,7 +2,7 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import { db } from '@shulka/db'
 import { accounts, users, verificationTokens } from '@shulka/db/schema'
 import { eq } from 'drizzle-orm'
-import NextAuth, { type NextAuthResult } from 'next-auth'
+import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
 import Resend from 'next-auth/providers/resend'
 
@@ -31,7 +31,9 @@ export function getLastMagicLinkUrl() {
   return globalThis.__playwrightLastMagicLinkUrl
 }
 
-const result: NextAuthResult = NextAuth({
+// Function-form (lazy initialization) defers NextAuth config evaluation to
+// request time, preventing MissingSecret/DB errors during `next build`.
+export const { handlers, signIn, signOut, auth } = NextAuth(() => ({
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
@@ -89,6 +91,4 @@ const result: NextAuthResult = NextAuth({
   pages: {
     signIn: '/en/sign-in',
   },
-})
-
-export const { handlers, signIn, signOut, auth } = result
+}))
