@@ -5,16 +5,17 @@
 ## Current state
 
 **Phase:** Phase 2 — Invoicing
-**Status:** IN PROGRESS — 1/8 tickets done
+**Status:** IN PROGRESS — 2/8 tickets done
 **Last updated:** 2026-05-20
-**Last actor:** Sonnet (P2-01 sales invoice schema + form)
+**Last actor:** Sonnet (P2-02 place-of-supply auto + CGST/SGST/IGST split)
 
 ## Active ticket
 
-**P2-02 — Place-of-supply override UI + CGST/SGST/IGST split display** (next)
+**P2-03** — next ticket TBD
 
 ## Recent shipped
 
+- P2-02 — posKind enum + pos_override_reason columns (migration 0007), POST /api/sales stores posKind, PATCH finalise writes PoS rule_resolution row, SalesInvoiceForm override detection + reason field + tax split display, 13 new tests (232 total)
 - P2-01 — sales_invoices + sales_invoice_items schema + migration 0006, POST/GET /api/sales, GET/PATCH /api/sales/:id (finalise dual-write), SalesInvoiceForm (draft save + restore), /en/sales list page, 28 new tests (219 total)
 - P1-08 — AuditPayloadSchemas (15 kinds), recordEvent<K> helper, wired into businesses + parties POST routes, immutability trigger integration test
 - P1-07 — placeOfSupply() engine, all 36 states+UTs, export/import/SEZ/B2B/B2C, 60 tests
@@ -28,6 +29,7 @@
 ## Blockers
 
 - [x] ~~Migration 0006 applied to Neon~~ ✓
+- [ ] **Migration 0007 (0007_pos_kind.sql) — must be applied to Neon before next session** (adds pos_kind enum + pos_override_reason to sales_invoices)
 - [ ] **CF Pages env vars missing** — Add to CF Pages dashboard before next deploy:
   - SENTRY_AUTH_TOKEN, SENTRY_ORG=shulka, SENTRY_PROJECT=shulka (for source map upload during build)
   - NEXT_PUBLIC_SENTRY_DSN (same value as SENTRY_DSN — needed for client-side error capture)
@@ -45,7 +47,7 @@
 
 - [x] Phase 0 — Setup (9/9 — all done ✓)
 - [x] Phase 1 — Identity & Foundation (8/8 — all done ✓)
-- [ ] Phase 2 — Invoicing (1/8)
+- [ ] Phase 2 — Invoicing (2/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
 - [ ] Phase 4 — Summaries & Insights (0/6)
 - [ ] Phase 5 — CA Multi-client (0/6)

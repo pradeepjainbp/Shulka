@@ -260,6 +260,31 @@ async function finaliseInvoice(invoiceId: string, userId: string): Promise<NextR
       }
     }
 
+    // Also write a PoS rule_resolution row for the invoice-level place_of_supply determination.
+    // invoiceItemId is null for invoice-level rules (not tied to a specific item).
+    const posRuleId =
+      finalInvoice.posKind === 'intra_state' ? 'POS_INTRASTATE_v1' : 'POS_INTERSTATE_v1'
+    uniqueRuleIds.add(posRuleId)
+    resolutionInserts.push({
+      invoiceKind: 'sales',
+      invoiceItemId: null,
+      domain: 'place_of_supply',
+      ruleId: posRuleId,
+      sourceCitationJson: {
+        section:
+          finalInvoice.posKind === 'intra_state'
+            ? 'CGST Act 2017 Section 8'
+            : 'IGST Act 2017 Section 7-14',
+        pos_kind: finalInvoice.posKind,
+        place_of_supply_state: finalInvoice.placeOfSupplyState,
+      },
+      resolvedValue: {
+        pos_kind: finalInvoice.posKind,
+        tax_type: finalInvoice.posKind === 'intra_state' ? 'CGST_SGST' : 'IGST',
+        overridden: finalInvoice.posOverrideReason !== null,
+      },
+    })
+
     if (resolutionInserts.length > 0) {
       await tx.insert(ruleResolutions).values(resolutionInserts)
     }

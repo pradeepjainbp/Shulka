@@ -20,6 +20,12 @@ export const AuditPayloadSchemas = {
     reversing_invoice_id: z.string().uuid(),
     reason: z.string(),
   }),
+  'sales_invoice.pos_overridden': z.object({
+    auto_derived: z.string(), // state code that engine would have chosen
+    overridden_to: z.string(), // state code user selected
+    reason: z.string(),
+    rule_id: z.string(), // e.g. 'POS_INTERSTATE_v1'
+  }),
   'purchase_invoice.created': z.object({
     total_amount_paise: z.number().int(),
     party_id: z.string().uuid(),

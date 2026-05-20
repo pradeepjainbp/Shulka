@@ -54,6 +54,9 @@ export const CreateSalesInvoiceSchema = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .optional(),
   placeOfSupplyState: z.string().length(2),
+  // When user manually overrides the auto-derived PoS, they must supply a reason.
+  // null/undefined means auto-derived was accepted.
+  posOverrideReason: z.string().min(1).max(500).optional(),
   items: z.array(LineItemSchema).min(1),
 })
 
@@ -266,6 +269,8 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
   const supplierStateCode = biz.stateCode
 
   let expectedTaxType: 'CGST_SGST' | 'IGST' | 'ZERO_RATED'
+  let posKind: 'intra_state' | 'inter_state' | 'export' | 'sez'
+
   if (supplierStateCode !== null && supplierStateCode !== undefined) {
     const posResult = placeOfSupply({
       supplierStateCode,
@@ -273,9 +278,11 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
       transactionType: 'b2b',
     })
     expectedTaxType = posResult.taxType
+    posKind = posResult.taxType === 'CGST_SGST' ? 'intra_state' : 'inter_state'
   } else {
     // Business has no state code registered — fall back to IGST (inter-state assumption)
     expectedTaxType = 'IGST'
+    posKind = 'inter_state'
   }
 
   const invoiceDate = new Date(data.invoiceDate)
@@ -367,6 +374,8 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
         invoiceDate: data.invoiceDate,
         dueDate: data.dueDate ?? null,
         placeOfSupplyState: data.placeOfSupplyState,
+        posKind,
+        posOverrideReason: data.posOverrideReason ?? null,
         status: 'draft',
         subtotalPaise,
         totalCgstPaise,

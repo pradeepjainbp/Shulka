@@ -5,6 +5,59 @@
 
 ---
 
+## Session: 2026-05-20 — P2-02: Place-of-supply auto + CGST/SGST/IGST split (Sonnet)
+
+### What this session did
+
+**P2-02 is complete. Phase 2 is 2/8.**
+
+**`packages/db/src/schema/sales-invoices.ts`** — added `posKindEnum` ('intra_state'|'inter_state'|'export'|'sez') and two columns: `posKind` (NOT NULL DEFAULT 'inter_state') + `posOverrideReason` (nullable text).
+
+**`packages/db/drizzle/0007_pos_kind.sql`** — migration file created. **NOT YET APPLIED TO NEON.** Apply before testing live (see "Critical before testing live" below).
+
+**`packages/shared-types/src/audit-events.ts`** — added `'sales_invoice.pos_overridden'` kind with `{ auto_derived, overridden_to, reason, rule_id }` payload.
+
+**`apps/web/app/api/sales/route.ts`** — POST handler now computes `posKind` ('intra_state'/'inter_state') from `placeOfSupply()` and stores it on the draft. Removed unused `posRuleId` variable (lint fix). Accepts `posOverrideReason` from form payload.
+
+**`apps/web/app/api/sales/[id]/route.ts`** — finalise transaction now also inserts a `domain: 'place_of_supply'` rule_resolution row (invoiceItemId: null) using the stored `posKind`. `resolvedValue` includes `overridden: true/false`.
+
+**`apps/web/components/SalesInvoiceForm.tsx`** — tracks `autoDerivedPos` separately from user-selected `placeOfSupplyState`. Detects override when they differ. Shows green "✓ Intra-state — CGST + SGST" or amber "→ Inter-state — IGST" pill. Amber "⚠ Override active (auto: state XX)" warning + required reason textarea when override is active. Sends `posOverrideReason` in payload only when override is active.
+
+**`apps/web/src/__tests__/pos-split.test.ts`** — 13 new tests: Karnataka→Karnataka CGST_SGST, Karnataka→Maharashtra IGST, rate splitting (18%, 5%, 28% slabs), end-to-end ₹10,000 item paise computation, posRuleId derivation.
+
+**Total tests: 232 passing, 1 skipped.**
+
+### Critical before testing live
+
+Apply migration 0007 to Neon manually (adds pos_kind enum + 2 columns):
+1. Paste `packages/db/drizzle/0007_pos_kind.sql` into Neon SQL Editor
+2. Then run:
+```sql
+INSERT INTO drizzle.__drizzle_migrations (hash, created_at)
+VALUES ('<sha256-of-0007_pos_kind.sql>', 1748010000000);
+```
+To get the SHA-256: run `sha256sum packages/db/drizzle/0007_pos_kind.sql` (Linux/Mac) or use PowerShell's `Get-FileHash`.
+
+After applying: update `packages/db/drizzle/meta/_journal.json` to add idx 7 for `0007_pos_kind`.
+
+### What's next
+
+**P2-03** — next ticket in Phase 2 (per PHASES.md). Run `/work-on P2-03` to load focused context.
+
+### Open questions for Pradeep
+
+- None — P2-02 is fully implemented per spec.
+
+### Sacred rules sanity check
+
+- Server computes every rupee: ✓ unchanged from P2-01
+- Money is BIGINT paise: ✓ no new money columns; posKind/posOverrideReason are non-monetary
+- Audit log: ✓ `sales_invoice.pos_overridden` kind added to AuditPayloadSchemas (will be used when wiring the override audit event in a future ticket)
+- rule_resolutions at finalise: ✓ PoS domain row now written with invoiceItemId=null
+- No hard-coded rates: ✓ posKind derived from placeOfSupply() engine, not hardcoded
+
+---
+
 ## Session: 2026-05-20 — P2-01: Sales invoice schema + create form (Sonnet)
 
 ### What this session did

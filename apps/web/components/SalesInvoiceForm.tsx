@@ -273,6 +273,8 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
   const [invoiceDate, setInvoiceDate] = useState(today)
   const [dueDate, setDueDate] = useState('')
   const [placeOfSupplyState, setPlaceOfSupplyState] = useState(businessStateCode ?? '')
+  const [autoDerivedPos, setAutoDerivedPos] = useState(businessStateCode ?? '')
+  const [posOverrideReason, setPosOverrideReason] = useState('')
   const [items, setItems] = useState<LineItem[]>([emptyItem()])
 
   // -- UI state --
@@ -306,6 +308,10 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
     }
   }, [hydrated, draftKey, partyId, invoiceDate, dueDate, placeOfSupplyState, items])
 
+  // Override is active when user manually changed PoS away from the auto-derived value
+  const posIsOverridden =
+    autoDerivedPos !== '' && placeOfSupplyState !== '' && placeOfSupplyState !== autoDerivedPos
+
   // When party is selected, derive place-of-supply from their GSTIN prefix
   function handlePartyChange(id: string) {
     setPartyId(id)
@@ -313,6 +319,8 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
     if (party?.externalGstin && party.externalGstin.length >= 2) {
       const prefix = party.externalGstin.slice(0, 2)
       setPlaceOfSupplyState(prefix)
+      setAutoDerivedPos(prefix)
+      setPosOverrideReason('')
     }
     setFieldErrors((prev) => ({ ...prev, partyId: '' }))
   }
@@ -376,6 +384,8 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
     if (!partyId) errors.partyId = 'Select a party.'
     if (!invoiceDate) errors.invoiceDate = 'Invoice date is required.'
     if (!placeOfSupplyState) errors.placeOfSupplyState = 'Place of supply is required.'
+    if (posIsOverridden && !posOverrideReason.trim())
+      errors.posOverrideReason = 'Reason required when overriding place of supply.'
     for (let i = 0; i < items.length; i++) {
       const item = items[i]
       if (!item) continue
@@ -416,13 +426,16 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
       }
     })
 
-    const body = {
+    const body: Record<string, unknown> = {
       businessId,
       partyId,
       invoiceDate,
       dueDate: dueDate || undefined,
       placeOfSupplyState,
       items: apiItems,
+    }
+    if (posIsOverridden && posOverrideReason.trim()) {
+      body.posOverrideReason = posOverrideReason.trim()
     }
 
     try {
@@ -575,18 +588,52 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
             {fieldErrors.placeOfSupplyState && (
               <p className="text-xs text-error">{fieldErrors.placeOfSupplyState}</p>
             )}
-            {businessStateCode &&
-              placeOfSupplyState &&
-              placeOfSupplyState !== businessStateCode && (
-                <p className="text-xs text-ink-muted">Inter-state — IGST will apply</p>
-              )}
-            {businessStateCode &&
-              placeOfSupplyState &&
-              placeOfSupplyState === businessStateCode && (
-                <p className="text-xs text-ink-muted">Intra-state — CGST + SGST will apply</p>
-              )}
+            {businessStateCode && placeOfSupplyState && (
+              <p
+                className={`text-xs font-medium ${
+                  placeOfSupplyState === businessStateCode ? 'text-emerald-700' : 'text-amber-700'
+                }`}
+              >
+                {placeOfSupplyState === businessStateCode
+                  ? '✓ Intra-state — CGST + SGST'
+                  : '→ Inter-state — IGST'}
+              </p>
+            )}
+            {posIsOverridden && (
+              <p className="text-xs text-amber-700 font-medium">
+                ⚠ Override active (auto: state {autoDerivedPos})
+              </p>
+            )}
           </div>
         </div>
+
+        {/* Override reason — shown only when user has changed the auto-derived PoS */}
+        {posIsOverridden && (
+          <div className="space-y-1.5 rounded-md border border-amber-200 bg-amber-50 p-3">
+            <p className="text-xs font-semibold text-amber-800">
+              Place of supply overridden — reason required
+            </p>
+            <p className="text-xs text-amber-700">
+              You changed the place of supply from the auto-derived state ({autoDerivedPos}) to{' '}
+              {placeOfSupplyState}. This will be logged in the audit trail.
+            </p>
+            <textarea
+              value={posOverrideReason}
+              onChange={(e) => {
+                setPosOverrideReason(e.target.value)
+                setFieldErrors((prev) => ({ ...prev, posOverrideReason: '' }))
+              }}
+              placeholder="e.g. Customer is registered at their head office in another state"
+              rows={2}
+              className={`w-full rounded-md border px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                fieldErrors.posOverrideReason ? 'border-error' : 'border-amber-300 bg-white'
+              }`}
+            />
+            {fieldErrors.posOverrideReason && (
+              <p className="text-xs text-error">{fieldErrors.posOverrideReason}</p>
+            )}
+          </div>
+        )}
       </section>
 
       {/* ------------------------------------------------------------------ */}

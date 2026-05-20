@@ -15,6 +15,8 @@ import { businesses } from './businesses'
 import { parties } from './parties'
 import { users } from './users'
 
+export const posKindEnum = pgEnum('pos_kind', ['intra_state', 'inter_state', 'export', 'sez'])
+
 export const salesInvoiceStatusEnum = pgEnum('sales_invoice_status', [
   'draft',
   'final',
@@ -42,6 +44,9 @@ export const salesInvoices = pgTable(
     dueDate: date('due_date'),
 
     placeOfSupplyState: text('place_of_supply_state').notNull(),
+
+    posKind: posKindEnum('pos_kind').notNull().default('inter_state'),
+    posOverrideReason: text('pos_override_reason'),
 
     status: salesInvoiceStatusEnum('status').notNull().default('draft'),
 
