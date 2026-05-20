@@ -57,6 +57,13 @@
       "when": 1748010000000,
       "tag": "0007_pos_kind",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1748020000000,
+      "tag": "0008_network_effect",
+      "breakpoints": true
     }
   ]
 }
