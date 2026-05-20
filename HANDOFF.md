@@ -5,6 +5,41 @@
 
 ---
 
+## Session: 2026-05-20 — P1-07: Place-of-supply engine (Sonnet)
+
+### What this session did
+
+**P1-07 is complete.**
+
+- **`packages/gst-engine/src/place-of-supply.ts`** — `placeOfSupply(input): PlaceOfSupplyOutput`. Pure TypeScript, zero deps. Covers all 36 Indian states + UTs (codes 01–38, 97, 99; 25 and 28 excluded as superseded). Seven rules in strict priority order: export → import → SEZ → intra-state → inter-state → B2C no-recipient → B2B missing recipient throws. Returns `{ taxType: 'CGST_SGST' | 'IGST' | 'ZERO_RATED', reasoning: string, rule: string }`. Exports `PlaceOfSupplyError`, `isValidStateCode()`.
+
+- **`packages/gst-engine/src/place-of-supply.test.ts`** — 60 test cases: all 4 transaction types, 5+ intra-state pairs, 5+ inter-state pairs, all 3 SEZ scenarios, export/import override, B2C no-recipient, invalid state codes, B2B missing recipient throws, UT codes, '97' Other Territory, export-wins-over-SEZ edge case.
+
+- **`packages/gst-engine/src/index.ts`** — exports added for `placeOfSupply`, `isValidStateCode`, `PlaceOfSupplyError`, and all new types.
+
+### What's next
+
+**P1-08 — Audit log helper + payload schemas.** This is the last Phase 1 ticket and it also retroactively wires into P1-02 and P1-04.
+
+Key requirements:
+- `packages/shared-types/src/audit-events.ts` — per-kind Zod payload schemas (minimum: business.created, party.created, invoice.created, invoice.status_changed, invoice.cancelled, trust.elevated, user.deleted)
+- `recordEvent({ actor_user_id, business_id, kind, ref_table, ref_id, payload, rule_ids })` helper in a new package or in `packages/db/`
+- Retroactively add `recordEvent` calls to POST /api/businesses (business.created) and POST /api/businesses/:id/parties (party.created)
+- Verification test: UPDATE on `audit_events` must be rejected by the DB trigger from P0-03
+- Two new indexes on `audit_events`: `(business_id, ts desc)` and `(kind, ts desc)` — check if they exist in the existing schema first
+
+Sub-agents needed: `api-builder` (wiring recordEvent into existing routes) + `test-writer` (verification test for trigger). Or `api-builder` can do both.
+
+### Open questions for Pradeep
+
+- None outstanding.
+
+### Sacred rules sanity check
+
+No financial computation. No money fields. No audit log needed (PoS engine is pure computation). No DB changes. Zero runtime deps. Works in CF Workers + Capacitor.
+
+---
+
 ## Session: 2026-05-20 — P1-06: Rule engine skeleton (Sonnet)
 
 ### What this session did
