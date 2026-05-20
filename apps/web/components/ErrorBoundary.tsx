@@ -1,6 +1,5 @@
 'use client'
 
-import * as Sentry from '@sentry/nextjs'
 import { Component, type ReactNode } from 'react'
 
 interface Props {
@@ -20,7 +19,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   override componentDidCatch(error: Error, info: { componentStack: string }) {
-    Sentry.captureException(error, { extra: info })
+    console.error(error, info)
   }
 
   override render() {
