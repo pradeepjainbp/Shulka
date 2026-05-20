@@ -5,6 +5,59 @@
 
 ---
 
+## Session: 2026-05-20 — P1-06: Rule engine skeleton (Sonnet)
+
+### What this session did
+
+**P1-06 is complete (code). Migration 0005 pending apply — see note below.**
+
+- **ADR-15** written in `DECISIONS.md` — scheme election grandfathering via `rule_set_at_election` snapshot. (PHASES.md/ARCHITECTURE.md referenced "ADR-8" for this; ADR-8 was already taken for invoice split. ADR-15 is the authoritative record.)
+
+- **`packages/gst-engine/src/rule-schema.ts`** — `RuleFile` interface + lightweight schema object with `.parse()` / `.safeParse()`. Zero runtime deps. `rule` body typed as `Record<string, unknown>` — domain sub-schemas come in later tickets.
+
+- **`packages/gst-engine/src/engine.ts`** — `RuleEngine` class:
+  - `static fromRules(rules: RuleFile[]): RuleEngine` — runs 4 load-time invariants (duplicate rule_id, hash mismatch, date-range overlap, broken supersedes chain), builds in-memory index. Throws `RuleEngineError` on any violation.
+  - `resolveRule(domain, key, transactionDate, opts?)` — date-range lookup with INCLUSIVE boundaries (`effective_from <= date <= effective_to`). Scheme-election grandfathering: if `opts.schemeElection.threshold_rule_id` matches a rule in the set, returns that rule regardless of date. Per-instance `Map` memoization.
+  - `static fetchHsnMaster()` — no-op stub; throws `NOT_IMPLEMENTED`. Wire in Phase 2 with CF R2/KV bindings.
+  - Hash check: `'sha256-placeholder'` bypasses (dev mode). Real SHA-256 via CI script in a future ticket. djb2 used for non-placeholder check (no `crypto` in CF Workers).
+
+- **`packages/gst-engine/src/engine.test.ts`** — 23 tests: date-range boundary resolution (e-invoice 10cr→5cr switchover on 2023-07-31 / 2023-08-01), scheme-election grandfathering overrides date, all 4 invariant violations throw `RuleEngineError`, no-rule-found throws, memoization returns same reference, `RuleFileSchema` validation.
+
+- **10 seeded rule JSON files** in `/rules/`:
+  - `gst-rates/rate-5.json`, `rate-12.json`, `rate-18.json`, `rate-28.json` — GST rates, effective 2017-07-01
+  - `thresholds/composition-150cr.json` — ₹1.5 Cr (1_500_000_000 paise), effective 2019-04-01
+  - `thresholds/einvoice-10cr.json` — ₹10 Cr, effective 2020-10-01 to **2023-07-31** (inclusive)
+  - `thresholds/einvoice-5cr.json` — ₹5 Cr, effective **2023-08-01**, supersedes 10cr rule
+  - `place-of-supply/interstate.json`, `intrastate.json` — IGST vs CGST+SGST
+  - `itc/blocked-credits-s17-5.json` — blocked ITC categories under §17(5)
+
+- **`packages/db/src/schema/scheme-elections.ts`** — `scheme_type` enum (regular/composition/qrmp), `scheme_elections` table per ARCHITECTURE.md §3 exactly.
+
+- **`packages/db/drizzle/0005_melodic_ogun.sql`** — generated migration. **NOT YET APPLIED.** Apply via Neon SQL Editor (paste the SQL) then INSERT into `drizzle.__drizzle_migrations`.
+
+### What's next
+
+**P1-07 — Place-of-supply engine.** Pure TypeScript in `packages/gst-engine/src/place-of-supply.ts`. `placeOfSupply({ supplier_state, recipient_state, transaction_type })` → `'CGST_SGST' | 'IGST'`. 30+ test cases covering all states + UTs, SEZ supplier, export. `gst-engineer` sub-agent.
+
+### Migration 0005 apply instructions
+
+In Neon SQL Editor, paste `packages/db/drizzle/0005_melodic_ogun.sql`, then:
+```sql
+INSERT INTO drizzle.__drizzle_migrations (hash, created_at)
+VALUES ('<sha256-of-file>', <when-from-journal>);
+```
+Check `packages/db/drizzle/meta/_journal.json` for the `when` value for `0005_melodic_ogun`.
+
+### Open questions for Pradeep
+
+- None outstanding.
+
+### Sacred rules sanity check
+
+No financial computation. No money fields touched. No audit log needed (rule engine is read-only). DB migration is additive (new table + enum). All free-tier. Engine is pure TypeScript, zero runtime dependencies — runs in CF Workers and Capacitor.
+
+---
+
 ## Session: 2026-05-20 — P1-05: HSN/SAC code search (Sonnet)
 
 ### What this session did

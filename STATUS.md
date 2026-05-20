@@ -5,16 +5,17 @@
 ## Current state
 
 **Phase:** Phase 1 — Identity & Foundation
-**Status:** IN PROGRESS — 5/8 tickets done
+**Status:** IN PROGRESS — 6/8 tickets done
 **Last updated:** 2026-05-20
-**Last actor:** Sonnet (P1-05 HSN/SAC search)
+**Last actor:** Sonnet (P1-06 rule engine)
 
 ## Active ticket
 
-**P1-06 — Rule engine skeleton** (in_progress)
+**P1-07 — Place-of-supply engine** (pending)
 
 ## Recent shipped
 
+- P1-06 — RuleEngine (fromRules, resolveRule, 4 invariants, scheme-election grandfathering), 10 seeded rule JSON files, scheme_elections table + migration 0005. **Migration 0005 NOT YET APPLIED to Neon — apply manually.**
 - P1-05 — HSN/SAC master JSON (633 codes), fuse.js autocomplete component, /en/hsn demo page
 - P1-04 — parties table + migration (applied manually to Neon), nested API GET/POST/PATCH, party list + search, add-party form with GSTIN validation + network-effect Shulka-match banner.
 - P1-03 — `@shulka/gst-engine` package, GSTIN validator (pure TS, Mod-36), 108 tests, wired into API + UI
@@ -46,7 +47,7 @@
 ## Phase progress
 
 - [x] Phase 0 — Setup (9/9 — all done ✓)
-- [ ] Phase 1 — Identity & Foundation (5/8)
+- [ ] Phase 1 — Identity & Foundation (6/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
 - [ ] Phase 4 — Summaries & Insights (0/6)
