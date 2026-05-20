@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-05 — next up** (pending)
+**P1-05 — HSN/SAC code search** (in_progress)
 
 ## Recent shipped
 

@@ -18,6 +18,9 @@
       "style": {
         "noNonNullAssertion": "warn",
         "useConst": "error"
+      },
+      "a11y": {
+        "useSemanticElements": "off"
       }
     }
   },

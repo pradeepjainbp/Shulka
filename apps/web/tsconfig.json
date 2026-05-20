@@ -14,7 +14,9 @@
       "@/*": ["./*"],
       "@shulka/shared-types": ["../../packages/shared-types/src/index.ts"],
       "@shulka/design-tokens": ["../../packages/design-tokens/src/index.ts"],
-      "@shulka/i18n": ["../../packages/i18n/src/index.ts"]
+      "@shulka/i18n": ["../../packages/i18n/src/index.ts"],
+      "@shulka/rules/*": ["../../rules/*"],
+      "@shulka/rules": ["../../rules"]
     }
   },
   "include": [

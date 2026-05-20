@@ -1,0 +1,2716 @@
+[
+  { "code": "0101", "description": "Live horses, asses, mules and hinnies", "type": "HSN" },
+  { "code": "0102", "description": "Live bovine animals (cattle and buffalo)", "type": "HSN" },
+  { "code": "0103", "description": "Live swine (pigs)", "type": "HSN" },
+  { "code": "0104", "description": "Live sheep and goats", "type": "HSN" },
+  {
+    "code": "0105",
+    "description": "Live poultry (fowls, ducks, geese, turkeys, guinea fowls)",
+    "type": "HSN"
+  },
+  { "code": "0201", "description": "Meat of bovine animals, fresh or chilled", "type": "HSN" },
+  { "code": "0202", "description": "Meat of bovine animals, frozen", "type": "HSN" },
+  {
+    "code": "0207",
+    "description": "Meat and edible offal of poultry, fresh, chilled or frozen",
+    "type": "HSN"
+  },
+  { "code": "0301", "description": "Live fish", "type": "HSN" },
+  { "code": "0302", "description": "Fish, fresh or chilled (excluding fillets)", "type": "HSN" },
+  { "code": "0303", "description": "Fish, frozen (excluding fillets)", "type": "HSN" },
+  {
+    "code": "0306",
+    "description": "Crustaceans (prawns, shrimps, lobsters, crabs)",
+    "type": "HSN"
+  },
+  { "code": "0401", "description": "Milk and cream, not concentrated or sweetened", "type": "HSN" },
+  {
+    "code": "0402",
+    "description": "Milk and cream, concentrated or sweetened (milk powder)",
+    "type": "HSN"
+  },
+  {
+    "code": "0403",
+    "description": "Buttermilk, curd, yogurt, kephir and other fermented milk",
+    "type": "HSN"
+  },
+  {
+    "code": "0405",
+    "description": "Butter and other fats and oils derived from milk; dairy spreads",
+    "type": "HSN"
+  },
+  { "code": "0406", "description": "Cheese and curd", "type": "HSN" },
+  {
+    "code": "0407",
+    "description": "Birds eggs, in shell, fresh, preserved or cooked",
+    "type": "HSN"
+  },
+  { "code": "0409", "description": "Natural honey", "type": "HSN" },
+  { "code": "0501", "description": "Human hair, unworked; waste of human hair", "type": "HSN" },
+  {
+    "code": "0601",
+    "description": "Bulbs, tubers, tuberous roots, corms, crowns and rhizomes",
+    "type": "HSN"
+  },
+  {
+    "code": "0602",
+    "description": "Other live plants (including their roots), cuttings and slips",
+    "type": "HSN"
+  },
+  { "code": "0701", "description": "Potatoes, fresh or chilled", "type": "HSN" },
+  { "code": "0702", "description": "Tomatoes, fresh or chilled", "type": "HSN" },
+  {
+    "code": "0703",
+    "description": "Onions, shallots, garlic, leeks and other alliaceous vegetables",
+    "type": "HSN"
+  },
+  {
+    "code": "0706",
+    "description": "Carrots, turnips, salad beetroot, radishes and similar edible roots",
+    "type": "HSN"
+  },
+  {
+    "code": "0713",
+    "description": "Dried leguminous vegetables, shelled (lentils, chickpeas, peas)",
+    "type": "HSN"
+  },
+  {
+    "code": "0714",
+    "description": "Manioc, arrowroot, tapioca, yams, sweet potatoes and similar roots",
+    "type": "HSN"
+  },
+  {
+    "code": "0801",
+    "description": "Coconuts, Brazil nuts and cashew nuts, fresh or dried",
+    "type": "HSN"
+  },
+  {
+    "code": "0802",
+    "description": "Nuts (almonds, hazelnuts, walnuts, chestnuts, pistachios)",
+    "type": "HSN"
+  },
+  { "code": "0803", "description": "Bananas, including plantains, fresh or dried", "type": "HSN" },
+  {
+    "code": "0804",
+    "description": "Dates, figs, pineapples, avocados, guavas, mangoes and mangosteens",
+    "type": "HSN"
+  },
+  {
+    "code": "0805",
+    "description": "Citrus fruit, fresh or dried (oranges, lemons, limes)",
+    "type": "HSN"
+  },
+  { "code": "0806", "description": "Grapes, fresh or dried (raisins)", "type": "HSN" },
+  { "code": "0808", "description": "Apples, pears and quinces, fresh", "type": "HSN" },
+  {
+    "code": "0901",
+    "description": "Coffee, whether or not roasted or decaffeinated",
+    "type": "HSN"
+  },
+  { "code": "0902", "description": "Tea, whether or not flavoured", "type": "HSN" },
+  { "code": "0903", "description": "Mate", "type": "HSN" },
+  {
+    "code": "0904",
+    "description": "Pepper of the genus Piper; dried or crushed chillies and capsicum",
+    "type": "HSN"
+  },
+  { "code": "0906", "description": "Cinnamon and cinnamon-tree flowers", "type": "HSN" },
+  { "code": "0907", "description": "Cloves (whole fruit, cloves and stems)", "type": "HSN" },
+  { "code": "0908", "description": "Nutmeg, mace and cardamoms", "type": "HSN" },
+  {
+    "code": "0910",
+    "description": "Ginger, saffron, turmeric (curcuma), thyme, bay leaves, curry",
+    "type": "HSN"
+  },
+  { "code": "1001", "description": "Wheat and meslin", "type": "HSN" },
+  { "code": "1002", "description": "Rye", "type": "HSN" },
+  { "code": "1003", "description": "Barley", "type": "HSN" },
+  { "code": "1004", "description": "Oats", "type": "HSN" },
+  { "code": "1005", "description": "Maize (corn)", "type": "HSN" },
+  { "code": "1006", "description": "Rice", "type": "HSN" },
+  { "code": "1007", "description": "Grain sorghum", "type": "HSN" },
+  {
+    "code": "1008",
+    "description": "Buckwheat, millet and canary seed; other cereals (including jowar, bajra, ragi)",
+    "type": "HSN"
+  },
+  { "code": "1101", "description": "Wheat or meslin flour", "type": "HSN" },
+  {
+    "code": "1102",
+    "description": "Cereal flours other than wheat or meslin (maize, rye, rice)",
+    "type": "HSN"
+  },
+  {
+    "code": "1104",
+    "description": "Cereal grains otherwise worked (hulled, rolled, flaked, pearled)",
+    "type": "HSN"
+  },
+  {
+    "code": "1108",
+    "description": "Starches; inulin (wheat starch, maize starch, potato starch)",
+    "type": "HSN"
+  },
+  { "code": "1201", "description": "Soya beans, whether or not broken", "type": "HSN" },
+  {
+    "code": "1202",
+    "description": "Groundnuts (peanuts), not roasted or otherwise cooked",
+    "type": "HSN"
+  },
+  {
+    "code": "1205",
+    "description": "Rape or colza seeds, whether or not broken (mustard seeds)",
+    "type": "HSN"
+  },
+  { "code": "1206", "description": "Sunflower seeds, whether or not broken", "type": "HSN" },
+  {
+    "code": "1207",
+    "description": "Other oil seeds and oleaginous fruits (sesame, linseed, castor)",
+    "type": "HSN"
+  },
+  {
+    "code": "1209",
+    "description": "Seeds, fruit and spores of a kind used for sowing",
+    "type": "HSN"
+  },
+  {
+    "code": "1301",
+    "description": "Lac; natural gums, resins, gum-resins and oleoresins",
+    "type": "HSN"
+  },
+  {
+    "code": "1401",
+    "description": "Vegetable materials of a kind used primarily for plaiting (bamboo, rattan)",
+    "type": "HSN"
+  },
+  { "code": "1501", "description": "Pig fat (lard) and poultry fat", "type": "HSN" },
+  { "code": "1507", "description": "Soya-bean oil and its fractions", "type": "HSN" },
+  { "code": "1508", "description": "Groundnut (peanut) oil and its fractions", "type": "HSN" },
+  { "code": "1511", "description": "Palm oil and its fractions", "type": "HSN" },
+  {
+    "code": "1512",
+    "description": "Sunflower-seed, safflower or cotton-seed oil and fractions",
+    "type": "HSN"
+  },
+  {
+    "code": "1513",
+    "description": "Coconut (copra) oil, palm kernel or babassu oil and fractions",
+    "type": "HSN"
+  },
+  { "code": "1514", "description": "Rape, colza or mustard oil and fractions", "type": "HSN" },
+  {
+    "code": "1516",
+    "description": "Animal or vegetable fats and oils, hydrogenated (vanaspati)",
+    "type": "HSN"
+  },
+  {
+    "code": "1517",
+    "description": "Margarine; edible mixtures or preparations of animal or vegetable fats",
+    "type": "HSN"
+  },
+  {
+    "code": "1601",
+    "description": "Sausages and similar products of meat, offal or blood",
+    "type": "HSN"
+  },
+  {
+    "code": "1701",
+    "description": "Cane or beet sugar and chemically pure sucrose, in solid form",
+    "type": "HSN"
+  },
+  {
+    "code": "1702",
+    "description": "Other sugars including lactose, maltose, glucose and fructose",
+    "type": "HSN"
+  },
+  {
+    "code": "1704",
+    "description": "Sugar confectionery (including white chocolate), not containing cocoa",
+    "type": "HSN"
+  },
+  { "code": "1801", "description": "Cocoa beans, whole or broken, raw or roasted", "type": "HSN" },
+  {
+    "code": "1805",
+    "description": "Cocoa powder, not containing added sugar or sweetening matter",
+    "type": "HSN"
+  },
+  {
+    "code": "1806",
+    "description": "Chocolate and other food preparations containing cocoa",
+    "type": "HSN"
+  },
+  {
+    "code": "1901",
+    "description": "Malt extract; food preparations of flour, groats, meal, starch (biscuit mixes)",
+    "type": "HSN"
+  },
+  {
+    "code": "1902",
+    "description": "Pasta (noodles, macaroni, spaghetti, vermicelli), whether or not cooked",
+    "type": "HSN"
+  },
+  {
+    "code": "1904",
+    "description": "Prepared foods obtained by swelling or roasting of cereals (corn flakes, muesli)",
+    "type": "HSN"
+  },
+  {
+    "code": "1905",
+    "description": "Bread, pastry, cakes, biscuits and other bakers wares",
+    "type": "HSN"
+  },
+  {
+    "code": "2001",
+    "description": "Vegetables, fruit, nuts prepared or preserved by vinegar or acetic acid",
+    "type": "HSN"
+  },
+  {
+    "code": "2002",
+    "description": "Tomatoes prepared or preserved otherwise than by vinegar (tomato paste, puree)",
+    "type": "HSN"
+  },
+  {
+    "code": "2004",
+    "description": "Other vegetables prepared or preserved (potato chips, other frozen vegetables)",
+    "type": "HSN"
+  },
+  {
+    "code": "2005",
+    "description": "Other vegetables prepared or preserved, not frozen (pickles, chutneys)",
+    "type": "HSN"
+  },
+  {
+    "code": "2007",
+    "description": "Jams, fruit jellies, marmalades, fruit or nut purees and pastes",
+    "type": "HSN"
+  },
+  {
+    "code": "2009",
+    "description": "Fruit juices (including grape must) and vegetable juices, unfermented",
+    "type": "HSN"
+  },
+  {
+    "code": "2101",
+    "description": "Extracts, essences and concentrates of coffee, tea or mate",
+    "type": "HSN"
+  },
+  {
+    "code": "2103",
+    "description": "Sauces and preparations therefor; mixed condiments and mixed seasonings",
+    "type": "HSN"
+  },
+  {
+    "code": "2104",
+    "description": "Soups and broths and preparations therefor; homogenized composite food preparations",
+    "type": "HSN"
+  },
+  {
+    "code": "2106",
+    "description": "Food preparations not elsewhere specified or included (protein concentrates, supplements)",
+    "type": "HSN"
+  },
+  {
+    "code": "2201",
+    "description": "Waters, including natural or artificial mineral waters and aerated waters",
+    "type": "HSN"
+  },
+  {
+    "code": "2202",
+    "description": "Waters including mineral waters and aerated waters with added sugar or flavouring (soft drinks)",
+    "type": "HSN"
+  },
+  { "code": "2203", "description": "Beer made from malt", "type": "HSN" },
+  {
+    "code": "2204",
+    "description": "Wine of fresh grapes, including fortified wines",
+    "type": "HSN"
+  },
+  {
+    "code": "2207",
+    "description": "Ethyl alcohol undenatured of alcoholic strength >= 80%; denatured spirits",
+    "type": "HSN"
+  },
+  {
+    "code": "2208",
+    "description": "Undenatured ethyl alcohol; spirits, liqueurs and other spirituous beverages",
+    "type": "HSN"
+  },
+  {
+    "code": "2301",
+    "description": "Flours, meals and pellets of meat, fish, crustaceans (fishmeal)",
+    "type": "HSN"
+  },
+  {
+    "code": "2302",
+    "description": "Bran, sharps and other residues from cereals or leguminous plants (wheat bran)",
+    "type": "HSN"
+  },
+  {
+    "code": "2309",
+    "description": "Preparations of a kind used in animal feeding (cattle feed, poultry feed)",
+    "type": "HSN"
+  },
+  { "code": "2401", "description": "Unmanufactured tobacco; tobacco refuse", "type": "HSN" },
+  {
+    "code": "2402",
+    "description": "Cigars, cheroots, cigarillos and cigarettes, of tobacco or tobacco substitutes",
+    "type": "HSN"
+  },
+  {
+    "code": "2403",
+    "description": "Other manufactured tobacco (bidis, khaini, gutkha, pan masala with tobacco)",
+    "type": "HSN"
+  },
+  {
+    "code": "2501",
+    "description": "Salt (including table salt and denatured salt) and pure sodium chloride",
+    "type": "HSN"
+  },
+  { "code": "2502", "description": "Unroasted iron pyrites", "type": "HSN" },
+  { "code": "2504", "description": "Natural graphite", "type": "HSN" },
+  {
+    "code": "2505",
+    "description": "Natural sands of all kinds, whether or not coloured (silica sand)",
+    "type": "HSN"
+  },
+  {
+    "code": "2507",
+    "description": "Kaolin and other kaolinic clays, whether or not calcined",
+    "type": "HSN"
+  },
+  {
+    "code": "2510",
+    "description": "Natural calcium phosphates, natural aluminium calcium phosphates",
+    "type": "HSN"
+  },
+  {
+    "code": "2516",
+    "description": "Granite, porphyry, basalt, sandstone and other monumental or building stone",
+    "type": "HSN"
+  },
+  {
+    "code": "2523",
+    "description": "Portland cement, aluminous cement, slag cement, supersulphate cement",
+    "type": "HSN"
+  },
+  {
+    "code": "2601",
+    "description": "Iron ores and concentrates, including roasted iron pyrites",
+    "type": "HSN"
+  },
+  { "code": "2609", "description": "Tin ores and concentrates", "type": "HSN" },
+  { "code": "2610", "description": "Chromium ores and concentrates", "type": "HSN" },
+  { "code": "2614", "description": "Titanium ores and concentrates", "type": "HSN" },
+  {
+    "code": "2701",
+    "description": "Coal; briquettes, ovoids and similar solid fuels manufactured from coal",
+    "type": "HSN"
+  },
+  {
+    "code": "2709",
+    "description": "Petroleum oils and oils obtained from bituminous minerals, crude",
+    "type": "HSN"
+  },
+  {
+    "code": "2710",
+    "description": "Petroleum oils (not crude); preparations containing >= 70% petroleum oils (petrol, diesel, kerosene, LDO)",
+    "type": "HSN"
+  },
+  {
+    "code": "2711",
+    "description": "Petroleum gas and other gaseous hydrocarbons (LPG, CNG, natural gas)",
+    "type": "HSN"
+  },
+  { "code": "2716", "description": "Electrical energy", "type": "HSN" },
+  { "code": "2801", "description": "Fluorine, chlorine, bromine and iodine", "type": "HSN" },
+  {
+    "code": "2804",
+    "description": "Hydrogen, rare gases (argon, helium) and other non-metals",
+    "type": "HSN"
+  },
+  { "code": "2814", "description": "Anhydrous ammonia or in aqueous solution", "type": "HSN" },
+  {
+    "code": "2815",
+    "description": "Sodium hydroxide (caustic soda); potassium hydroxide; sodium or potassium peroxides",
+    "type": "HSN"
+  },
+  {
+    "code": "2836",
+    "description": "Carbonates; peroxocarbonates; commercial ammonium carbonate (soda ash)",
+    "type": "HSN"
+  },
+  {
+    "code": "2901",
+    "description": "Acyclic hydrocarbons (ethylene, propylene, butylene, acetylene)",
+    "type": "HSN"
+  },
+  {
+    "code": "2902",
+    "description": "Cyclic hydrocarbons (benzene, toluene, xylene, cyclohexane)",
+    "type": "HSN"
+  },
+  {
+    "code": "2905",
+    "description": "Acyclic alcohols and their halogenated, sulphonated derivatives (methanol, ethanol)",
+    "type": "HSN"
+  },
+  {
+    "code": "2915",
+    "description": "Saturated acyclic monocarboxylic acids (acetic acid, formic acid)",
+    "type": "HSN"
+  },
+  {
+    "code": "2917",
+    "description": "Polycarboxylic acids, their anhydrides, halides, peroxides and peroxyacids",
+    "type": "HSN"
+  },
+  {
+    "code": "2933",
+    "description": "Heterocyclic compounds with nitrogen hetero-atoms (pyridine, indole, piperazine)",
+    "type": "HSN"
+  },
+  {
+    "code": "2941",
+    "description": "Antibiotics (penicillin, streptomycin, tetracycline, chloramphenicol, erythromycin)",
+    "type": "HSN"
+  },
+  {
+    "code": "3001",
+    "description": "Glands and other organs for organo-therapeutic uses, dried; organ extracts",
+    "type": "HSN"
+  },
+  {
+    "code": "3002",
+    "description": "Human blood; animal blood for therapeutic, prophylactic or diagnostic uses; vaccines",
+    "type": "HSN"
+  },
+  {
+    "code": "3003",
+    "description": "Medicaments (excluding goods of heading 30.02, 30.05 or 30.06), not in measured doses or packaged for retail sale",
+    "type": "HSN"
+  },
+  {
+    "code": "3004",
+    "description": "Medicaments packaged for retail sale — tablets, capsules, syrups, injections",
+    "type": "HSN"
+  },
+  {
+    "code": "3005",
+    "description": "Wadding, gauze, bandages and similar articles for medical, surgical, dental use",
+    "type": "HSN"
+  },
+  {
+    "code": "3006",
+    "description": "Pharmaceutical goods (sterile surgical catgut, bone reconstruction cements, first-aid boxes)",
+    "type": "HSN"
+  },
+  {
+    "code": "3101",
+    "description": "Animal or vegetable fertilisers, whether or not mixed together (compost)",
+    "type": "HSN"
+  },
+  {
+    "code": "3102",
+    "description": "Mineral or chemical fertilisers, nitrogenous (urea, ammonium nitrate, ammonium sulphate)",
+    "type": "HSN"
+  },
+  {
+    "code": "3104",
+    "description": "Mineral or chemical fertilisers, potassic (potassium chloride, potassium sulphate)",
+    "type": "HSN"
+  },
+  {
+    "code": "3201",
+    "description": "Tanning extracts of vegetable origin; tannins and their salts, ethers, esters",
+    "type": "HSN"
+  },
+  {
+    "code": "3204",
+    "description": "Synthetic organic colouring matter (dyes and pigments)",
+    "type": "HSN"
+  },
+  {
+    "code": "3208",
+    "description": "Paints and varnishes based on synthetic polymers in non-aqueous medium",
+    "type": "HSN"
+  },
+  {
+    "code": "3209",
+    "description": "Paints and varnishes based on synthetic or natural polymers in aqueous medium (emulsion paints)",
+    "type": "HSN"
+  },
+  {
+    "code": "3214",
+    "description": "Glaziers putty, grafting putty, resin cements, caulking compounds, painters fillings",
+    "type": "HSN"
+  },
+  {
+    "code": "3301",
+    "description": "Essential oils (dementholised or not); resinoids; extracted oleoresins",
+    "type": "HSN"
+  },
+  { "code": "3303", "description": "Perfumes and toilet waters", "type": "HSN" },
+  {
+    "code": "3304",
+    "description": "Beauty or make-up preparations and preparations for the care of the skin",
+    "type": "HSN"
+  },
+  {
+    "code": "3305",
+    "description": "Preparations for use on the hair (shampoos, hair conditioners, hair dyes)",
+    "type": "HSN"
+  },
+  {
+    "code": "3306",
+    "description": "Preparations for oral or dental hygiene (toothpaste, mouthwash)",
+    "type": "HSN"
+  },
+  {
+    "code": "3307",
+    "description": "Pre-shave, shaving or after-shave preparations, personal deodorants, bath preparations",
+    "type": "HSN"
+  },
+  {
+    "code": "3401",
+    "description": "Soap; organic surface-active products for use as soap, in bars, cakes, moulded pieces or shapes",
+    "type": "HSN"
+  },
+  {
+    "code": "3402",
+    "description": "Organic surface-active agents (detergents); washing and cleaning preparations",
+    "type": "HSN"
+  },
+  { "code": "3406", "description": "Candles, tapers and the like", "type": "HSN" },
+  {
+    "code": "3407",
+    "description": "Modelling pastes including those put up for childrens amusement; dental waxes",
+    "type": "HSN"
+  },
+  {
+    "code": "3506",
+    "description": "Prepared glues and other prepared adhesives (fevicol, araldite)",
+    "type": "HSN"
+  },
+  { "code": "3601", "description": "Propellant powders", "type": "HSN" },
+  {
+    "code": "3602",
+    "description": "Prepared explosives, other than propellant powders",
+    "type": "HSN"
+  },
+  {
+    "code": "3604",
+    "description": "Fireworks, signal flares, rain rockets, fog signals and other pyrotechnic articles",
+    "type": "HSN"
+  },
+  {
+    "code": "3701",
+    "description": "Photographic plates and film in the flat, sensitised, unexposed",
+    "type": "HSN"
+  },
+  {
+    "code": "3707",
+    "description": "Chemical preparations for photographic uses (developers, fixers)",
+    "type": "HSN"
+  },
+  {
+    "code": "3801",
+    "description": "Artificial graphite; colloidal or semi-colloidal graphite; preparations based on graphite",
+    "type": "HSN"
+  },
+  {
+    "code": "3808",
+    "description": "Insecticides, rodenticides, fungicides, herbicides, anti-sprouting products and plant-growth regulators",
+    "type": "HSN"
+  },
+  {
+    "code": "3811",
+    "description": "Anti-knock preparations, oxidation inhibitors, gum inhibitors, viscosity improvers (fuel additives)",
+    "type": "HSN"
+  },
+  {
+    "code": "3814",
+    "description": "Organic composite solvents and thinners; prepared paint or varnish removers",
+    "type": "HSN"
+  },
+  {
+    "code": "3820",
+    "description": "Anti-freezing preparations and prepared de-icing fluids",
+    "type": "HSN"
+  },
+  {
+    "code": "3824",
+    "description": "Prepared binders for foundry moulds or cores; chemical products and preparations (mixed solvents)",
+    "type": "HSN"
+  },
+  {
+    "code": "3901",
+    "description": "Polymers of ethylene, in primary forms (polyethylene)",
+    "type": "HSN"
+  },
+  {
+    "code": "3902",
+    "description": "Polymers of propylene or of other olefins, in primary forms (polypropylene)",
+    "type": "HSN"
+  },
+  {
+    "code": "3904",
+    "description": "Polymers of vinyl chloride or of other halogenated olefins, in primary forms (PVC)",
+    "type": "HSN"
+  },
+  {
+    "code": "3907",
+    "description": "Polyacetals, other polyethers, and epoxide resins, in primary forms; polycarbonate",
+    "type": "HSN"
+  },
+  {
+    "code": "3920",
+    "description": "Other plates, sheets, film, foil and strip of plastics, non-cellular",
+    "type": "HSN"
+  },
+  {
+    "code": "3923",
+    "description": "Articles for the conveyance or packing of goods, of plastics (plastic bags, containers, bottles)",
+    "type": "HSN"
+  },
+  {
+    "code": "3924",
+    "description": "Tableware, kitchenware, other household articles and toilet articles, of plastics",
+    "type": "HSN"
+  },
+  {
+    "code": "3926",
+    "description": "Other articles of plastics and articles of other materials of headings 39.01 to 39.14",
+    "type": "HSN"
+  },
+  {
+    "code": "4001",
+    "description": "Natural rubber, balata, gutta-percha, guayule, chicle and similar natural gums",
+    "type": "HSN"
+  },
+  {
+    "code": "4002",
+    "description": "Synthetic rubber and factice derived from oils in primary forms or in plates, sheets or strip",
+    "type": "HSN"
+  },
+  { "code": "4011", "description": "New pneumatic tyres of rubber (vehicle tyres)", "type": "HSN" },
+  {
+    "code": "4016",
+    "description": "Other articles of vulcanised rubber other than hard rubber (rubber gaskets, rubber rings)",
+    "type": "HSN"
+  },
+  {
+    "code": "4101",
+    "description": "Raw hides and skins of bovine or equine animals (fresh, salted, dried, pickled)",
+    "type": "HSN"
+  },
+  {
+    "code": "4107",
+    "description": "Leather further prepared after tanning or crusting of bovine or equine animals",
+    "type": "HSN"
+  },
+  {
+    "code": "4203",
+    "description": "Articles of apparel and clothing accessories, of leather or composition leather",
+    "type": "HSN"
+  },
+  {
+    "code": "4205",
+    "description": "Other articles of leather or of composition leather (belts, straps, saddlery)",
+    "type": "HSN"
+  },
+  {
+    "code": "4301",
+    "description": "Raw furskins (including heads, tails, paws and other pieces or cuttings)",
+    "type": "HSN"
+  },
+  {
+    "code": "4401",
+    "description": "Fuel wood, in logs, billets, twigs, faggots or similar forms; wood in chips or particles",
+    "type": "HSN"
+  },
+  {
+    "code": "4403",
+    "description": "Wood in the rough, whether or not stripped of bark or sapwood, or roughly squared (timber logs)",
+    "type": "HSN"
+  },
+  {
+    "code": "4407",
+    "description": "Wood sawn or chipped lengthwise, sliced or peeled (planks, boards)",
+    "type": "HSN"
+  },
+  {
+    "code": "4409",
+    "description": "Wood (including strips and friezes for parquet flooring) continuously shaped along edges or faces",
+    "type": "HSN"
+  },
+  {
+    "code": "4410",
+    "description": "Particle board, oriented strand board and similar board of wood",
+    "type": "HSN"
+  },
+  {
+    "code": "4411",
+    "description": "Fibreboard of wood or other ligneous materials (MDF — medium-density fibreboard)",
+    "type": "HSN"
+  },
+  {
+    "code": "4412",
+    "description": "Plywood, veneered panels and similar laminated wood",
+    "type": "HSN"
+  },
+  {
+    "code": "4418",
+    "description": "Builders joinery and carpentry of wood (doors, windows, frames, staircases)",
+    "type": "HSN"
+  },
+  {
+    "code": "4419",
+    "description": "Tableware and kitchenware, of wood (wooden spoons, bowls, trays)",
+    "type": "HSN"
+  },
+  {
+    "code": "4601",
+    "description": "Plaits and similar products of plaiting materials; plaiting materials, plaits and similar",
+    "type": "HSN"
+  },
+  { "code": "4701", "description": "Mechanical wood pulp", "type": "HSN" },
+  {
+    "code": "4802",
+    "description": "Uncoated paper and paperboard, of a kind used for writing, printing or other graphic purposes",
+    "type": "HSN"
+  },
+  {
+    "code": "4808",
+    "description": "Paper and paperboard, corrugated, creped, crinkled, embossed or perforated, in rolls or sheets",
+    "type": "HSN"
+  },
+  {
+    "code": "4811",
+    "description": "Paper, paperboard, cellulose wadding and webs coated, impregnated, covered, surface-coloured, decorated or printed",
+    "type": "HSN"
+  },
+  {
+    "code": "4819",
+    "description": "Cartons, boxes, cases, bags and other packing containers, of paper, paperboard, cellulose wadding",
+    "type": "HSN"
+  },
+  {
+    "code": "4820",
+    "description": "Registers, account books, notebooks, order books, receipt books, letter pads, memorandum pads",
+    "type": "HSN"
+  },
+  {
+    "code": "4821",
+    "description": "Paper or paperboard labels of all kinds, whether or not printed",
+    "type": "HSN"
+  },
+  {
+    "code": "4901",
+    "description": "Printed books, brochures, leaflets and similar printed matter (including textbooks)",
+    "type": "HSN"
+  },
+  {
+    "code": "4902",
+    "description": "Newspapers, journals and periodicals, whether or not illustrated",
+    "type": "HSN"
+  },
+  {
+    "code": "4905",
+    "description": "Maps and hydrographic or similar charts of all kinds",
+    "type": "HSN"
+  },
+  {
+    "code": "4907",
+    "description": "Unused postage, revenue or similar stamps; cheque forms; banknotes, share certificates",
+    "type": "HSN"
+  },
+  {
+    "code": "4909",
+    "description": "Printed or illustrated postcards; printed cards bearing personal greetings",
+    "type": "HSN"
+  },
+  {
+    "code": "4911",
+    "description": "Other printed matter, including printed pictures and photographs, advertising brochures",
+    "type": "HSN"
+  },
+  {
+    "code": "5004",
+    "description": "Silk yarn (other than yarn spun from silk waste) not put up for retail sale",
+    "type": "HSN"
+  },
+  { "code": "5007", "description": "Woven fabrics of silk or of silk waste", "type": "HSN" },
+  { "code": "5101", "description": "Wool, not carded or combed", "type": "HSN" },
+  {
+    "code": "5105",
+    "description": "Wool and fine or coarse animal hair, carded or combed (including combed wool in fragments)",
+    "type": "HSN"
+  },
+  { "code": "5201", "description": "Cotton, not carded or combed (raw cotton)", "type": "HSN" },
+  {
+    "code": "5205",
+    "description": "Cotton yarn (other than sewing thread), containing >= 85% cotton by weight, not for retail",
+    "type": "HSN"
+  },
+  {
+    "code": "5208",
+    "description": "Woven fabrics of cotton, containing >= 85% cotton, weighing <= 200 g/m2",
+    "type": "HSN"
+  },
+  {
+    "code": "5209",
+    "description": "Woven fabrics of cotton, containing >= 85% cotton, weighing > 200 g/m2 (denim)",
+    "type": "HSN"
+  },
+  {
+    "code": "5210",
+    "description": "Woven fabrics of cotton, containing < 85% cotton, mixed mainly or solely with man-made fibres, <= 200 g/m2",
+    "type": "HSN"
+  },
+  {
+    "code": "5211",
+    "description": "Woven fabrics of cotton, containing < 85% cotton, mixed with man-made fibres, > 200 g/m2",
+    "type": "HSN"
+  },
+  { "code": "5212", "description": "Other woven fabrics of cotton", "type": "HSN" },
+  {
+    "code": "5303",
+    "description": "Jute and other textile bast fibres (excluding flax, true hemp and ramie), raw or processed",
+    "type": "HSN"
+  },
+  { "code": "5401", "description": "Sewing thread of man-made filaments", "type": "HSN" },
+  {
+    "code": "5402",
+    "description": "High tenacity yarn of nylon or other polyamides, polyesters or viscose rayon",
+    "type": "HSN"
+  },
+  {
+    "code": "5407",
+    "description": "Woven fabrics of synthetic filament yarn (nylon, polyester fabrics)",
+    "type": "HSN"
+  },
+  {
+    "code": "5408",
+    "description": "Woven fabrics of artificial filament yarn (viscose rayon fabric)",
+    "type": "HSN"
+  },
+  {
+    "code": "5501",
+    "description": "Synthetic filament tow (polyester tow, nylon tow)",
+    "type": "HSN"
+  },
+  {
+    "code": "5503",
+    "description": "Synthetic staple fibres, not carded, combed or otherwise processed (polyester fibre, acrylic fibre)",
+    "type": "HSN"
+  },
+  {
+    "code": "5509",
+    "description": "Yarn of synthetic staple fibres (polyester yarn, acrylic yarn)",
+    "type": "HSN"
+  },
+  {
+    "code": "5512",
+    "description": "Woven fabrics of synthetic staple fibres, containing >= 85% by weight of such fibres",
+    "type": "HSN"
+  },
+  {
+    "code": "5513",
+    "description": "Woven fabrics of synthetic staple fibres, containing < 85%, mixed mainly with cotton",
+    "type": "HSN"
+  },
+  {
+    "code": "5601",
+    "description": "Wadding of textile materials and articles thereof; textile fibres of a length <= 5 mm (flock)",
+    "type": "HSN"
+  },
+  {
+    "code": "5602",
+    "description": "Felt, whether or not impregnated, coated, covered or laminated",
+    "type": "HSN"
+  },
+  {
+    "code": "5603",
+    "description": "Nonwovens, whether or not impregnated, coated, covered or laminated",
+    "type": "HSN"
+  },
+  {
+    "code": "5607",
+    "description": "Twine, cordage, ropes and cables, whether or not plaited or braided",
+    "type": "HSN"
+  },
+  {
+    "code": "5608",
+    "description": "Knotted netting of twine, cordage or rope; made up fishing nets and other made up nets, of textile materials",
+    "type": "HSN"
+  },
+  {
+    "code": "5701",
+    "description": "Carpets and other textile floor coverings, knotted, whether or not made up",
+    "type": "HSN"
+  },
+  {
+    "code": "5702",
+    "description": "Carpets and other textile floor coverings, woven, not tufted or flocked (dhurries, durries)",
+    "type": "HSN"
+  },
+  {
+    "code": "5703",
+    "description": "Carpets and other textile floor coverings, tufted",
+    "type": "HSN"
+  },
+  {
+    "code": "5801",
+    "description": "Woven pile fabrics and chenille fabrics, other than fabrics of heading 58.02 or 58.06",
+    "type": "HSN"
+  },
+  {
+    "code": "5806",
+    "description": "Narrow woven fabrics, other than goods of heading 58.07; narrow fabrics consisting of warp",
+    "type": "HSN"
+  },
+  {
+    "code": "5901",
+    "description": "Textile fabrics coated with gum or amylaceous substances",
+    "type": "HSN"
+  },
+  {
+    "code": "6001",
+    "description": "Pile fabrics, including long pile fabrics and terry fabrics, knitted or crocheted",
+    "type": "HSN"
+  },
+  { "code": "6006", "description": "Other knitted or crocheted fabrics", "type": "HSN" },
+  {
+    "code": "6101",
+    "description": "Mens or boys overcoats, car-coats, capes, cloaks, anoraks (including ski-jackets), wind-cheaters",
+    "type": "HSN"
+  },
+  {
+    "code": "6104",
+    "description": "Womens or girls suits, ensembles, jackets, blazers, dresses, skirts, trousers, knitted or crocheted",
+    "type": "HSN"
+  },
+  {
+    "code": "6105",
+    "description": "Mens or boys shirts, knitted or crocheted (T-shirts, polo shirts)",
+    "type": "HSN"
+  },
+  {
+    "code": "6109",
+    "description": "T-shirts, singlets and other vests, knitted or crocheted",
+    "type": "HSN"
+  },
+  {
+    "code": "6110",
+    "description": "Jerseys, pullovers, sweatshirts, waistcoats and similar articles, knitted or crocheted (sweaters)",
+    "type": "HSN"
+  },
+  {
+    "code": "6111",
+    "description": "Babies garments and clothing accessories, knitted or crocheted",
+    "type": "HSN"
+  },
+  {
+    "code": "6201",
+    "description": "Mens or boys overcoats, car-coats, capes, cloaks, anoraks (woven)",
+    "type": "HSN"
+  },
+  {
+    "code": "6203",
+    "description": "Mens or boys suits, ensembles, jackets, blazers, trousers, bib and brace overalls (woven)",
+    "type": "HSN"
+  },
+  {
+    "code": "6204",
+    "description": "Womens or girls suits, ensembles, jackets, blazers, dresses, skirts, trousers (woven)",
+    "type": "HSN"
+  },
+  { "code": "6205", "description": "Mens or boys shirts (woven)", "type": "HSN" },
+  {
+    "code": "6206",
+    "description": "Womens or girls blouses, shirts and shirt-blouses (woven)",
+    "type": "HSN"
+  },
+  {
+    "code": "6211",
+    "description": "Track suits, ski suits and swimwear; other garments (sports wear)",
+    "type": "HSN"
+  },
+  {
+    "code": "6214",
+    "description": "Shawls, scarves, mufflers, mantillas, veils and the like",
+    "type": "HSN"
+  },
+  {
+    "code": "6217",
+    "description": "Other made up clothing accessories; parts of garments or of clothing accessories (labels, badges)",
+    "type": "HSN"
+  },
+  { "code": "6301", "description": "Blankets and travelling rugs", "type": "HSN" },
+  {
+    "code": "6302",
+    "description": "Bed linen, table linen, toilet linen and kitchen linen (bedsheets, pillowcases, towels)",
+    "type": "HSN"
+  },
+  {
+    "code": "6303",
+    "description": "Curtains (including drapes) and interior blinds; curtain or bed valances",
+    "type": "HSN"
+  },
+  {
+    "code": "6305",
+    "description": "Sacks and bags, of a kind used for the packing of goods (gunny bags, jute bags)",
+    "type": "HSN"
+  },
+  {
+    "code": "6306",
+    "description": "Tarpaulins, awnings and sunblinds; tents; sails for boats; camping goods",
+    "type": "HSN"
+  },
+  {
+    "code": "6401",
+    "description": "Waterproof footwear with outer soles and uppers of rubber or plastics",
+    "type": "HSN"
+  },
+  {
+    "code": "6402",
+    "description": "Other footwear with outer soles and uppers of rubber or plastics (plastic chappals, sports shoes)",
+    "type": "HSN"
+  },
+  {
+    "code": "6403",
+    "description": "Footwear with outer soles of rubber, plastics or composition leather and uppers of leather",
+    "type": "HSN"
+  },
+  {
+    "code": "6404",
+    "description": "Footwear with outer soles of rubber or plastics and uppers of textile materials (canvas shoes)",
+    "type": "HSN"
+  },
+  {
+    "code": "6501",
+    "description": "Hat-forms, hat bodies and hoods of felt; plateaux and manchons (including slit manchons) of felt",
+    "type": "HSN"
+  },
+  {
+    "code": "6506",
+    "description": "Other headgear, whether or not lined or trimmed (helmets, caps, hats)",
+    "type": "HSN"
+  },
+  {
+    "code": "6601",
+    "description": "Umbrellas and sun umbrellas (including walking-stick umbrellas, garden umbrellas and similar)",
+    "type": "HSN"
+  },
+  {
+    "code": "6701",
+    "description": "Skins and other parts of birds with their feathers or down, feathers, parts of feathers",
+    "type": "HSN"
+  },
+  {
+    "code": "6802",
+    "description": "Worked monumental or building stone (except slate) and articles thereof (marble, granite tiles)",
+    "type": "HSN"
+  },
+  {
+    "code": "6810",
+    "description": "Articles of cement, concrete or artificial stone, whether or not reinforced (cement blocks, pipes)",
+    "type": "HSN"
+  },
+  {
+    "code": "6901",
+    "description": "Bricks, blocks, tiles and other ceramic goods of siliceous fossil meals or of similar siliceous earths",
+    "type": "HSN"
+  },
+  {
+    "code": "6907",
+    "description": "Ceramic flags and paving, hearth or wall tiles; ceramic mosaic cubes and the like (floor and wall tiles)",
+    "type": "HSN"
+  },
+  {
+    "code": "6911",
+    "description": "Tableware, kitchenware, other household articles and toilet articles, of porcelain or china",
+    "type": "HSN"
+  },
+  {
+    "code": "6912",
+    "description": "Ceramic tableware, kitchenware, other household articles and toilet articles other than of porcelain or china",
+    "type": "HSN"
+  },
+  {
+    "code": "7003",
+    "description": "Cast glass and rolled glass, in sheets or profiles, whether or not having an absorbent or reflecting layer",
+    "type": "HSN"
+  },
+  { "code": "7004", "description": "Drawn glass and blown glass, in sheets", "type": "HSN" },
+  {
+    "code": "7005",
+    "description": "Float glass and surface ground or polished glass, in sheets (window glass)",
+    "type": "HSN"
+  },
+  {
+    "code": "7013",
+    "description": "Glassware of a kind used for table, kitchen, toilet, office, indoor decoration or similar purposes",
+    "type": "HSN"
+  },
+  {
+    "code": "7101",
+    "description": "Pearls, natural or cultured, whether or not worked or graded",
+    "type": "HSN"
+  },
+  {
+    "code": "7102",
+    "description": "Diamonds, whether or not worked, but not mounted or set",
+    "type": "HSN"
+  },
+  {
+    "code": "7103",
+    "description": "Precious stones (other than diamonds) and semi-precious stones, whether or not worked",
+    "type": "HSN"
+  },
+  {
+    "code": "7106",
+    "description": "Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms",
+    "type": "HSN"
+  },
+  {
+    "code": "7108",
+    "description": "Gold (including gold plated with platinum) unwrought or in semi-manufactured forms, or in powder form",
+    "type": "HSN"
+  },
+  {
+    "code": "7113",
+    "description": "Articles of jewellery and parts thereof, of precious metal or of metal clad with precious metal",
+    "type": "HSN"
+  },
+  {
+    "code": "7114",
+    "description": "Articles of goldsmiths or silversmiths wares and parts thereof, of precious metal",
+    "type": "HSN"
+  },
+  {
+    "code": "7202",
+    "description": "Ferro-alloys (ferro-manganese, ferro-silicon, ferro-chromium)",
+    "type": "HSN"
+  },
+  {
+    "code": "7207",
+    "description": "Semi-finished products of iron or non-alloy steel (billets, blooms, slabs)",
+    "type": "HSN"
+  },
+  {
+    "code": "7208",
+    "description": "Flat-rolled products of iron or non-alloy steel, hot-rolled, in coils (HR coils)",
+    "type": "HSN"
+  },
+  {
+    "code": "7209",
+    "description": "Flat-rolled products of iron or non-alloy steel, cold-rolled (CR coils)",
+    "type": "HSN"
+  },
+  {
+    "code": "7210",
+    "description": "Flat-rolled products of iron or non-alloy steel, clad, plated or coated (galvanised sheets, tin plates)",
+    "type": "HSN"
+  },
+  {
+    "code": "7213",
+    "description": "Bars and rods, hot-rolled, in irregularly wound coils, of iron or non-alloy steel (wire rods)",
+    "type": "HSN"
+  },
+  {
+    "code": "7214",
+    "description": "Other bars and rods of iron or non-alloy steel, not further worked than forged, hot-rolled or extruded (TMT bars)",
+    "type": "HSN"
+  },
+  {
+    "code": "7216",
+    "description": "Angles, shapes and sections of iron or non-alloy steel (structural steel — angles, channels, beams, joists)",
+    "type": "HSN"
+  },
+  {
+    "code": "7217",
+    "description": "Wire of iron or non-alloy steel (binding wire, galvanised wire)",
+    "type": "HSN"
+  },
+  {
+    "code": "7219",
+    "description": "Flat-rolled products of stainless steel (stainless steel sheets, coils)",
+    "type": "HSN"
+  },
+  {
+    "code": "7225",
+    "description": "Flat-rolled products of other alloy steel (CRGO/CRNGO silicon steel sheets)",
+    "type": "HSN"
+  },
+  {
+    "code": "7301",
+    "description": "Sheet piling of iron or steel, whether or not drilled, punched or made from assembled elements; welded angles, shapes and sections of iron or steel",
+    "type": "HSN"
+  },
+  {
+    "code": "7304",
+    "description": "Tubes, pipes and hollow profiles, seamless, of iron (other than cast iron) or steel (seamless pipes)",
+    "type": "HSN"
+  },
+  {
+    "code": "7305",
+    "description": "Other tubes and pipes (having circular cross-sections, the external diameter of which exceeds 406.4 mm)",
+    "type": "HSN"
+  },
+  {
+    "code": "7306",
+    "description": "Other tubes, pipes and hollow profiles, of iron or steel (ERW pipes, MS pipes)",
+    "type": "HSN"
+  },
+  {
+    "code": "7312",
+    "description": "Stranded wire, ropes, cables, plaited bands, slings and the like, of iron or steel (steel wire ropes)",
+    "type": "HSN"
+  },
+  {
+    "code": "7318",
+    "description": "Screws, bolts, nuts, coach screws, screw hooks, rivets, cotters, cotter-pins, washers and spring washers of iron or steel",
+    "type": "HSN"
+  },
+  {
+    "code": "7323",
+    "description": "Table, kitchen or other household articles and parts thereof, of iron or steel (cookware, utensils)",
+    "type": "HSN"
+  },
+  {
+    "code": "7401",
+    "description": "Copper mattes; cement copper (precipitated copper)",
+    "type": "HSN"
+  },
+  {
+    "code": "7407",
+    "description": "Copper bars, rods and profiles (copper rods for conductors)",
+    "type": "HSN"
+  },
+  { "code": "7408", "description": "Copper wire (copper winding wire)", "type": "HSN" },
+  { "code": "7411", "description": "Copper tubes and pipes", "type": "HSN" },
+  { "code": "7601", "description": "Unwrought aluminium (aluminium ingots)", "type": "HSN" },
+  {
+    "code": "7604",
+    "description": "Aluminium bars, rods and profiles (aluminium sections, extrusions)",
+    "type": "HSN"
+  },
+  {
+    "code": "7606",
+    "description": "Aluminium plates, sheets and strip, of a thickness exceeding 0.2 mm (aluminium sheets)",
+    "type": "HSN"
+  },
+  {
+    "code": "7607",
+    "description": "Aluminium foil (whether or not printed or backed with paper, paperboard, plastics or similar backing material)",
+    "type": "HSN"
+  },
+  {
+    "code": "7610",
+    "description": "Aluminium structures (excluding prefabricated buildings of heading 94.06) and parts of structures",
+    "type": "HSN"
+  },
+  {
+    "code": "8101",
+    "description": "Tungsten (wolfram) and articles thereof, including waste and scrap",
+    "type": "HSN"
+  },
+  {
+    "code": "8301",
+    "description": "Padlocks and locks (key, combination or electrically operated), of base metal (door locks, padlocks)",
+    "type": "HSN"
+  },
+  {
+    "code": "8302",
+    "description": "Base metal mountings, fittings and similar articles suitable for furniture, doors, windows, blinds",
+    "type": "HSN"
+  },
+  {
+    "code": "8401",
+    "description": "Nuclear reactors; fuel elements (cartridges), non-irradiated, for nuclear reactors",
+    "type": "HSN"
+  },
+  {
+    "code": "8407",
+    "description": "Spark-ignition reciprocating or rotary internal combustion piston engines (petrol engines)",
+    "type": "HSN"
+  },
+  {
+    "code": "8408",
+    "description": "Compression-ignition internal combustion piston engines (diesel engines)",
+    "type": "HSN"
+  },
+  {
+    "code": "8413",
+    "description": "Pumps for liquids (centrifugal pumps, submersible pumps, fuel pumps)",
+    "type": "HSN"
+  },
+  {
+    "code": "8414",
+    "description": "Air or vacuum pumps, air or other gas compressors, fans; ventilating hoods with fans (air compressors, ceiling fans)",
+    "type": "HSN"
+  },
+  {
+    "code": "8415",
+    "description": "Air conditioning machines comprising a motor-driven fan and elements for changing temperature and humidity (AC units)",
+    "type": "HSN"
+  },
+  {
+    "code": "8418",
+    "description": "Refrigerators, freezers and other refrigerating or freezing equipment, heat pumps",
+    "type": "HSN"
+  },
+  {
+    "code": "8419",
+    "description": "Machinery, plant or laboratory equipment, whether or not electrically heated, for treating material by a process involving a change of temperature (water heaters, geysers, heat exchangers)",
+    "type": "HSN"
+  },
+  {
+    "code": "8422",
+    "description": "Dishwashing machines; machinery for cleaning or drying bottles or other containers; packaging or wrapping machinery",
+    "type": "HSN"
+  },
+  {
+    "code": "8424",
+    "description": "Mechanical appliances (whether or not hand-operated) for projecting, dispersing or spraying liquids (spray guns, fire extinguishers)",
+    "type": "HSN"
+  },
+  {
+    "code": "8425",
+    "description": "Pulley tackle and hoists other than skip hoists; winches and capstans; jacks (chain hoists, hydraulic jacks)",
+    "type": "HSN"
+  },
+  {
+    "code": "8428",
+    "description": "Other lifting, handling, loading or unloading machinery (conveyors, escalators, lifts, elevators)",
+    "type": "HSN"
+  },
+  {
+    "code": "8429",
+    "description": "Self-propelled bulldozers, angledozers, graders, levellers, scrapers, mechanical shovels, excavators (earthmoving machinery)",
+    "type": "HSN"
+  },
+  {
+    "code": "8433",
+    "description": "Harvesting or threshing machinery, including straw or fodder balers; grass or hay mowers; threshing machines (combine harvesters)",
+    "type": "HSN"
+  },
+  {
+    "code": "8443",
+    "description": "Printing machinery used for printing by means of the printing type, blocks, plates, cylinders and other printing components (printers, photocopiers, MFPs)",
+    "type": "HSN"
+  },
+  {
+    "code": "8450",
+    "description": "Household or laundry-type washing machines, including machines which both wash and dry (washing machines)",
+    "type": "HSN"
+  },
+  {
+    "code": "8452",
+    "description": "Sewing machines, other than book-sewing machines of heading 84.40; furniture, bases and covers specially designed for sewing machines; sewing machine needles",
+    "type": "HSN"
+  },
+  {
+    "code": "8467",
+    "description": "Tools for working in the hand, pneumatic, hydraulic or with self-contained electric or non-electric motor (power tools — drill, grinder)",
+    "type": "HSN"
+  },
+  {
+    "code": "8471",
+    "description": "Automatic data processing machines (computers, laptops, tablets, servers)",
+    "type": "HSN"
+  },
+  {
+    "code": "847130",
+    "description": "Portable automatic data processing machines, weighing <= 10 kg (laptops, notebooks, tablets)",
+    "type": "HSN"
+  },
+  {
+    "code": "847141",
+    "description": "Comprising in the same housing at least a central processing unit and an input and output unit (all-in-one desktop computers)",
+    "type": "HSN"
+  },
+  {
+    "code": "847149",
+    "description": "Other automatic data processing machines (tower desktops, workstations)",
+    "type": "HSN"
+  },
+  {
+    "code": "847160",
+    "description": "Input or output units, whether or not containing storage units in the same housing (monitors, keyboards, mice)",
+    "type": "HSN"
+  },
+  {
+    "code": "847170",
+    "description": "Storage units (hard disk drives, solid state drives, external hard disks)",
+    "type": "HSN"
+  },
+  {
+    "code": "847180",
+    "description": "Other units of automatic data processing machines (UPS, docking stations)",
+    "type": "HSN"
+  },
+  {
+    "code": "8473",
+    "description": "Parts and accessories for machines of headings 84.69 to 84.72 (computer parts, printer cartridges)",
+    "type": "HSN"
+  },
+  {
+    "code": "8480",
+    "description": "Moulding boxes for metal foundry; mould bases; moulding patterns; moulds for metal (injection moulds)",
+    "type": "HSN"
+  },
+  {
+    "code": "8501",
+    "description": "Electric motors and generators (excluding generating sets)",
+    "type": "HSN"
+  },
+  {
+    "code": "8502",
+    "description": "Electric generating sets and rotary converters (diesel generator sets, alternators)",
+    "type": "HSN"
+  },
+  {
+    "code": "8504",
+    "description": "Electrical transformers, static converters (rectifiers) and inductors (transformers, inverters, UPS)",
+    "type": "HSN"
+  },
+  {
+    "code": "8506",
+    "description": "Primary cells and primary batteries (dry cells, alkaline batteries)",
+    "type": "HSN"
+  },
+  {
+    "code": "8507",
+    "description": "Electric accumulators (storage batteries — lead-acid, nickel-cadmium, lithium-ion)",
+    "type": "HSN"
+  },
+  {
+    "code": "8516",
+    "description": "Electric instantaneous or storage water heaters, immersion heaters; electric irons; microwave ovens (home appliances)",
+    "type": "HSN"
+  },
+  {
+    "code": "8517",
+    "description": "Telephone sets, including telephones for cellular networks or for other wireless networks (mobile phones, landlines, routers, modems)",
+    "type": "HSN"
+  },
+  { "code": "851711", "description": "Line telephone sets with cordless handsets", "type": "HSN" },
+  {
+    "code": "851712",
+    "description": "Telephones for cellular networks or for other wireless networks (mobile phones, smartphones)",
+    "type": "HSN"
+  },
+  {
+    "code": "851718",
+    "description": "Other telephone sets (IP phones, VoIP phones)",
+    "type": "HSN"
+  },
+  {
+    "code": "851762",
+    "description": "Machines for the reception, conversion and transmission or regeneration of voice, images or other data (routers, switches, modems, WiFi equipment)",
+    "type": "HSN"
+  },
+  {
+    "code": "851769",
+    "description": "Other apparatus for transmission or reception of voice, images or other data (network switches, hubs, access points)",
+    "type": "HSN"
+  },
+  {
+    "code": "8518",
+    "description": "Microphones and their stands; loudspeakers; headphones; audio-frequency electric amplifiers",
+    "type": "HSN"
+  },
+  {
+    "code": "8519",
+    "description": "Sound recording or reproducing apparatus (CD/DVD players, cassette recorders)",
+    "type": "HSN"
+  },
+  {
+    "code": "8523",
+    "description": "Discs, tapes, solid-state non-volatile storage devices, smart cards and other media for recording sound or other phenomena, whether or not recorded (USB drives, memory cards, DVDs, CDs)",
+    "type": "HSN"
+  },
+  {
+    "code": "8525",
+    "description": "Transmission apparatus for radio-broadcasting or television, whether or not incorporating reception apparatus or sound recording or reproducing apparatus; television cameras, digital cameras and video camera recorders",
+    "type": "HSN"
+  },
+  {
+    "code": "8527",
+    "description": "Reception apparatus for radio-broadcasting (transistor radios, FM radios)",
+    "type": "HSN"
+  },
+  {
+    "code": "8528",
+    "description": "Monitors and projectors, not incorporating television reception apparatus; reception apparatus for television (TVs, monitors, projectors)",
+    "type": "HSN"
+  },
+  {
+    "code": "8529",
+    "description": "Parts suitable for use solely or principally with the apparatus of headings 85.25 to 85.28 (TV parts, antenna)",
+    "type": "HSN"
+  },
+  {
+    "code": "8534",
+    "description": "Printed circuits (PCBs — printed circuit boards)",
+    "type": "HSN"
+  },
+  {
+    "code": "8536",
+    "description": "Electrical apparatus for switching or protecting electrical circuits, or for making connections to or in electrical circuits for a voltage not exceeding 1,000 V (MCBs, switches, sockets, circuit breakers)",
+    "type": "HSN"
+  },
+  {
+    "code": "8537",
+    "description": "Boards, panels, consoles, desks, cabinets and other bases for electrical control or the distribution of electricity (switchboards, distribution boards, electrical panels)",
+    "type": "HSN"
+  },
+  {
+    "code": "8539",
+    "description": "Electric filament or discharge lamps, including sealed beam lamp units and ultra-violet or infra-red lamps; arc-lamps; LED lamps",
+    "type": "HSN"
+  },
+  {
+    "code": "8541",
+    "description": "Diodes, transistors and similar semiconductor devices; photosensitive semiconductor devices including photovoltaic cells; LEDs; mounted piezo-electric crystals",
+    "type": "HSN"
+  },
+  {
+    "code": "8542",
+    "description": "Electronic integrated circuits (ICs, microchips, microcontrollers, microprocessors)",
+    "type": "HSN"
+  },
+  {
+    "code": "854231",
+    "description": "Processors and controllers, whether or not combined with memories, converters, logic circuits, amplifiers, clock and timing circuits, or other circuits (CPUs, microcontrollers)",
+    "type": "HSN"
+  },
+  {
+    "code": "854232",
+    "description": "Memories (RAM, ROM, Flash memory, EPROM, EEPROM)",
+    "type": "HSN"
+  },
+  {
+    "code": "8544",
+    "description": "Insulated (including enamelled or anodised) wire, cable and other insulated electric conductors (electric wires, cables, coaxial cables)",
+    "type": "HSN"
+  },
+  {
+    "code": "8701",
+    "description": "Tractors (other than tractors of heading 87.09)",
+    "type": "HSN"
+  },
+  {
+    "code": "8702",
+    "description": "Motor vehicles for the transport of ten or more persons, including the driver (buses, minibuses)",
+    "type": "HSN"
+  },
+  {
+    "code": "8703",
+    "description": "Motor cars and other motor vehicles principally designed for the transport of persons (cars, jeeps, SUVs)",
+    "type": "HSN"
+  },
+  {
+    "code": "8704",
+    "description": "Motor vehicles for the transport of goods (trucks, lorries, pickup vans)",
+    "type": "HSN"
+  },
+  {
+    "code": "8705",
+    "description": "Special purpose motor vehicles, other than those principally designed for the transport of persons or goods (fire engines, crane lorries, concrete mixer lorries)",
+    "type": "HSN"
+  },
+  {
+    "code": "8706",
+    "description": "Chassis fitted with engines, for the motor vehicles of headings 87.01 to 87.05",
+    "type": "HSN"
+  },
+  {
+    "code": "8707",
+    "description": "Bodies (including cabs), for the motor vehicles of headings 87.01 to 87.05",
+    "type": "HSN"
+  },
+  {
+    "code": "8708",
+    "description": "Parts and accessories of the motor vehicles of headings 87.01 to 87.05 (auto parts — bumpers, gearbox, brakes)",
+    "type": "HSN"
+  },
+  {
+    "code": "8711",
+    "description": "Motorcycles (including mopeds) and cycles fitted with an auxiliary motor, with or without side-cars; side-cars (motorcycles, scooters)",
+    "type": "HSN"
+  },
+  {
+    "code": "8712",
+    "description": "Bicycles and other cycles (including delivery tricycles), not motorised",
+    "type": "HSN"
+  },
+  {
+    "code": "8714",
+    "description": "Parts and accessories of vehicles of headings 87.11 to 87.13 (two-wheeler spare parts — tyres, tubes, mudguards)",
+    "type": "HSN"
+  },
+  {
+    "code": "8715",
+    "description": "Baby carriages and parts thereof (prams, strollers)",
+    "type": "HSN"
+  },
+  {
+    "code": "8716",
+    "description": "Trailers and semi-trailers; other vehicles, not mechanically propelled (hand carts, trolleys)",
+    "type": "HSN"
+  },
+  {
+    "code": "8801",
+    "description": "Balloons and dirigibles; gliders, hang gliders and other non-powered aircraft",
+    "type": "HSN"
+  },
+  {
+    "code": "8802",
+    "description": "Other aircraft (aeroplanes, helicopters); spacecraft (including satellites) and spacecraft launch vehicles",
+    "type": "HSN"
+  },
+  {
+    "code": "8901",
+    "description": "Cruise ships, excursion boats, ferry-boats, cargo ships, barges and similar vessels for the transport of persons or goods",
+    "type": "HSN"
+  },
+  {
+    "code": "9001",
+    "description": "Optical fibres and optical fibre bundles; optical fibre cables; sheets and plates of polarising material; lenses, prisms, mirrors",
+    "type": "HSN"
+  },
+  {
+    "code": "9006",
+    "description": "Photographic (other than cinematographic) cameras; photographic flashlight apparatus (DSLR cameras, film cameras)",
+    "type": "HSN"
+  },
+  {
+    "code": "9013",
+    "description": "Liquid crystal devices; lasers other than laser diodes; other optical appliances and instruments (LCD panels, laser equipment)",
+    "type": "HSN"
+  },
+  {
+    "code": "9021",
+    "description": "Orthopaedic appliances, including crutches, surgical belts and trusses; splints and other fracture appliances; artificial parts of the body; hearing aids; apparatus for compensating for a defect or disability",
+    "type": "HSN"
+  },
+  {
+    "code": "9022",
+    "description": "Apparatus based on the use of X-rays or of alpha, beta or gamma radiations (X-ray machines, CT scanners, radiation therapy equipment)",
+    "type": "HSN"
+  },
+  {
+    "code": "9026",
+    "description": "Instruments and apparatus for measuring or checking the flow, level, pressure or other variables of liquids or gases (flow meters, pressure gauges)",
+    "type": "HSN"
+  },
+  {
+    "code": "9027",
+    "description": "Instruments and apparatus for physical or chemical analysis (spectrometers, chromatographs, glucose meters, pH meters)",
+    "type": "HSN"
+  },
+  {
+    "code": "9030",
+    "description": "Oscilloscopes, spectrum analysers and other instruments and apparatus for measuring or checking electrical quantities (multimeters, oscilloscopes)",
+    "type": "HSN"
+  },
+  {
+    "code": "9032",
+    "description": "Automatic regulating or controlling instruments and apparatus (thermostats, temperature controllers, PIDs)",
+    "type": "HSN"
+  },
+  {
+    "code": "9101",
+    "description": "Wrist-watches, pocket-watches and other watches, including stop-watches, with case of precious metal or of metal clad with precious metal",
+    "type": "HSN"
+  },
+  {
+    "code": "9102",
+    "description": "Wrist-watches, pocket-watches and other watches, including stop-watches, other than those of heading 91.01 (watches, smartwatches)",
+    "type": "HSN"
+  },
+  {
+    "code": "9201",
+    "description": "Pianos, including automatic pianos; harpsichords and other keyboard stringed instruments",
+    "type": "HSN"
+  },
+  {
+    "code": "9207",
+    "description": "Musical instruments, the sound of which is produced, or must be amplified, electrically (electric guitars, synthesizers, electronic keyboards)",
+    "type": "HSN"
+  },
+  {
+    "code": "9301",
+    "description": "Military weapons, other than revolvers, pistols and the arms of heading 93.07",
+    "type": "HSN"
+  },
+  {
+    "code": "9401",
+    "description": "Seats (other than those of heading 94.02), whether or not convertible into beds, and parts thereof (chairs, sofas, office chairs)",
+    "type": "HSN"
+  },
+  {
+    "code": "9403",
+    "description": "Other furniture and parts thereof (tables, wardrobes, shelves, cabinets)",
+    "type": "HSN"
+  },
+  {
+    "code": "9404",
+    "description": "Mattress supports; articles of bedding and similar furnishing (mattresses, pillows, sleeping bags)",
+    "type": "HSN"
+  },
+  {
+    "code": "9405",
+    "description": "Lamps and lighting fittings including searchlights and spotlights and parts thereof, not elsewhere specified or included (chandeliers, tube lights, LED batten)",
+    "type": "HSN"
+  },
+  {
+    "code": "9406",
+    "description": "Prefabricated buildings (porta cabins, prefab structures)",
+    "type": "HSN"
+  },
+  {
+    "code": "9503",
+    "description": "Tricycles, scooters, pedal cars and similar wheeled toys; dolls carriages; dolls; other toys; reduced-size (scale) models; puzzles of all kinds",
+    "type": "HSN"
+  },
+  {
+    "code": "9504",
+    "description": "Video games consoles and machines, table or parlour games, including pintables, billiards, special tables for casino games, automatic bowling alley equipment (chess sets, carrom boards, ludo)",
+    "type": "HSN"
+  },
+  {
+    "code": "9505",
+    "description": "Festival, carnival or other entertainment articles, including conjuring tricks and novelty jokes",
+    "type": "HSN"
+  },
+  {
+    "code": "9601",
+    "description": "Worked ivory, bone, tortoise-shell, horn, antlers, coral, mother-of-pearl and other animal carving material, and articles of these materials including articles obtained by moulding",
+    "type": "HSN"
+  },
+  {
+    "code": "9603",
+    "description": "Brooms, brushes (including brushes constituting parts of machines, appliances or vehicles), hand-operated mechanical floor sweepers, mops and feather dusters; prepared knots and tufts for broom or brush making; paint pads and rollers; squeegees",
+    "type": "HSN"
+  },
+  {
+    "code": "9608",
+    "description": "Ball point pens; felt tipped and other porous-tipped pens and markers; fountain pens, stylographs and other pens; duplicating styli; propelling or sliding pencils",
+    "type": "HSN"
+  },
+  {
+    "code": "9609",
+    "description": "Pencils (other than pencils of heading 96.08), crayons, pencil leads, pastels, drawing charcoals, writing or drawing chalks and tailors chalks",
+    "type": "HSN"
+  },
+  {
+    "code": "9612",
+    "description": "Typewriter or similar ribbons, inked or otherwise prepared for giving impressions, whether or not on spools or in cartridges; ink-pads, whether or not inked, with or without boxes (printer ink cartridges, toner)",
+    "type": "HSN"
+  },
+  {
+    "code": "9614",
+    "description": "Smoking pipes (including pipe bowls) and cigar or cigarette holders, and parts thereof",
+    "type": "HSN"
+  },
+  {
+    "code": "9617",
+    "description": "Vacuum flasks and other vacuum vessels, complete with cases; parts thereof other than glass inners (thermos flasks, vacuum bottles)",
+    "type": "HSN"
+  },
+  {
+    "code": "9619",
+    "description": "Sanitary towels (pads) and tampons, napkins and napkin liners for babies and similar articles, of any material (sanitary pads, diapers)",
+    "type": "HSN"
+  },
+  {
+    "code": "9620",
+    "description": "Monopods, bipods, tripods and similar articles (camera tripods, phone stands)",
+    "type": "HSN"
+  },
+
+  {
+    "code": "995411",
+    "description": "Construction services of single dwelling or multi-dwelling or multi-storeyed residential buildings",
+    "type": "SAC"
+  },
+  {
+    "code": "995412",
+    "description": "Construction services of other residential buildings such as old age homes, homeless shelters, hostels etc.",
+    "type": "SAC"
+  },
+  {
+    "code": "995413",
+    "description": "Construction services of industrial buildings such as buildings used for production activities, warehouses, workshop buildings",
+    "type": "SAC"
+  },
+  {
+    "code": "995414",
+    "description": "Construction services of commercial buildings such as office buildings, exhibition and marriage halls, malls, hotels, restaurants, airports, rail or road terminals",
+    "type": "SAC"
+  },
+  {
+    "code": "995415",
+    "description": "Construction services of other non-residential buildings such as educational institutions, hospitals, clinics, places of worship",
+    "type": "SAC"
+  },
+  {
+    "code": "995421",
+    "description": "General construction services of highways, streets, roads, railways and airfield runways, bridges and tunnels",
+    "type": "SAC"
+  },
+  {
+    "code": "995422",
+    "description": "General construction services of harbours, waterways, dams, water mains and lines, irrigation and other waterworks",
+    "type": "SAC"
+  },
+  {
+    "code": "995423",
+    "description": "General construction services of long-distance underground/overwater pipelines, communication and electric power lines",
+    "type": "SAC"
+  },
+  {
+    "code": "995424",
+    "description": "General construction services of local water and sewage pipelines, electricity and communication cables and related works",
+    "type": "SAC"
+  },
+  {
+    "code": "995425",
+    "description": "General construction services of mines and industrial plants",
+    "type": "SAC"
+  },
+  {
+    "code": "995426",
+    "description": "General construction services of power plants and its associated infrastructure",
+    "type": "SAC"
+  },
+  {
+    "code": "995427",
+    "description": "General construction services of outdoor sport and recreation facilities",
+    "type": "SAC"
+  },
+  {
+    "code": "995428",
+    "description": "Other general construction services not elsewhere classified",
+    "type": "SAC"
+  },
+  { "code": "995431", "description": "Demolition services", "type": "SAC" },
+  { "code": "995432", "description": "Site preparation services", "type": "SAC" },
+  { "code": "995433", "description": "Test drilling and boring services", "type": "SAC" },
+  {
+    "code": "995441",
+    "description": "Installation, assembly and erection services of prefabricated buildings",
+    "type": "SAC"
+  },
+  {
+    "code": "995442",
+    "description": "Installation, assembly and erection services of other structures and fabrications",
+    "type": "SAC"
+  },
+  {
+    "code": "995443",
+    "description": "Electrical installation services including electrical wiring and fitting services",
+    "type": "SAC"
+  },
+  { "code": "995444", "description": "Water plumbing and drain laying services", "type": "SAC" },
+  {
+    "code": "995445",
+    "description": "Insulation services (heat, sound or vibration)",
+    "type": "SAC"
+  },
+  { "code": "995446", "description": "Lift and escalator installation services", "type": "SAC" },
+  { "code": "995451", "description": "Plastering services", "type": "SAC" },
+  { "code": "995452", "description": "Joinery and carpentry services", "type": "SAC" },
+  {
+    "code": "995453",
+    "description": "Floor laying, tiling, carpeting and wallcovering services",
+    "type": "SAC"
+  },
+  { "code": "995454", "description": "Painting services", "type": "SAC" },
+  { "code": "995455", "description": "Glazing services", "type": "SAC" },
+  { "code": "995456", "description": "Landscaping and gardening services", "type": "SAC" },
+  {
+    "code": "995461",
+    "description": "Services involving Repair, alterations, additions, replacements, renovation, maintenance or remodelling of the buildings covered in 9954",
+    "type": "SAC"
+  },
+  {
+    "code": "996111",
+    "description": "Wholesale trade services of agricultural raw material, live animals, food, beverages and tobacco",
+    "type": "SAC"
+  },
+  {
+    "code": "996112",
+    "description": "Wholesale trade services of textiles, clothing and footwear",
+    "type": "SAC"
+  },
+  { "code": "996113", "description": "Wholesale trade services of household goods", "type": "SAC" },
+  {
+    "code": "996114",
+    "description": "Wholesale trade services of pharmaceutical and medical goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996115",
+    "description": "Wholesale trade services of computers, computer peripherals and software",
+    "type": "SAC"
+  },
+  {
+    "code": "996116",
+    "description": "Wholesale trade services of electronic and telecommunications equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "996117",
+    "description": "Wholesale trade services of agricultural machinery, equipment and supplies",
+    "type": "SAC"
+  },
+  {
+    "code": "996118",
+    "description": "Wholesale trade services of other machinery, equipment and supplies",
+    "type": "SAC"
+  },
+  {
+    "code": "996121",
+    "description": "Retail trade services of food, beverages and tobacco",
+    "type": "SAC"
+  },
+  {
+    "code": "996122",
+    "description": "Retail trade services of textiles, clothing, footwear and leather goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996123",
+    "description": "Retail trade services of household appliances and other consumer goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996124",
+    "description": "Retail trade services of pharmaceutical and medical goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996125",
+    "description": "Retail trade services of computers and related items",
+    "type": "SAC"
+  },
+  {
+    "code": "996126",
+    "description": "Retail trade services of motor vehicles and motorcycles, parts and accessories thereof",
+    "type": "SAC"
+  },
+  {
+    "code": "996130",
+    "description": "Commission agent services for other goods — merchandise brokerage",
+    "type": "SAC"
+  },
+  {
+    "code": "996161",
+    "description": "Retail trade services via electronic medium / Internet (e-commerce)",
+    "type": "SAC"
+  },
+  {
+    "code": "996211",
+    "description": "Local land transport services of goods including letters, parcels, live animals, household and office furniture and other goods (road freight transport)",
+    "type": "SAC"
+  },
+  { "code": "996212", "description": "Rail freight transport services", "type": "SAC" },
+  {
+    "code": "996213",
+    "description": "Refrigerated transport services by road or rail (cold chain logistics)",
+    "type": "SAC"
+  },
+  {
+    "code": "996214",
+    "description": "Bulk liquid or gas transport services by road or rail",
+    "type": "SAC"
+  },
+  {
+    "code": "996221",
+    "description": "Inland water transport services of goods by vessels operating on rivers, canals, lakes etc.",
+    "type": "SAC"
+  },
+  {
+    "code": "996231",
+    "description": "Sea and coastal water transport services of goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996241",
+    "description": "Air transport services of letters and parcels and other goods",
+    "type": "SAC"
+  },
+  {
+    "code": "996311",
+    "description": "Room or unit accommodation services provided by Hotels, INN, Guest House, Club etc.",
+    "type": "SAC"
+  },
+  { "code": "996312", "description": "Camp site services", "type": "SAC" },
+  { "code": "996313", "description": "Recreational and vacation camp services", "type": "SAC" },
+  {
+    "code": "996321",
+    "description": "Room or unit accommodation services provided on time-share basis",
+    "type": "SAC"
+  },
+  {
+    "code": "996331",
+    "description": "Services provided by restaurants, cafes and similar eating facilities",
+    "type": "SAC"
+  },
+  {
+    "code": "996332",
+    "description": "Services provided by Hotels, INN, Guest House, Club etc. including room accommodation services with catering services",
+    "type": "SAC"
+  },
+  {
+    "code": "996333",
+    "description": "Catering services in exhibition halls, events, marriage halls, banquet halls, open air theatres",
+    "type": "SAC"
+  },
+  { "code": "996334", "description": "Takeaway food services", "type": "SAC" },
+  {
+    "code": "996335",
+    "description": "Catering services on contract basis for companies, institutions, offices, railways, airlines, ships etc.",
+    "type": "SAC"
+  },
+  { "code": "996411", "description": "Rail passenger transport services", "type": "SAC" },
+  {
+    "code": "996421",
+    "description": "Urban or suburban or inter-urban regular passenger transport services over regular routes and on regular timetables (bus, metro, local train services)",
+    "type": "SAC"
+  },
+  {
+    "code": "996422",
+    "description": "Long-distance passenger transport services by road (inter-city bus, coaches)",
+    "type": "SAC"
+  },
+  {
+    "code": "996423",
+    "description": "Taxi services including radio taxi and cab aggregator services (Ola, Uber, cab services)",
+    "type": "SAC"
+  },
+  {
+    "code": "996424",
+    "description": "Non-scheduled charter or excursion coach and bus services",
+    "type": "SAC"
+  },
+  {
+    "code": "996425",
+    "description": "Other road transportation services (auto-rickshaw, cycle-rickshaw services)",
+    "type": "SAC"
+  },
+  {
+    "code": "996511",
+    "description": "Postal services including letter delivery by post (speed post, registered post)",
+    "type": "SAC"
+  },
+  {
+    "code": "996512",
+    "description": "Courier services — air, ground, water based local, urban and national (couriers — Blue Dart, DTDC, Delhivery)",
+    "type": "SAC"
+  },
+  { "code": "996521", "description": "Electricity distribution services", "type": "SAC" },
+  {
+    "code": "996522",
+    "description": "Gas distribution services (piped gas, city gas distribution)",
+    "type": "SAC"
+  },
+  {
+    "code": "996531",
+    "description": "Collection services of industrial or manufacturing waste (waste management services)",
+    "type": "SAC"
+  },
+  {
+    "code": "996532",
+    "description": "Collection services of other non-hazardous waste and recyclables (e-waste, paper, scrap collection)",
+    "type": "SAC"
+  },
+  { "code": "996533", "description": "Sewerage and sewage treatment services", "type": "SAC" },
+  {
+    "code": "996611",
+    "description": "Financial services (including banking, insurance, stock exchange, commodity exchange, financial leasing, other financial services)",
+    "type": "SAC"
+  },
+  {
+    "code": "996621",
+    "description": "Life insurance services (term insurance, whole life insurance, endowment policies)",
+    "type": "SAC"
+  },
+  {
+    "code": "996622",
+    "description": "Accident and health insurance services (mediclaim, personal accident insurance)",
+    "type": "SAC"
+  },
+  { "code": "996623", "description": "Motor vehicle insurance services", "type": "SAC" },
+  {
+    "code": "996624",
+    "description": "Marine, aviation and other transport insurance services",
+    "type": "SAC"
+  },
+  {
+    "code": "996625",
+    "description": "Other property insurance services (fire insurance, shopkeeper policy)",
+    "type": "SAC"
+  },
+  {
+    "code": "996631",
+    "description": "Foreign exchange services (currency exchange, forex transactions)",
+    "type": "SAC"
+  },
+  {
+    "code": "996641",
+    "description": "ATM operation, maintenance and cash management services",
+    "type": "SAC"
+  },
+  {
+    "code": "996651",
+    "description": "Services related to investment banking such as mergers and acquisition services, corporate finance and venture capital services",
+    "type": "SAC"
+  },
+  {
+    "code": "996711",
+    "description": "Real estate services involving owned or leased property (rental of own residential property)",
+    "type": "SAC"
+  },
+  {
+    "code": "996712",
+    "description": "Real estate services of commercial properties on owned or leased basis (rental of commercial property)",
+    "type": "SAC"
+  },
+  {
+    "code": "996713",
+    "description": "Trade services of buildings (sale of residential and commercial property)",
+    "type": "SAC"
+  },
+  {
+    "code": "997111",
+    "description": "Legal advisory and representation services concerning criminal law (legal services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997112",
+    "description": "Legal advisory and representation services concerning other fields of law (civil, family, property law, IPR)",
+    "type": "SAC"
+  },
+  {
+    "code": "997113",
+    "description": "Legal documentation and certification services (notary, stamp duty services)",
+    "type": "SAC"
+  },
+  { "code": "997114", "description": "Arbitration and conciliation services", "type": "SAC" },
+  { "code": "997121", "description": "Accounting and bookkeeping services", "type": "SAC" },
+  {
+    "code": "997122",
+    "description": "Auditing services (statutory audit, internal audit)",
+    "type": "SAC"
+  },
+  { "code": "997123", "description": "Payroll services", "type": "SAC" },
+  {
+    "code": "997124",
+    "description": "Other similar services not elsewhere classified (management accounting, financial reporting, tax preparation)",
+    "type": "SAC"
+  },
+  {
+    "code": "997131",
+    "description": "Tax advisory services (GST compliance, income tax advisory, tax planning)",
+    "type": "SAC"
+  },
+  {
+    "code": "997132",
+    "description": "Other similar services not elsewhere classified",
+    "type": "SAC"
+  },
+  { "code": "997141", "description": "Insolvency and receivership services", "type": "SAC" },
+  { "code": "997151", "description": "Public relations services", "type": "SAC" },
+  {
+    "code": "997152",
+    "description": "Business consulting services including public relations services (management consultancy)",
+    "type": "SAC"
+  },
+  {
+    "code": "997153",
+    "description": "Business strategy services (strategy consulting)",
+    "type": "SAC"
+  },
+  { "code": "997154", "description": "Business process management services", "type": "SAC" },
+  {
+    "code": "997161",
+    "description": "Human resource management/outsourcing services (HR consulting, staffing, manpower supply)",
+    "type": "SAC"
+  },
+  {
+    "code": "997211",
+    "description": "Real estate agent services for residential buildings",
+    "type": "SAC"
+  },
+  {
+    "code": "997212",
+    "description": "Real estate agent services for non-residential buildings (commercial property broking)",
+    "type": "SAC"
+  },
+  {
+    "code": "997213",
+    "description": "Real estate agent services for land and development sites",
+    "type": "SAC"
+  },
+  {
+    "code": "997221",
+    "description": "Property management services on a fee or contract basis for residential properties",
+    "type": "SAC"
+  },
+  {
+    "code": "997222",
+    "description": "Property management services on a fee or contract basis for non-residential properties",
+    "type": "SAC"
+  },
+  {
+    "code": "997311",
+    "description": "Research and experimental development services in natural sciences and engineering",
+    "type": "SAC"
+  },
+  {
+    "code": "997312",
+    "description": "Research and experimental development services in social sciences and humanities",
+    "type": "SAC"
+  },
+  {
+    "code": "997313",
+    "description": "Market research services (market survey, consumer research)",
+    "type": "SAC"
+  },
+  {
+    "code": "997321",
+    "description": "Advertising services (ad campaigns, media buying, hoardings, newspaper and TV ads)",
+    "type": "SAC"
+  },
+  {
+    "code": "997322",
+    "description": "Digital advertising services (online advertising, search engine marketing, social media ads)",
+    "type": "SAC"
+  },
+  {
+    "code": "997323",
+    "description": "Display advertising design services (graphic design for ads)",
+    "type": "SAC"
+  },
+  {
+    "code": "997331",
+    "description": "Photographic services for commercial purposes (product photography, food photography)",
+    "type": "SAC"
+  },
+  {
+    "code": "997332",
+    "description": "Event photography, wedding photography and videography services",
+    "type": "SAC"
+  },
+  {
+    "code": "997341",
+    "description": "Specialty design services including interior design (graphic design, logo design, UI/UX design, industrial design)",
+    "type": "SAC"
+  },
+  {
+    "code": "997342",
+    "description": "Fashion, textile and apparel design services",
+    "type": "SAC"
+  },
+  { "code": "997351", "description": "Translation and interpretation services", "type": "SAC" },
+  {
+    "code": "997411",
+    "description": "Scientific and technical consulting services (engineering consultancy)",
+    "type": "SAC"
+  },
+  {
+    "code": "997412",
+    "description": "Architectural services and urban planning services (architects, town planning)",
+    "type": "SAC"
+  },
+  {
+    "code": "997413",
+    "description": "Engineering advisory and design services (structural engineering, MEP engineering)",
+    "type": "SAC"
+  },
+  {
+    "code": "997414",
+    "description": "Technical testing and analysis services (quality testing, laboratory testing, calibration)",
+    "type": "SAC"
+  },
+  {
+    "code": "997511",
+    "description": "Equipment rental and operating leasing services (construction equipment hire, machine hire)",
+    "type": "SAC"
+  },
+  {
+    "code": "997512",
+    "description": "Rental or leasing services involving own or leased non-residential property",
+    "type": "SAC"
+  },
+  {
+    "code": "997521",
+    "description": "Leasing or rental services concerning computers and peripheral equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997522",
+    "description": "Leasing or rental services concerning telecommunications equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997523",
+    "description": "Leasing or rental services concerning other machinery and equipment with or without operator",
+    "type": "SAC"
+  },
+  {
+    "code": "997611",
+    "description": "Employment and labour supply services including recruitment, placement and staffing services",
+    "type": "SAC"
+  },
+  { "code": "997612", "description": "Temporary staffing services", "type": "SAC" },
+  { "code": "997613", "description": "Co-employment staffing services", "type": "SAC" },
+  {
+    "code": "997621",
+    "description": "Travel agency and tour operator services (travel agents, tour operators, holiday packages)",
+    "type": "SAC"
+  },
+  {
+    "code": "997622",
+    "description": "Tour operator services (domestic and international tour packages)",
+    "type": "SAC"
+  },
+  { "code": "997623", "description": "Tourist guide services", "type": "SAC" },
+  { "code": "997631", "description": "Security guard and patrol services", "type": "SAC" },
+  { "code": "997632", "description": "Armoured car services", "type": "SAC" },
+  {
+    "code": "997633",
+    "description": "Investigation services (detective, private investigation)",
+    "type": "SAC"
+  },
+  {
+    "code": "997641",
+    "description": "Cleaning services for buildings and industrial plants (housekeeping, office cleaning, facility management)",
+    "type": "SAC"
+  },
+  {
+    "code": "997642",
+    "description": "Cleaning services for industrial plants and machineries",
+    "type": "SAC"
+  },
+  {
+    "code": "997643",
+    "description": "Disinfecting and exterminating services (pest control)",
+    "type": "SAC"
+  },
+  { "code": "997651", "description": "Packaging services", "type": "SAC" },
+  { "code": "997661", "description": "Satellite telecommunications services", "type": "SAC" },
+  {
+    "code": "997711",
+    "description": "Maintenance and repair services of computers and peripherals (computer repair services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997712",
+    "description": "Maintenance and repair services of telecommunications equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997713",
+    "description": "Maintenance and repair services of household appliances and home and garden equipment (TV repair, AC servicing, washing machine repair)",
+    "type": "SAC"
+  },
+  {
+    "code": "997714",
+    "description": "Maintenance and repair services of motor vehicles (automobile workshop, car service, two-wheeler service)",
+    "type": "SAC"
+  },
+  {
+    "code": "997715",
+    "description": "Maintenance and repair services of other transport equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997716",
+    "description": "Maintenance and repair services of other machinery and equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997721",
+    "description": "Installation services of industrial machinery and equipment",
+    "type": "SAC"
+  },
+  {
+    "code": "997722",
+    "description": "Installation services of electrical equipment and devices",
+    "type": "SAC"
+  },
+  {
+    "code": "997811",
+    "description": "Educational support services for pre-primary education (playschool, nursery)",
+    "type": "SAC"
+  },
+  {
+    "code": "997812",
+    "description": "Educational support services for primary education (primary school services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997813",
+    "description": "Educational support services for secondary education (secondary school services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997814",
+    "description": "Educational support services for higher education (college, university education services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997815",
+    "description": "Educational support services for vocational training and adult learning (ITI, skill development, vocational courses)",
+    "type": "SAC"
+  },
+  {
+    "code": "997821",
+    "description": "Commercial training and coaching services (coaching classes, tuition, test prep)",
+    "type": "SAC"
+  },
+  {
+    "code": "997822",
+    "description": "Computer training and coaching services (computer training institutes)",
+    "type": "SAC"
+  },
+  {
+    "code": "997823",
+    "description": "Management and other specialist training and coaching services (MBA coaching, professional training)",
+    "type": "SAC"
+  },
+  { "code": "997824", "description": "Language training services", "type": "SAC" },
+  {
+    "code": "997825",
+    "description": "Music, dance, drama, arts and crafts training and coaching services",
+    "type": "SAC"
+  },
+  {
+    "code": "997826",
+    "description": "Fitness, recreation sports, games training and coaching services (gym, yoga, sports coaching)",
+    "type": "SAC"
+  },
+  {
+    "code": "997911",
+    "description": "Library services (public and private library subscription services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997912",
+    "description": "Archives and museum services (museum entry fees)",
+    "type": "SAC"
+  },
+  {
+    "code": "997913",
+    "description": "Botanical and zoological garden services (zoo tickets, parks)",
+    "type": "SAC"
+  },
+  {
+    "code": "997921",
+    "description": "Performing arts services (stage performances, concerts, cultural shows)",
+    "type": "SAC"
+  },
+  {
+    "code": "997922",
+    "description": "Promotion and organisation of theatrical, live music and other live entertainment events (event management services)",
+    "type": "SAC"
+  },
+  {
+    "code": "997923",
+    "description": "Film production services and other film and video production services",
+    "type": "SAC"
+  },
+  {
+    "code": "997924",
+    "description": "Motion picture, videotape, television programme, post production services",
+    "type": "SAC"
+  },
+  { "code": "997931", "description": "Amusement park and theme park services", "type": "SAC" },
+  { "code": "997932", "description": "Gambling and lottery services", "type": "SAC" },
+  {
+    "code": "997933",
+    "description": "Sports and recreational sports services (sports clubs, gymnasium, sports events)",
+    "type": "SAC"
+  },
+  {
+    "code": "997941",
+    "description": "Health care services by clinical establishments — hospitals, clinics, nursing homes etc.",
+    "type": "SAC"
+  },
+  {
+    "code": "997942",
+    "description": "Medical and dental services of licensed practitioners",
+    "type": "SAC"
+  },
+  {
+    "code": "997943",
+    "description": "Paramedical services (nursing services, midwife services)",
+    "type": "SAC"
+  },
+  { "code": "997944", "description": "Ambulance services", "type": "SAC" },
+  {
+    "code": "997945",
+    "description": "Mental health and substance abuse treatment services",
+    "type": "SAC"
+  },
+  {
+    "code": "997946",
+    "description": "Veterinary services for pet animals (pet clinics, veterinary hospitals)",
+    "type": "SAC"
+  },
+  {
+    "code": "997951",
+    "description": "Residential care services for the elderly and persons with disabilities (old age homes, care homes)",
+    "type": "SAC"
+  },
+  {
+    "code": "997961",
+    "description": "Social protection services for the elderly and persons with disabilities",
+    "type": "SAC"
+  },
+  {
+    "code": "998111",
+    "description": "Computer programming services (software development, mobile app development, custom software)",
+    "type": "SAC"
+  },
+  {
+    "code": "998112",
+    "description": "Computer systems design and related services (system integration, enterprise software implementation)",
+    "type": "SAC"
+  },
+  {
+    "code": "998113",
+    "description": "Computer facilities management services (AMC, IT infrastructure management, managed services)",
+    "type": "SAC"
+  },
+  {
+    "code": "998114",
+    "description": "Information technology consulting and support services (IT consulting)",
+    "type": "SAC"
+  },
+  {
+    "code": "998115",
+    "description": "Hosting and information technology infrastructure provisioning services (web hosting, cloud services, data centre services)",
+    "type": "SAC"
+  },
+  {
+    "code": "998116",
+    "description": "IT infrastructure and network management services (NOC services, network management)",
+    "type": "SAC"
+  },
+  {
+    "code": "998211",
+    "description": "Publishing, on a fee or contract basis, of books, periodicals and other publishing services",
+    "type": "SAC"
+  },
+  {
+    "code": "998212",
+    "description": "On-line content publishing and distribution services",
+    "type": "SAC"
+  },
+  {
+    "code": "998213",
+    "description": "Software publishing services (off-the-shelf software, ERP, CRM software licensing)",
+    "type": "SAC"
+  },
+  {
+    "code": "998221",
+    "description": "Broadcasting services — transmission of TV programmes (cable TV, DTH services)",
+    "type": "SAC"
+  },
+  { "code": "998222", "description": "Radio broadcasting services", "type": "SAC" },
+  {
+    "code": "998311",
+    "description": "Telephone and other telecommunications services (telecom services — fixed line, mobile)",
+    "type": "SAC"
+  },
+  {
+    "code": "998312",
+    "description": "Internet telecommunications services (broadband, internet access services)",
+    "type": "SAC"
+  },
+  { "code": "998313", "description": "Facsimile telecommunications services", "type": "SAC" },
+  {
+    "code": "998314",
+    "description": "Private network telecommunications services (leased line, MPLS, VSAT)",
+    "type": "SAC"
+  },
+  {
+    "code": "998315",
+    "description": "Data transmission services (data centre, cloud hosting, CDN)",
+    "type": "SAC"
+  },
+  { "code": "998316", "description": "Paging services", "type": "SAC" },
+  {
+    "code": "998411",
+    "description": "General cleaning services (office cleaning, building maintenance, janitorial services)",
+    "type": "SAC"
+  },
+  {
+    "code": "998511",
+    "description": "Event management services including sports events, cultural programmes, exhibitions, conferences",
+    "type": "SAC"
+  },
+  {
+    "code": "998512",
+    "description": "Decoration services for events and functions",
+    "type": "SAC"
+  },
+  { "code": "998513", "description": "Sound and lighting services for events", "type": "SAC" },
+  { "code": "999111", "description": "Central government services", "type": "SAC" },
+  { "code": "999112", "description": "State government services", "type": "SAC" },
+  {
+    "code": "999113",
+    "description": "Local government services (panchayat, municipal corporation services)",
+    "type": "SAC"
+  },
+  { "code": "999121", "description": "Foreign affairs services", "type": "SAC" },
+  { "code": "999131", "description": "Defence services", "type": "SAC" },
+  {
+    "code": "999141",
+    "description": "Public order and safety services (police, fire brigade)",
+    "type": "SAC"
+  },
+  {
+    "code": "999211",
+    "description": "Primary education services (school education — government)",
+    "type": "SAC"
+  },
+  {
+    "code": "999212",
+    "description": "Secondary and higher secondary education services",
+    "type": "SAC"
+  },
+  {
+    "code": "999311",
+    "description": "Compulsory social security services (EPF, ESI, NPS contributions)",
+    "type": "SAC"
+  },
+  { "code": "999411", "description": "Human health services of government", "type": "SAC" },
+  {
+    "code": "999511",
+    "description": "Sewage, garbage, refuse disposal and sanitation services of government",
+    "type": "SAC"
+  },
+  {
+    "code": "999611",
+    "description": "Services of membership organisations — religious, political, trade unions, professional associations (chambers of commerce, bar councils)",
+    "type": "SAC"
+  },
+  {
+    "code": "999711",
+    "description": "Services of households as employers of domestic personnel (domestic maid, cook, driver)",
+    "type": "SAC"
+  },
+  {
+    "code": "999900",
+    "description": "Services by way of tolerating non-performance of a contract for which consideration is received as cancellation charges (penalty, forfeiture of deposit)",
+    "type": "SAC"
+  }
+]

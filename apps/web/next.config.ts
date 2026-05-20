@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { withSentryConfig } from '@sentry/nextjs'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -17,7 +18,15 @@ const withPWA = withPWAInit({
   skipWaiting: true,
 })
 
-const nextConfig: NextConfig = {}
+const nextConfig: NextConfig = {
+  webpack(config) {
+    config.resolve.alias = {
+      ...(config.resolve.alias as Record<string, string>),
+      '@shulka/rules': path.resolve(__dirname, '../../rules'),
+    }
+    return config
+  },
+}
 
 const combinedConfig = withPWA(withNextIntl(nextConfig))
 
