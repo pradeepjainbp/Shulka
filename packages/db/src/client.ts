@@ -18,10 +18,14 @@ let _db: DrizzleDb | undefined
 
 export const db: DrizzleDb = new Proxy({} as DrizzleDb, {
   get(_target, prop, receiver) {
-    if (_db === undefined) {
-      _db = createDb()
-    }
+    if (_db === undefined) _db = createDb()
     return Reflect.get(_db, prop, receiver)
+  },
+  // Required so drizzle-orm's is() dialect check walks the real prototype chain.
+  // Without this, instanceof/prototype checks see Object.prototype and fail.
+  getPrototypeOf(_target) {
+    if (_db === undefined) _db = createDb()
+    return Object.getPrototypeOf(_db)
   },
 })
 
