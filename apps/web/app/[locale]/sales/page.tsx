@@ -184,9 +184,10 @@ export default async function SalesInvoicesPage({
             {/* Rows */}
             <div className="divide-y divide-border">
               {rows.map((inv) => (
-                <div
+                <Link
                   key={inv.id}
-                  className="flex flex-col sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-1 sm:gap-4 sm:items-center px-5 py-4 hover:bg-surface transition-colors duration-[150ms]"
+                  href={`/${locale}/sales/${inv.id}`}
+                  className="flex flex-col sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-1 sm:gap-4 sm:items-center px-5 py-4 hover:bg-surface transition-colors duration-[150ms] block"
                 >
                   {/* Invoice number */}
                   <div>
@@ -223,7 +224,7 @@ export default async function SalesInvoicesPage({
                   <div className="sm:flex sm:justify-center">
                     <StatusPill status={inv.status} />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 

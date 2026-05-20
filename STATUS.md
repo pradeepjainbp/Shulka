@@ -27,7 +27,7 @@
 
 ## Blockers
 
-- [ ] **Migration 0006 not yet applied to Neon** — must apply `packages/db/drizzle/0006_sales_invoices.sql` manually via Neon SQL Editor, then INSERT into `drizzle.__drizzle_migrations`. SHA-256: `53796f25cbd91d7e2a9425b7e79f58e79d9b242d698f57ae092e666929facc23`, when: `1748000000000`.
+- [x] ~~Migration 0006 applied to Neon~~ ✓
 - [ ] **CF Pages env vars missing** — Add to CF Pages dashboard before next deploy:
   - SENTRY_AUTH_TOKEN, SENTRY_ORG=shulka, SENTRY_PROJECT=shulka (for source map upload during build)
   - NEXT_PUBLIC_SENTRY_DSN (same value as SENTRY_DSN — needed for client-side error capture)

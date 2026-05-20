@@ -451,8 +451,10 @@ export function SalesInvoiceForm({ businessId, businessStateCode, parties, local
         return
       }
 
+      const saved = (await res.json()) as { invoice?: { id?: string } }
       clearDraft(draftKey)
-      router.push(`/${locale}/sales`)
+      const invoiceId = saved.invoice?.id
+      router.push(invoiceId ? `/${locale}/sales/${invoiceId}` : `/${locale}/sales`)
     } catch {
       setError('Network error. Please check your connection and try again.')
       setSaving(false)
