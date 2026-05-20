@@ -418,3 +418,46 @@ conventions apply everywhere in this project.
 ---
 
 *Last updated: 2026-05-19 — Phase 0, P0-09 complete. 24 learnings total.*
+
+---
+
+### 25. Drizzle self-referential FK requires `AnyPgColumn` return type annotation
+
+**Problem:** `sales_invoices.reversedByInvoiceId` references the same table via `.references(() => salesInvoices.id)`. TypeScript errors TS7022/TS7024 ("type aliases circularly references itself") appear throughout the codebase when importing the table — the inferred type of `salesInvoices` resolves to `any`, contaminating all `.returning()` results.
+
+**Root cause:** TypeScript can't infer the return type of the arrow `() => salesInvoices.id` during table construction because the table object isn't fully typed yet.
+
+**Fix:** Import `AnyPgColumn` from `drizzle-orm/pg-core` and annotate the callback return type explicitly:
+```ts
+import { AnyPgColumn, ... } from 'drizzle-orm/pg-core'
+reversedByInvoiceId: uuid('reversed_by_invoice_id')
+  .references((): AnyPgColumn => salesInvoices.id),
+```
+
+**Why it works:** `AnyPgColumn` breaks the circular inference by providing an explicit type for the callback return, allowing TypeScript to type the table without recursion.
+
+---
+
+### 26. Biome `noLabelWithoutControl` fires on Radix UI `<Select>` labels
+
+**Problem:** `lint/a11y/noLabelWithoutControl` fires on every `<label>` adjacent to a Radix UI `<Select>` component because Radix renders a `<button>` (not a native `<select>`) as the trigger — there's no `id` for `htmlFor` to reference.
+
+**Root cause:** Biome enforces the HTML spec: `<label>` must have an associated control via `htmlFor` or by wrapping the input. Radix Select uses a composite widget pattern that doesn't expose a native input id.
+
+**Fix:** Use `<p>` with the same Tailwind class instead of `<label>` for visual labels that describe Radix UI components or custom comboboxes. The components already have accessible text via `SelectValue`/`aria-label` internally.
+
+```tsx
+// Before (lint error):
+<label className="text-sm font-medium text-ink">Party</label>
+<Select ...>
+
+// After (clean):
+<p className="text-sm font-medium text-ink">Party</p>
+<Select ...>
+```
+
+**Why it works:** `<p>` carries no implicit ARIA role that requires an associated control, so the lint rule doesn't fire. For actual `<input>` elements, still use `<label htmlFor="...">` with a matching `id`.
+
+---
+
+*Last updated: 2026-05-20 — Phase 2, P2-01 complete. 26 learnings total.*

@@ -339,3 +339,23 @@ The `users` and `accounts` tables are still created (for OAuth account linking a
 **Note:** PHASES.md P1-06 and ARCHITECTURE.md §3 referenced "ADR-8" for this decision. ADR-8 is already taken (invoice split). This is ADR-15.
 
 ---
+
+## ADR-16 | 2026-05-20 | Two-step draft→finalise flow for sales invoices
+
+**Context:** When creating a sales invoice, two distinct operations must happen atomically at finalisation: INSERT rule_resolutions (one per item×tax_kind) and INSERT audit_events. These must only run when the invoice is ready for submission, not on every auto-save. GSTR-1 filing depends on final invoices only.
+
+**Decision:** Invoice creation is a two-step flow:
+1. `POST /api/sales` — saves invoice + items in `draft` status. No rule_resolutions, no audit_event written. Safe to call on auto-save.
+2. `PATCH /api/sales/:id` with `{ action: 'finalise' }` — upgrades status to `final` and runs the dual-write (rule_resolutions + audit_event) in a single transaction.
+
+Once finalised, monetary fields and line items are immutable (Sacred Rule 3). Only status, notes, and payment metadata may change.
+
+**Consequences:**
+- Draft auto-save is cheap (just an upsert, no downstream writes).
+- The finalise transaction is atomic: if rule_resolutions insertion fails, the status update rolls back and no partial audit trail is created.
+- GSTR-1 queries filter on `status = 'final'` — draft invoices are invisible to reporting.
+- The UI must prevent accidental finalisation with a clear "Finalise Invoice" button separate from "Save as Draft".
+
+**Alternatives considered:**
+- Single-step (save = finalise immediately): rejected — makes auto-save dangerous and prevents draft review before submission.
+- Soft finalise without DB transaction: rejected — partial dual-write creates audit trail gaps that violate Sacred Rule 3.
