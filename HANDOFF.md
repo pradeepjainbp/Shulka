@@ -5,6 +5,67 @@
 
 ---
 
+## Session: 2026-05-20 — P1-02: Business entity creation (Sonnet)
+
+### What this session did
+
+**P1-02 is complete.**
+
+- **DB migration `0003_noisy_ted_forrester.sql`** (applied to live Neon): creates `businesses` table with `business_type` enum, FK to `users.id`, GSTIN unique index, owner + deletedAt indexes.
+
+- **`packages/db/src/schema/businesses.ts`** — new schema file: `businessTypeEnum`, `businesses` table, `Business` / `NewBusiness` types. `gstin` is nullable unique (unregistered businesses may lack a GSTIN; Postgres unique index allows multiple NULLs by design).
+
+- **`packages/shared-types/src/api/businesses.ts`** — `BusinessResponseSchema` + `BusinessResponse` type (Zod). Exported from `packages/shared-types/src/index.ts`.
+
+- **`apps/web/app/api/businesses/route.ts`** — `GET /api/businesses` (list non-deleted businesses for current user) + `POST /api/businesses` (create). GSTIN validated structurally (15-char regex) + Mod-36 checksum inline. PAN validated via regex. Wrapped with `withErrorReporting`.
+
+- **`apps/web/app/api/businesses/[id]/route.ts`** — `GET /api/businesses/:id` + `PATCH /api/businesses/:id`. Ownership check before any mutation (fetch by id + ownerUserId + deletedAt IS NULL). Next.js 16 async params (`await ctx.params`) used.
+
+- **`apps/web/app/[locale]/businesses/new/page.tsx`** — Client component creation form: name, legal name, business type (Select), GSTIN (live validation badge — green tick / red warning at 15 chars), PAN (auto-uppercase), state (Select with all 38 Indian state/UT GST codes), registration date (native `<input type="date">`), composition scheme (Checkbox). POSTs to `/api/businesses`, redirects to `/en/businesses` on success.
+
+- **`apps/web/app/[locale]/businesses/page.tsx`** — Server component list: queries DB directly, shows business cards (name, type badge, GSTIN monospace, state), empty state with CTA, "Add Business" button.
+
+- **`apps/web/app/[locale]/dashboard/page.tsx`** — Updated: added "My Businesses" section with DB count query. Zero state shows "Create your first business" CTA; non-zero shows count + "Manage businesses →" link.
+
+- **`apps/web/components/ui/select.tsx`** + **`checkbox.tsx`** — New shadcn-style components via `@radix-ui/react-select` + `@radix-ui/react-checkbox`. Added to `apps/web/package.json`.
+
+**All checks green:** Biome clean, typecheck clean, unit tests 1/1. Migration applied to live Neon.
+
+### What's next
+
+**P1-03 — GSTIN validator (pure TypeScript util).**
+
+Read PHASES.md §P1-03. Summary:
+- Create `packages/gst-engine/src/gstin-validator.ts` — pure TS, zero deps.
+- Validates: 15-char structure, state code (first 2 digits ∈ valid GST state codes), PAN embedded (chars 3–12 match PAN format), Mod-36 checksum digit.
+- **Acceptance: 50+ valid GSTINs + 50+ invalid GSTINs in unit tests, 100% coverage on this module.**
+- The inline `validateGstin` in the two route files + UI form should be replaced to import from this util once it exists (a P1-03 follow-up task — mark this explicitly).
+
+The `gst-engine` package already exists at `packages/gst-engine/` — check what's already there before creating new files.
+
+### Open questions for Pradeep
+
+1. **Onboarding chain**: Currently after role selection the user goes to `/en/dashboard`, which now shows a "Create your first business" CTA. The PHASES.md open question was whether to force business creation inline during onboarding (role → business form). Current implementation leaves it at dashboard level. Is this acceptable, or should the middleware also redirect business_owner users with 0 businesses to `/en/businesses/new`?
+
+2. **CA flow for businesses**: CAs don't own businesses — the `businesses` page currently queries by `ownerUserId`, so CAs will always see an empty list. Should `/en/businesses/new` be hidden / replaced for CAs? (The `ca_business_links` table for CA←→client relationships doesn't exist yet — that's a later ticket.)
+
+3. **Edit page**: `/en/businesses/:id/edit` is linked from the list but the page doesn't exist yet (only the `PATCH` API exists). Should this be added as part of P1-02 cleanup or deferred to after P1-03?
+
+4. **Deploy to production?** Migration is on live Neon already. CF Pages deploy would expose the new routes.
+
+### Notes / context
+
+- The GSTIN Mod-36 checksum is duplicated in three places: `route.ts`, `[id]/route.ts`, and `new/page.tsx`. This is intentional for P1-02 — P1-03 will consolidate into `packages/gst-engine/src/gstin-validator.ts` and the routes/form should import from there.
+- `@radix-ui/react-select` and `@radix-ui/react-checkbox` were added to `apps/web/package.json`. These are new peer-level deps — no CF Pages issues expected (they're pure client-side).
+- The `businesses` table allows `gstin = NULL` (unregistered businesses). The unique index on `gstin` uses `UNIQUE INDEX` (not constraint), which lets multiple NULL values coexist — correct Postgres behaviour for nullable unique fields.
+- `address` is stored as `jsonb { text: string }` for now (simple free-text). Full structured address (line1/line2/city/pin) can be added when invoicing requires it (Phase 2).
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. No financial computation. No audit log mutation (P1-08 will retroactively add `business.created` event — noted in PHASES.md). No money fields. All services on free tier. DB migration is additive (new table + enum).
+
+---
+
 ## Session: 2026-05-19 — P1-01: Role selection + auth guard (Sonnet)
 
 ### What this session did
