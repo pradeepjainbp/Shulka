@@ -12,6 +12,7 @@ export const BusinessResponseSchema = z.object({
   registrationDate: z.string().nullable(),
   type: z.enum(['proprietorship', 'partnership', 'llp', 'pvt_ltd', 'public_ltd', 'huf', 'other']),
   compositionScheme: z.boolean(),
+  upiVpa: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
 })

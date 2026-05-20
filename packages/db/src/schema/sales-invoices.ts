@@ -80,6 +80,8 @@ export const salesInvoices = pgTable(
     ),
 
     pdfR2Key: text('pdf_r2_key'),
+    pdfShareToken: text('pdf_share_token'),
+    pdfShareTokenExpiresAt: timestamp('pdf_share_token_expires_at', { withTimezone: true }),
 
     createdBy: uuid('created_by')
       .notNull()

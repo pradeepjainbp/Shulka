@@ -25,6 +25,7 @@ const PatchBusinessSchema = z.object({
     .enum(['proprietorship', 'partnership', 'llp', 'pvt_ltd', 'public_ltd', 'huf', 'other'])
     .optional(),
   compositionScheme: z.boolean().optional(),
+  upiVpa: z.string().optional(),
 })
 
 type RouteContext = { params: Promise<{ id: string }> }
@@ -62,6 +63,7 @@ export const GET = withErrorReporting(async (_req: NextRequest, ctx: unknown) =>
     registrationDate: row.registrationDate ?? null,
     type: row.type,
     compositionScheme: row.compositionScheme,
+    upiVpa: row.upiVpa ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   })
@@ -125,6 +127,7 @@ export const PATCH = withErrorReporting(async (req: NextRequest, ctx: unknown) =
     registrationDate: row.registrationDate ?? null,
     type: row.type,
     compositionScheme: row.compositionScheme,
+    upiVpa: row.upiVpa ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   })

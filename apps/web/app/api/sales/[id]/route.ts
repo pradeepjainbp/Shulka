@@ -13,10 +13,13 @@
  */
 
 import { auth } from '@/auth'
+import { generateInvoicePdf } from '@/lib/pdf/invoice-pdf'
+import { getInvoiceBucket } from '@/lib/r2'
 import { withErrorReporting } from '@/lib/with-error-reporting'
 import {
   businesses,
   db,
+  parties,
   recordEvent,
   ruleResolutions,
   salesInvoiceItems,
@@ -316,6 +319,58 @@ async function finaliseInvoice(invoiceId: string, userId: string): Promise<NextR
     },
     ...(result.ruleIds.length > 0 ? { ruleIds: result.ruleIds } : {}),
   })
+
+  // --- PDF generation (best-effort — do not fail finalise if PDF fails) ---
+  try {
+    const [biz] = await db
+      .select()
+      .from(businesses)
+      .where(eq(businesses.id, result.finalInvoice.businessId))
+      .limit(1)
+
+    const [party] = await db
+      .select()
+      .from(parties)
+      .where(eq(parties.id, result.finalInvoice.partyId))
+      .limit(1)
+
+    if (biz && party) {
+      const invoiceItems = await db
+        .select()
+        .from(salesInvoiceItems)
+        .where(eq(salesInvoiceItems.salesInvoiceId, invoiceId))
+
+      const pdfBytes = await generateInvoicePdf({
+        invoice: result.finalInvoice,
+        items: invoiceItems,
+        business: biz,
+        party,
+      })
+
+      const r2Key = `invoices/${invoiceId}.pdf`
+      const shareToken = crypto.randomUUID()
+      const tokenExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+
+      const bucket = await getInvoiceBucket()
+      if (bucket) {
+        await bucket.put(r2Key, pdfBytes, {
+          httpMetadata: { contentType: 'application/pdf' },
+        })
+      }
+
+      await db
+        .update(salesInvoices)
+        .set({
+          pdfR2Key: r2Key,
+          pdfShareToken: shareToken,
+          pdfShareTokenExpiresAt: tokenExpiresAt,
+          updatedAt: new Date(),
+        })
+        .where(eq(salesInvoices.id, invoiceId))
+    }
+  } catch (err) {
+    console.error('[pdf] PDF generation failed on finalise:', err)
+  }
 
   return NextResponse.json({ invoice: result.finalInvoice })
 }

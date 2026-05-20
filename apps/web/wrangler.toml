@@ -6,3 +6,7 @@ pages_build_output_dir = ".open-next"
 [[kv_namespaces]]
 binding = "NEXT_CACHE_WORKERS_KV"
 id = "bad64cb90fbb41a3b20feede49dd586b"
+
+[[r2_buckets]]
+binding = "INVOICE_PDFS"
+bucket_name = "shulka-prod"

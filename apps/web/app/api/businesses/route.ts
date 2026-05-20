@@ -25,6 +25,7 @@ const CreateBusinessSchema = z.object({
     .enum(['proprietorship', 'partnership', 'llp', 'pvt_ltd', 'public_ltd', 'huf', 'other'])
     .default('proprietorship'),
   compositionScheme: z.boolean().default(false),
+  upiVpa: z.string().optional(),
 })
 
 export const GET = withErrorReporting(async () => {
@@ -54,6 +55,7 @@ export const GET = withErrorReporting(async () => {
       registrationDate: row.registrationDate ?? null,
       type: row.type,
       compositionScheme: row.compositionScheme,
+      upiVpa: row.upiVpa ?? null,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     }),
@@ -94,6 +96,7 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
       registrationDate: data.registrationDate ?? null,
       type: data.type,
       compositionScheme: data.compositionScheme,
+      upiVpa: data.upiVpa ?? null,
     })
     .returning()
   const row = inserted[0]
@@ -122,6 +125,7 @@ export const POST = withErrorReporting(async (req: NextRequest) => {
     registrationDate: row.registrationDate ?? null,
     type: row.type,
     compositionScheme: row.compositionScheme,
+    upiVpa: row.upiVpa ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   })

@@ -39,6 +39,7 @@ export const businesses = pgTable(
     registrationDate: date('registration_date'),
     type: businessTypeEnum('type').notNull().default('proprietorship'),
     compositionScheme: boolean('composition_scheme').notNull().default(false),
+    upiVpa: text('upi_vpa'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
     deletedAt: timestamp('deleted_at', { withTimezone: true }),

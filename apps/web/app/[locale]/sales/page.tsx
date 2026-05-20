@@ -2,7 +2,7 @@ import { auth } from '@/auth'
 import { Button } from '@/components/ui/button'
 import { businesses, db, parties, salesInvoices } from '@shulka/db'
 import { and, desc, eq, isNull } from 'drizzle-orm'
-import { FileText, Plus } from 'lucide-react'
+import { FileDown, FileText, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
@@ -163,7 +163,7 @@ export default async function SalesInvoicesPage({
           /* ---- Invoice list ---- */
           <div className="rounded-lg border border-border bg-raised overflow-hidden">
             {/* Table header */}
-            <div className="hidden sm:grid grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4 px-5 py-3 border-b border-border bg-surface">
+            <div className="hidden sm:grid grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_40px] gap-4 px-5 py-3 border-b border-border bg-surface">
               <span className="text-xs font-semibold text-ink-muted uppercase tracking-[0.04em]">
                 Invoice
               </span>
@@ -179,52 +179,70 @@ export default async function SalesInvoicesPage({
               <span className="text-xs font-semibold text-ink-muted uppercase tracking-[0.04em] text-center">
                 Status
               </span>
+              <span />
             </div>
 
             {/* Rows */}
             <div className="divide-y divide-border">
               {rows.map((inv) => (
-                <Link
+                <div
                   key={inv.id}
-                  href={`/${locale}/sales/${inv.id}`}
-                  className="flex flex-col sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-1 sm:gap-4 sm:items-center px-5 py-4 hover:bg-surface transition-colors duration-[150ms] block"
+                  className="flex flex-col sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_40px] gap-1 sm:gap-4 sm:items-center px-5 py-4 hover:bg-surface transition-colors duration-[150ms]"
                 >
-                  {/* Invoice number */}
-                  <div>
-                    <span className="font-mono text-sm font-semibold tabular-nums text-ink">
-                      {inv.invoiceNumber}
-                    </span>
-                  </div>
+                  <Link href={`/${locale}/sales/${inv.id}`} className="contents">
+                    {/* Invoice number */}
+                    <div>
+                      <span className="font-mono text-sm font-semibold tabular-nums text-ink">
+                        {inv.invoiceNumber}
+                      </span>
+                    </div>
 
-                  {/* Party */}
-                  <div className="min-w-0">
-                    <p className="text-sm text-ink truncate">{inv.partyName ?? '—'}</p>
-                    {inv.partyGstin && (
-                      <p className="text-xs text-ink-muted font-mono tabular-nums truncate">
-                        {inv.partyGstin}
-                      </p>
+                    {/* Party */}
+                    <div className="min-w-0">
+                      <p className="text-sm text-ink truncate">{inv.partyName ?? '—'}</p>
+                      {inv.partyGstin && (
+                        <p className="text-xs text-ink-muted font-mono tabular-nums truncate">
+                          {inv.partyGstin}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Date */}
+                    <div>
+                      <span className="text-sm text-ink-soft tabular-nums">
+                        {formatDate(inv.invoiceDate)}
+                      </span>
+                    </div>
+
+                    {/* Amount */}
+                    <div className="sm:text-right">
+                      <span className="text-sm font-semibold tabular-nums text-ink">
+                        {formatINR(inv.totalAmountPaise)}
+                      </span>
+                    </div>
+
+                    {/* Status */}
+                    <div className="sm:flex sm:justify-center">
+                      <StatusPill status={inv.status} />
+                    </div>
+                  </Link>
+
+                  {/* PDF download — outside the link to avoid nested <a> */}
+                  <div className="hidden sm:flex items-center justify-center">
+                    {inv.status === 'final' && (
+                      <a
+                        href={`/api/sales/${inv.id}/pdf`}
+                        target="_blank"
+                        rel="noreferrer"
+                        title="Download PDF"
+                        className="text-ink-muted hover:text-ink transition-colors duration-[150ms]"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FileDown size={15} strokeWidth={1.8} />
+                      </a>
                     )}
                   </div>
-
-                  {/* Date */}
-                  <div>
-                    <span className="text-sm text-ink-soft tabular-nums">
-                      {formatDate(inv.invoiceDate)}
-                    </span>
-                  </div>
-
-                  {/* Amount */}
-                  <div className="sm:text-right">
-                    <span className="text-sm font-semibold tabular-nums text-ink">
-                      {formatINR(inv.totalAmountPaise)}
-                    </span>
-                  </div>
-
-                  {/* Status */}
-                  <div className="sm:flex sm:justify-center">
-                    <StatusPill status={inv.status} />
-                  </div>
-                </Link>
+                </div>
               ))}
             </div>
 

@@ -76,6 +76,7 @@ type BusinessRow = {
   registrationDate: string | null
   type: string
   compositionScheme: boolean
+  upiVpa: string | null
   address: unknown
 }
 
@@ -90,6 +91,7 @@ export function EditBusinessForm({ business }: { business: BusinessRow }) {
   const [stateCode, setStateCode] = useState(business.stateCode ?? '')
   const [registrationDate, setRegistrationDate] = useState(business.registrationDate ?? '')
   const [compositionScheme, setCompositionScheme] = useState(business.compositionScheme)
+  const [upiVpa, setUpiVpa] = useState(business.upiVpa ?? '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -117,6 +119,7 @@ export function EditBusinessForm({ business }: { business: BusinessRow }) {
     if (pan) body.pan = pan
     if (stateCode) body.stateCode = stateCode
     if (registrationDate) body.registrationDate = registrationDate
+    if (upiVpa.trim()) body.upiVpa = upiVpa.trim()
 
     const res = await fetch(`/api/businesses/${business.id}`, {
       method: 'PATCH',
@@ -278,6 +281,21 @@ export function EditBusinessForm({ business }: { business: BusinessRow }) {
             >
               Registered under Composition Scheme
             </label>
+          </div>
+
+          <div className="space-y-1.5">
+            <label htmlFor="upiVpa" className="text-sm font-medium text-ink">
+              UPI ID (for invoice QR code)
+            </label>
+            <Input
+              id="upiVpa"
+              value={upiVpa}
+              onChange={(e) => setUpiVpa(e.target.value)}
+              placeholder="yourname@upi"
+            />
+            <p className="text-xs text-ink-muted">
+              Customers can scan the QR on your PDF invoice to pay instantly
+            </p>
           </div>
 
           {error && (

@@ -2,7 +2,7 @@ import { auth } from '@/auth'
 import { Button } from '@/components/ui/button'
 import { businesses, db, parties, salesInvoiceItems, salesInvoices } from '@shulka/db'
 import { and, eq, isNull } from 'drizzle-orm'
-import { ArrowLeft, CheckCircle2, Clock, XCircle } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Clock, FileDown, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 
@@ -105,11 +105,26 @@ export default async function SalesInvoiceDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {invoice.status === 'draft' && (
-          <Button asChild>
-            <Link href={`/${locale}/sales/${invoiceId}/finalise`}>Finalise Invoice</Link>
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {invoice.status === 'draft' && (
+            <Button asChild>
+              <Link href={`/${locale}/sales/${invoiceId}/finalise`}>Finalise Invoice</Link>
+            </Button>
+          )}
+          {invoice.status === 'final' && (
+            <Button variant="secondary" size="sm" asChild>
+              <a
+                href={`/api/sales/${invoiceId}/pdf`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5"
+              >
+                <FileDown size={14} strokeWidth={2} />
+                Download PDF
+              </a>
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Invoice meta */}
