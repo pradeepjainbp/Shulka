@@ -5,6 +5,50 @@
 
 ---
 
+## Session: 2026-05-20 — P1-08: Audit log helper + payload schemas (Sonnet)
+
+### What this session did
+
+**P1-08 is complete. Phase 1 is complete (8/8).**
+
+- **`packages/shared-types/src/audit-events.ts`** — `AuditPayloadSchemas` map (15 kinds): business.created/updated, party.created/updated, sales_invoice.created/status_changed/cancelled, purchase_invoice.created/status_changed/cancelled, business_trust.elevated/revoked, itc.claimed/blocked_override, user.deleted. `AuditKind` and `AuditPayload<K>` generic type.
+
+- **`packages/db/src/record-event.ts`** — `recordEvent<K>(input)` generic helper. Validates `payload` against `AuditPayloadSchemas[kind]` (throws ZodError on mismatch) then INSERTs into `audit_events`. `exactOptionalPropertyTypes`-safe (explicit `?? null` for optional fields, no undefined spread).
+
+- **`packages/db/src/client.ts`** — made `db` a lazy Proxy singleton so importing `@shulka/db` without `DATABASE_URL` in test env doesn't throw at module load time — deferred to first actual DB call.
+
+- **`apps/web/app/api/businesses/route.ts`** — wired `recordEvent('business.created', ...)` after successful INSERT.
+
+- **`apps/web/app/api/businesses/[id]/parties/route.ts`** — wired `recordEvent('party.created', ...)` after successful INSERT.
+
+- **`apps/web/src/__tests__/audit-immutability.test.ts`** — integration test (`describe.skipIf(!process.env.DATABASE_URL)`): INSERTs a test event then attempts UPDATE; asserts the DB trigger throws. Run manually with `DATABASE_URL` set to verify live.
+
+- No new migration needed — `audit_events` table, indexes, and trigger all live from P0-03.
+
+### What's next
+
+**Phase 2 — Invoicing.** First ticket: **P2-01 — Sales invoice schema + create form.**
+
+Key things to know going into Phase 2:
+- `sales_invoices` + `sales_invoice_items` tables do not exist yet (P2-01 creates them)
+- Invoice creation must run in a single Drizzle transaction: INSERT invoice + items → INSERT rule_resolutions rows → recordEvent('sales_invoice.created') — per ARCHITECTURE.md §3 dual-write spec
+- Money is integer paise (BIGINT). NEVER numeric/float.
+- Gap-free invoice numbering: `unique(business_id, fy, invoice_number)`, server-allocated only
+- The `RuleEngine` and `placeOfSupply()` are ready in `@shulka/gst-engine` — Phase 2 will use them for live tax computation
+- `HsnSearch` component is ready for embedding in invoice line items
+
+### Open questions for Pradeep
+
+- None. Phase 1 acceptance criteria met: user can sign up, pick role, create business, add parties, search HSN, rule engine resolves rates, all mutations go through audit log.
+
+### Sacred rules sanity check
+
+- `recordEvent` validates payload before INSERT — no way to write malformed audit entries
+- `audit_events` immutability enforced at DB level (trigger) AND role level (shulka_app has only INSERT+SELECT) — belt and suspenders per Sacred Rule 3
+- No financial computation in this ticket
+
+---
+
 ## Session: 2026-05-20 — P1-07: Place-of-supply engine (Sonnet)
 
 ### What this session did

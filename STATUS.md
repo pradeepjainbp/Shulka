@@ -5,16 +5,17 @@
 ## Current state
 
 **Phase:** Phase 1 — Identity & Foundation
-**Status:** IN PROGRESS — 7/8 tickets done
+**Status:** COMPLETE ✓ — 8/8 tickets done
 **Last updated:** 2026-05-20
-**Last actor:** Sonnet (P1-07 place-of-supply engine)
+**Last actor:** Sonnet (P1-08 audit log)
 
 ## Active ticket
 
-**P1-08 — Audit log helper + payload schemas** (in_progress)
+**P2-01 — Sales invoice schema + create form** (pending — Phase 2 starts next)
 
 ## Recent shipped
 
+- P1-08 — AuditPayloadSchemas (15 kinds), recordEvent<K> helper, wired into businesses + parties POST routes, immutability trigger integration test
 - P1-07 — placeOfSupply() engine, all 36 states+UTs, export/import/SEZ/B2B/B2C, 60 tests
 - P1-06 — RuleEngine (fromRules, resolveRule, 4 invariants, scheme-election grandfathering), 10 seeded rule JSON files, scheme_elections table + migration 0005 (applied).
 - P1-05 — HSN/SAC master JSON (633 codes), fuse.js autocomplete component, /en/hsn demo page
@@ -48,7 +49,7 @@
 ## Phase progress
 
 - [x] Phase 0 — Setup (9/9 — all done ✓)
-- [ ] Phase 1 — Identity & Foundation (7/8)
+- [x] Phase 1 — Identity & Foundation (8/8 — all done ✓)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
 - [ ] Phase 4 — Summaries & Insights (0/6)
