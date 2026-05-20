@@ -5,6 +5,75 @@
 
 ---
 
+## Session: 2026-05-20 — P1-03: GSTIN validator (Sonnet)
+
+### What this session did
+
+**P1-03 is complete.**
+
+- **`packages/gst-engine/`** — new workspace package `@shulka/gst-engine`. Pure TypeScript, zero runtime dependencies. Usable in Cloudflare Workers and Capacitor.
+
+- **`packages/gst-engine/src/gstin-validator.ts`** — exports:
+  - `validateGstin(gstin: string): GstinValidationResult` — structured result with typed reason on failure
+  - `isValidGstin(gstin: string): boolean` — convenience wrapper
+  - `GstinValidationResult` and `GstinInvalidReason` types
+  - Five-step validation: length → structure regex → state code (valid GST set) → PAN embedded (chars 2–11) → Mod-36 checksum
+  - State code 25 (old Daman & Diu) and 28 (old Andhra Pradesh) intentionally excluded — deactivated/migrated. 97 and 99 included (Other Territory + centre-administered).
+
+- **`packages/gst-engine/src/gstin-validator.test.ts`** — 108 tests (107 in the validator suite + 1 smoke test):
+  - 65 valid GSTINs covering 6+ state codes and all 9 PAN entity types (P/C/H/F/A/B/L/J/G)
+  - `invalid_length`: empty string, 14 chars, 16 chars
+  - `invalid_structure`: lowercase letters, digits where letters expected, wrong char at position 13
+  - `invalid_state_code`: 00, 25, 28, 39, 40
+  - `invalid_pan`: lowercase PAN, digits where letters needed
+  - `invalid_checksum`: every valid GSTIN has a flipped-checksum variant tested
+  - `makeGstin` / `flipCheckChar` helpers inside the test file for deterministic generation
+
+- **Wired into 4 existing files** — inline `CHARSET`/`validateGstin` removed; replaced with `import { isValidGstin } from '@shulka/gst-engine'`:
+  - `apps/web/app/api/businesses/route.ts`
+  - `apps/web/app/api/businesses/[id]/route.ts`
+  - `apps/web/components/BusinessForm.tsx`
+  - `apps/web/components/EditBusinessForm.tsx`
+
+- **`apps/web/package.json`** — added `"@shulka/gst-engine": "workspace:*"` dependency.
+
+**All checks green:** Biome clean, typecheck clean, 108/108 tests passing.
+
+### What's next
+
+**P1-04 — Party (customer/supplier) directory.**
+
+Read PHASES.md §P1-04. Summary:
+- `parties` table: `business_id` (FK), name, legal_name, `external_gstin` (nullable), `linked_business_id` (FK to businesses, nullable — network-effect), phone, email, address jsonb, `party_kind` enum (customer/supplier/both).
+- Add party manually → works.
+- Search by name/GSTIN → works.
+- If added GSTIN matches an existing `businesses.gstin` row → auto-populate `linked_business_id` (network-effect discovery).
+- "External" badge in UI computed from `linked_business_id` + `business_trusts` lookup (trust table doesn't exist yet — badge logic uses `linked_business_id IS NOT NULL` for now).
+- Out of scope: `business_trusts` writes (Phase 2 P2-03).
+
+Suggested approach:
+1. `schema-architect` for `parties` table migration.
+2. `api-builder` for `GET/POST /api/businesses/:businessId/parties` + `GET/PATCH /api/businesses/:businessId/parties/:id`.
+3. `ui-builder` for party list + add party form under a business.
+
+### Open questions for Pradeep
+
+1. **Deploy to production?** P1-02 + P1-03 are both on `main`, unpushed at session start (pushed during P1-02 session). P1-03 commit `560c5e8` is not yet pushed. Confirm push.
+
+2. **P1-04 party routes structure**: Should parties be nested under `/api/businesses/:businessId/parties` (scoped to a business — cleaner ownership) or flat `/api/parties?businessId=...`? Nested is safer for ownership checks.
+
+### Notes / context
+
+- `packages/gst-engine` is the first package in the `gst-engine` namespace. P1-06 (rule engine skeleton), P1-07 (place-of-supply), and all GST computation lives here eventually.
+- State codes 25 and 28 are excluded deliberately. If a use case arises for reading legacy invoices with these codes, a separate `parseHistoricGstin` lenient mode should be added — not by relaxing the main validator.
+- `computeCheckChar` is internal (not exported) in `gstin-validator.ts`. The test file re-implements it as a test helper to avoid coupling tests to implementation internals.
+
+### Sacred rules sanity check
+
+Reviewed all 20 rules. No financial computation. No audit log touched. No money fields. Pure utility package — no DB, no network. All free tier.
+
+---
+
 ## Session: 2026-05-20 — P1-02: Business entity creation (Sonnet)
 
 ### What this session did

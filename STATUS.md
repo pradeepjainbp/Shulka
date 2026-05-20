@@ -5,16 +5,17 @@
 ## Current state
 
 **Phase:** Phase 1 — Identity & Foundation
-**Status:** IN PROGRESS — 2/8 tickets done
+**Status:** IN PROGRESS — 3/8 tickets done
 **Last updated:** 2026-05-20
-**Last actor:** Sonnet (P1-02 business entity creation)
+**Last actor:** Sonnet (P1-03 GSTIN validator)
 
 ## Active ticket
 
-**P1-03 — GSTIN validator** (in_progress)
+**P1-04 — Party (customer/supplier) directory** (next to claim)
 
 ## Recent shipped
 
+- P1-03 — `@shulka/gst-engine` package, GSTIN validator (pure TS, Mod-36), 108 tests, wired into API + UI
 - P1-02 — businesses table, GET/POST/PATCH API, creation form, list page, dashboard CTA
 - P1-01 — Role selection onboarding, auth guard in middleware, PATCH /api/me, /en/dashboard
 - P0-01 — monorepo + tooling
@@ -43,7 +44,7 @@
 ## Phase progress
 
 - [x] Phase 0 — Setup (9/9 — all done ✓)
-- [ ] Phase 1 — Identity & Foundation (2/8)
+- [ ] Phase 1 — Identity & Foundation (3/8)
 - [ ] Phase 2 — Invoicing (0/8)
 - [ ] Phase 3 — Purchases & ITC (0/5)
 - [ ] Phase 4 — Summaries & Insights (0/6)
