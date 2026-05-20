@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { isValidGstin } from '@shulka/gst-engine'
 import { AlertTriangle, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -65,19 +66,6 @@ const INDIAN_STATES = [
   { code: '38', name: 'Ladakh' },
 ]
 
-const GSTIN_CHARSET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-function validateGstin(gstin: string): boolean {
-  if (!/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gstin)) return false
-  let sum = 0
-  for (let i = 0; i < 14; i++) {
-    let val = GSTIN_CHARSET.indexOf(gstin.charAt(i))
-    if ((i + 1) % 2 === 0) val *= 2
-    sum += Math.floor(val / 36) + (val % 36)
-  }
-  return gstin[14] === GSTIN_CHARSET[(36 - (sum % 36)) % 36]
-}
-
 type BusinessRow = {
   id: string
   name: string
@@ -105,7 +93,7 @@ export function EditBusinessForm({ business }: { business: BusinessRow }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const gstinValid = gstin.length === 15 && validateGstin(gstin)
+  const gstinValid = gstin.length === 15 && isValidGstin(gstin)
   const gstinInvalid = gstin.length >= 15 && !gstinValid
 
   async function handleSubmit(e: React.FormEvent) {

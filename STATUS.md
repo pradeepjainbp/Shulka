@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-03 — GSTIN validator** (next to claim)
+**P1-03 — GSTIN validator** (in_progress)
 
 ## Recent shipped
 

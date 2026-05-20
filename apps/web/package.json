@@ -24,6 +24,7 @@
     "@sentry/nextjs": "^10.53.1",
     "@shulka/db": "workspace:*",
     "@shulka/design-tokens": "workspace:*",
+    "@shulka/gst-engine": "workspace:*",
     "@shulka/i18n": "workspace:*",
     "@tremor/react": "^3.18.7",
     "class-variance-authority": "^0.7.1",

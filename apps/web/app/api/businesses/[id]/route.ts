@@ -1,28 +1,16 @@
 import { auth } from '@/auth'
 import { withErrorReporting } from '@/lib/with-error-reporting'
 import { businesses, db } from '@shulka/db'
+import { isValidGstin } from '@shulka/gst-engine'
 import { BusinessResponseSchema } from '@shulka/shared-types'
 import { and, eq, isNull } from 'drizzle-orm'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 
-const CHARSET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-function validateGstin(gstin: string): boolean {
-  if (!/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gstin)) return false
-  let sum = 0
-  for (let i = 0; i < 14; i++) {
-    let val = CHARSET.indexOf(gstin.charAt(i))
-    if ((i + 1) % 2 === 0) val *= 2
-    sum += Math.floor(val / 36) + (val % 36)
-  }
-  return gstin[14] === CHARSET[(36 - (sum % 36)) % 36]
-}
-
 const PatchBusinessSchema = z.object({
   name: z.string().min(1).max(200).optional(),
   legalName: z.string().max(200).optional(),
-  gstin: z.string().refine(validateGstin, { message: 'Invalid GSTIN' }).optional(),
+  gstin: z.string().refine(isValidGstin, { message: 'Invalid GSTIN' }).optional(),
   pan: z
     .string()
     .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN')
