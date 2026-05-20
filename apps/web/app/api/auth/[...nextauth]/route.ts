@@ -2,14 +2,12 @@ export const dynamic = 'force-dynamic'
 
 import type { NextRequest } from 'next/server'
 
-type NextAuthCtx = { params: Promise<{ nextauth: string[] }> }
-
-export async function GET(req: NextRequest, ctx: NextAuthCtx) {
+export async function GET(req: NextRequest) {
   const { handlers } = await import('@/auth')
-  return handlers.GET(req, ctx as never)
+  return handlers.GET(req)
 }
 
-export async function POST(req: NextRequest, ctx: NextAuthCtx) {
+export async function POST(req: NextRequest) {
   const { handlers } = await import('@/auth')
-  return handlers.POST(req, ctx as never)
+  return handlers.POST(req)
 }
