@@ -29,6 +29,15 @@
 
 - **`apps/web/components/ui/select.tsx`** + **`checkbox.tsx`** — New shadcn-style components via `@radix-ui/react-select` + `@radix-ui/react-checkbox`. Added to `apps/web/package.json`.
 
+**Second commit (UX follow-ups — same session):**
+- **`apps/web/app/[locale]/onboarding/role/page.tsx`** — updated redirect: business_owner → `/en/onboarding/business`, CA → `/en/dashboard`.
+- **`apps/web/app/[locale]/onboarding/business/page.tsx`** — new onboarding step using `BusinessForm` with "Set up your first business" heading, "I'll do this later" skip link → `/en/dashboard`.
+- **`apps/web/components/BusinessForm.tsx`** — shared client component extracted from `new/page.tsx`. Takes `heading`, `subheading`, `redirectTo`, `submitLabel`, optional `topLink`/`bottomLink` props. Eliminates duplication between create and onboarding flows.
+- **`apps/web/components/EditBusinessForm.tsx`** — pre-filled edit form component, uses PATCH `/api/businesses/:id`.
+- **`apps/web/app/[locale]/businesses/[id]/edit/page.tsx`** — server component: auth check, ownership check, passes row to `EditBusinessForm`. Fixes the broken "Edit" link in the list.
+- **`apps/web/app/[locale]/businesses/page.tsx`** — updated: CA users see "Client Businesses" header + "Your clients' businesses will appear here once they invite you" placeholder. No "Add Business" button for CAs.
+- **`apps/web/app/[locale]/businesses/new/page.tsx`** — refactored to thin wrapper using `BusinessForm`.
+
 **All checks green:** Biome clean, typecheck clean, unit tests 1/1. Migration applied to live Neon.
 
 ### What's next
@@ -45,13 +54,7 @@ The `gst-engine` package already exists at `packages/gst-engine/` — check what
 
 ### Open questions for Pradeep
 
-1. **Onboarding chain**: Currently after role selection the user goes to `/en/dashboard`, which now shows a "Create your first business" CTA. The PHASES.md open question was whether to force business creation inline during onboarding (role → business form). Current implementation leaves it at dashboard level. Is this acceptable, or should the middleware also redirect business_owner users with 0 businesses to `/en/businesses/new`?
-
-2. **CA flow for businesses**: CAs don't own businesses — the `businesses` page currently queries by `ownerUserId`, so CAs will always see an empty list. Should `/en/businesses/new` be hidden / replaced for CAs? (The `ca_business_links` table for CA←→client relationships doesn't exist yet — that's a later ticket.)
-
-3. **Edit page**: `/en/businesses/:id/edit` is linked from the list but the page doesn't exist yet (only the `PATCH` API exists). Should this be added as part of P1-02 cleanup or deferred to after P1-03?
-
-4. **Deploy to production?** Migration is on live Neon already. CF Pages deploy would expose the new routes.
+1. **Deploy to production?** Migration is on live Neon already. CF Pages deploy would expose the new routes and the full onboarding chain (role → business form → dashboard).
 
 ### Notes / context
 
