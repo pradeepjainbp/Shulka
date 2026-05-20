@@ -34,6 +34,7 @@ export function getLastMagicLinkUrl() {
 // Function-form (lazy initialization) defers NextAuth config evaluation to
 // request time, preventing MissingSecret/DB errors during `next build`.
 export const { handlers, signIn, signOut, auth } = NextAuth(() => ({
+  trustHost: true,
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
