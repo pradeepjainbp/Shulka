@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-04 — Party (customer/supplier) directory** (next to claim)
+**P1-04 — Party (customer/supplier) directory** (in_progress)
 
 ## Recent shipped
 

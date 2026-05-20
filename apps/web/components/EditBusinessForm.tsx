@@ -290,6 +290,15 @@ export function EditBusinessForm({ business }: { business: BusinessRow }) {
             {loading ? 'Saving…' : 'Save Changes'}
           </Button>
         </form>
+
+        <div className="text-center pt-2">
+          <Link
+            href={`/en/businesses/${business.id}/parties`}
+            className="text-sm text-ink-muted hover:text-ink transition-colors"
+          >
+            Manage Parties →
+          </Link>
+        </div>
       </div>
     </main>
   )

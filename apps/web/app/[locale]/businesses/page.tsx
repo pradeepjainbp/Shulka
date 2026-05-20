@@ -133,12 +133,20 @@ export default async function BusinessesPage() {
                     </p>
                   )}
                 </div>
-                <Link
-                  href={`/en/businesses/${biz.id}/edit`}
-                  className="text-sm text-primary hover:underline shrink-0 mt-0.5"
-                >
-                  Edit
-                </Link>
+                <div className="flex items-center gap-3 shrink-0 mt-0.5">
+                  <Link
+                    href={`/en/businesses/${biz.id}/parties`}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    → Parties
+                  </Link>
+                  <Link
+                    href={`/en/businesses/${biz.id}/edit`}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Edit
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
