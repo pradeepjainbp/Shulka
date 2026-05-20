@@ -43,7 +43,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth(() => ({
   }),
   session: { strategy: 'jwt' },
   providers: [
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
     Resend({
       apiKey: process.env.RESEND_API_KEY ?? '',
       from: process.env.RESEND_FROM ?? 'noreply@pradeepjainbp.in',
