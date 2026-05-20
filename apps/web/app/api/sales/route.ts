@@ -54,7 +54,7 @@ const LineItemSchema = z.object({
   cessRatePct: z.string().default('0'),
 })
 
-export const CreateSalesInvoiceSchema = z.object({
+const CreateSalesInvoiceSchema = z.object({
   businessId: z.string().uuid(),
   partyId: z.string().uuid(),
   invoiceDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // ISO date YYYY-MM-DD

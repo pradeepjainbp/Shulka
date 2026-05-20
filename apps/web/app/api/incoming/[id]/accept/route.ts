@@ -48,7 +48,7 @@ import { z } from 'zod'
 // Zod schema
 // ---------------------------------------------------------------------------
 
-export const AcceptIncomingInvoiceSchema = z.object({
+const AcceptIncomingInvoiceSchema = z.object({
   businessId: z.string().uuid(),
 })
 

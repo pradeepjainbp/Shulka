@@ -41,7 +41,7 @@ type RouteContext = { params: Promise<{ id: string }> }
 
 /** Only `action: 'finalise'` is accepted in P2-01.
  *  Cancel / update-notes arrive in later tickets. */
-export const FinaliseSalesInvoiceSchema = z.object({
+const FinaliseSalesInvoiceSchema = z.object({
   action: z.literal('finalise'),
 })
 

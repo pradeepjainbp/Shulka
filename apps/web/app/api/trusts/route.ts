@@ -24,11 +24,11 @@ import { z } from 'zod'
 // Zod schemas
 // ---------------------------------------------------------------------------
 
-export const ListTrustsSchema = z.object({
+const ListTrustsSchema = z.object({
   businessId: z.string().uuid(),
 })
 
-export const ElevateTrustSchema = z.object({
+const ElevateTrustSchema = z.object({
   trusterBusinessId: z.string().uuid(),
   trustedBusinessId: z.string().uuid(),
 })
