@@ -29,7 +29,7 @@
 ## Blockers
 
 - [x] ~~Migration 0006 applied to Neon~~ ✓
-- [ ] **Migration 0007 (0007_pos_kind.sql) — must be applied to Neon before next session** (adds pos_kind enum + pos_override_reason to sales_invoices)
+- [x] ~~Migration 0007 applied to Neon~~ ✓
 - [ ] **CF Pages env vars missing** — Add to CF Pages dashboard before next deploy:
   - SENTRY_AUTH_TOKEN, SENTRY_ORG=shulka, SENTRY_PROJECT=shulka (for source map upload during build)
   - NEXT_PUBLIC_SENTRY_DSN (same value as SENTRY_DSN — needed for client-side error capture)
