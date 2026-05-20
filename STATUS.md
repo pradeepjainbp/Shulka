@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-07 — Place-of-supply engine** (pending)
+**P1-07 — Place-of-supply engine** (in_progress)
 
 ## Recent shipped
 
