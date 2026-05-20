@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getLastMagicLinkUrl } from '@/auth'
 import { NextResponse } from 'next/server'
 

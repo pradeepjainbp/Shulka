@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 /**
  * GET  /api/trusts?businessId=<uuid>  — list business trusts where truster = current business
  * POST /api/trusts                    — proactively elevate trust (without invoice context)

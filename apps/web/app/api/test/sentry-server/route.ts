@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import * as Sentry from '@sentry/nextjs'
 import { NextResponse } from 'next/server'
 

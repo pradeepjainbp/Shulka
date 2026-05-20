@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 /**
  * GET  /api/sales  — list sales invoices for the authenticated user's current business
  * POST /api/sales  — create a sales invoice (draft status only)

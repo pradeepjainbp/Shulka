@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { auth } from '@/auth'
 import { withErrorReporting } from '@/lib/with-error-reporting'
 import { db } from '@shulka/db'

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 /**
  * GET  /api/sales/:id  — fetch a single sales invoice with its line items
  * PATCH /api/sales/:id — finalise a draft invoice (status: draft → final)

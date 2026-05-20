@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 /**
  * DELETE /api/trusts/:id  — revoke trust (status → 'revoked')
  *
