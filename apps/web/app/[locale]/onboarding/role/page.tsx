@@ -45,7 +45,7 @@ export default function RoleSelectionPage() {
 
     // Refresh the JWT so the new role is reflected in session.user.role
     await update({ role: selected })
-    router.push('/en/dashboard')
+    router.push(selected === 'business_owner' ? '/en/onboarding/business' : '/en/dashboard')
   }
 
   return (

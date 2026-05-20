@@ -59,23 +59,43 @@ export default async function BusinessesPage() {
   const session = await auth()
   if (!session) redirect('/en/sign-in')
 
-  const rows = await db
-    .select()
-    .from(businesses)
-    .where(and(eq(businesses.ownerUserId, session.user.id), isNull(businesses.deletedAt)))
-    .orderBy(desc(businesses.createdAt))
+  const isCA = session.user.role === 'chartered_accountant'
+
+  const rows = isCA
+    ? []
+    : await db
+        .select()
+        .from(businesses)
+        .where(and(eq(businesses.ownerUserId, session.user.id), isNull(businesses.deletedAt)))
+        .orderBy(desc(businesses.createdAt))
 
   return (
     <main className="min-h-screen bg-surface p-6">
       <div className="max-w-2xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-ink">My Businesses</h1>
-          <Button asChild size="sm">
-            <Link href="/en/businesses/new">Add Business</Link>
-          </Button>
+          <h1 className="text-2xl font-semibold text-ink">
+            {isCA ? 'Client Businesses' : 'My Businesses'}
+          </h1>
+          {!isCA && (
+            <Button asChild size="sm">
+              <Link href="/en/businesses/new">Add Business</Link>
+            </Button>
+          )}
         </div>
 
-        {rows.length === 0 ? (
+        {isCA ? (
+          <div className="rounded-lg border border-border bg-raised p-12 flex flex-col items-center gap-3 text-center">
+            <div className="h-16 w-16 rounded-full bg-surface flex items-center justify-center text-3xl">
+              🤝
+            </div>
+            <div className="space-y-1">
+              <p className="font-medium text-ink">No clients yet</p>
+              <p className="text-sm text-ink-muted">
+                Your clients&apos; businesses will appear here once they invite you.
+              </p>
+            </div>
+          </div>
+        ) : rows.length === 0 ? (
           <div className="rounded-lg border border-border bg-raised p-12 flex flex-col items-center gap-4 text-center">
             <div className="h-16 w-16 rounded-full bg-surface flex items-center justify-center text-3xl">
               🏢
