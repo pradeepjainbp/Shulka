@@ -319,3 +319,23 @@ The `users` and `accounts` tables are still created (for OAuth account linking a
 - Use Lucia or another lib — Auth.js is the most maintained for this stack; switching libraries is a bigger risk than the JWT fallback.
 
 ---
+
+## ADR-15 | 2026-05-20 | Scheme election grandfathering via `rule_set_at_election` snapshot
+
+**Context:** GST composition scheme and QRMP thresholds can change between the date a business elects a scheme and the date a specific transaction occurs. If the composition threshold was ₹1.5 Cr when a business filed its election but is later raised, the business should be evaluated against the rule in force at election time — not the current rule — for continuity and auditability.
+
+**Decision:** The `scheme_elections` table stores a `rule_set_at_election` JSONB snapshot: `{ threshold_rule_id: string, rate_rules: string[] }` — the exact rule IDs in force when the election was filed. When resolving a threshold-sensitive rule for a transaction, the engine checks for an active `scheme_election` for that business. If present, it uses `rule_set_at_election.threshold_rule_id` directly (bypassing date-range lookup for that rule). All non-threshold rules still use normal date-range resolution. `resolveRule()` accepts an optional `schemeElection` argument for this.
+
+**Consequences:**
+- Threshold audits are always traceable to the frozen snapshot.
+- Rate changes still apply from their effective date even for composition dealers — only threshold-sensitive rules are grandfathered.
+- Without `schemeElection`, `resolveRule()` uses pure date-range resolution (regular scheme path).
+- `effective_to = null` is the currently active election. On exit, old row gets `effective_to` set; a new row is not inserted (scheme reverts to regular).
+
+**Alternatives considered:**
+- Storing the elected threshold value directly: rejected — loses traceability to source rule and citation.
+- Re-evaluating at query time from the rule archive: rejected — expensive and fragile; snapshot is cheap and auditable.
+
+**Note:** PHASES.md P1-06 and ARCHITECTURE.md §3 referenced "ADR-8" for this decision. ADR-8 is already taken (invoice split). This is ADR-15.
+
+---

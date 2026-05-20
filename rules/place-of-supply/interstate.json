@@ -1,0 +1,26 @@
+{
+  "rule_id": "POS_INTERSTATE_v1",
+  "domain": "place_of_supply",
+  "key": "interstate",
+  "effective_from": "2017-07-01",
+  "effective_to": null,
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "IGST Act 2017 Section 7-14",
+    "council_meeting": "1st GST Council Meeting",
+    "url": null,
+    "archived_pdf": null,
+    "summary": "Place of supply for inter-state transactions — IGST applies when supplier and recipient are in different states"
+  },
+  "rule": {
+    "kind": "place_of_supply",
+    "result": "IGST",
+    "condition": "supplier_state != recipient_state"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": null,
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

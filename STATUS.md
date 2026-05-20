@@ -11,7 +11,7 @@
 
 ## Active ticket
 
-**P1-06 — Rule engine skeleton** (pending)
+**P1-06 — Rule engine skeleton** (in_progress)
 
 ## Recent shipped
 

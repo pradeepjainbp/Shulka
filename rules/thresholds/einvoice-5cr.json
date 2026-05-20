@@ -1,0 +1,26 @@
+{
+  "rule_id": "THRESHOLD_EINVOICE_5CR_v1",
+  "domain": "threshold",
+  "key": "einvoice_mandatory",
+  "effective_from": "2023-08-01",
+  "effective_to": null,
+  "supersedes": "THRESHOLD_EINVOICE_10CR_v1",
+  "source": {
+    "type": "notification",
+    "id": "10/2023-Central Tax",
+    "council_meeting": null,
+    "url": null,
+    "archived_pdf": null,
+    "summary": "e-Invoice mandatory threshold reduced from ₹10 Cr to ₹5 Cr from 1st August 2023"
+  },
+  "rule": {
+    "kind": "threshold",
+    "amount_paise": 500000000,
+    "description": "e-Invoice mandatory threshold ₹5 Cr (reduced from ₹10 Cr)"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": "₹5 Cr = ₹5,00,00,000 = 500,000,000 paise. Supersedes THRESHOLD_EINVOICE_10CR_v1 which ended 2023-07-31. effective_from 2023-08-01 — no gap with predecessor.",
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

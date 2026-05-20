@@ -1,0 +1,26 @@
+{
+  "rule_id": "GST_RATE_12_v1",
+  "domain": "gst_rate",
+  "key": "rate_12",
+  "effective_from": "2017-07-01",
+  "effective_to": null,
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "01/2017-Central Tax (Rate)",
+    "council_meeting": "1st GST Council Meeting",
+    "url": null,
+    "archived_pdf": null,
+    "summary": "GST rate of 12% on specified goods and services"
+  },
+  "rule": {
+    "kind": "gst_rate",
+    "rate_pct": 12,
+    "applies_to": "specified goods and services — see CBIC notification"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": null,
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

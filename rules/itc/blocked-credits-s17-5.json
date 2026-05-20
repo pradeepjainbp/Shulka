@@ -1,0 +1,32 @@
+{
+  "rule_id": "ITC_BLOCKED_S17_5_v1",
+  "domain": "itc",
+  "key": "blocked_credits_s17_5",
+  "effective_from": "2017-07-01",
+  "effective_to": null,
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "CGST Act 2017 Section 17(5)",
+    "council_meeting": "1st GST Council Meeting",
+    "url": null,
+    "archived_pdf": null,
+    "summary": "Blocked credits under Section 17(5) — ITC not available on specified categories"
+  },
+  "rule": {
+    "kind": "itc_blocked",
+    "section": "17(5)",
+    "categories": [
+      "motor_vehicles_personal",
+      "food_beverages",
+      "club_memberships",
+      "health_insurance_personal",
+      "works_contract_immovable"
+    ]
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": "Section 17(5) lists categories where ITC is blocked. This rule captures the core categories. Amendments (e.g., Finance Act 2018 changes to motor vehicle provisions) should be captured as superseding rules.",
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

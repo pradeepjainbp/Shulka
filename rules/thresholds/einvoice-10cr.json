@@ -1,0 +1,26 @@
+{
+  "rule_id": "THRESHOLD_EINVOICE_10CR_v1",
+  "domain": "threshold",
+  "key": "einvoice_mandatory",
+  "effective_from": "2020-10-01",
+  "effective_to": "2023-07-31",
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "88/2020-Central Tax",
+    "council_meeting": null,
+    "url": null,
+    "archived_pdf": null,
+    "summary": "e-Invoice mandatory for taxpayers with aggregate turnover exceeding ₹10 Cr"
+  },
+  "rule": {
+    "kind": "threshold",
+    "amount_paise": 1000000000,
+    "description": "e-Invoice mandatory threshold ₹10 Cr"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": "₹10 Cr = ₹10,00,00,000 = 1,000,000,000 paise. Superseded by THRESHOLD_EINVOICE_5CR_v1 from 2023-08-01. effective_to is 2023-07-31 (inclusive) — no gap with successor rule.",
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

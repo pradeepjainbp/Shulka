@@ -1,0 +1,26 @@
+{
+  "rule_id": "POS_INTRASTATE_v1",
+  "domain": "place_of_supply",
+  "key": "intrastate",
+  "effective_from": "2017-07-01",
+  "effective_to": null,
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "CGST Act 2017 Section 8",
+    "council_meeting": "1st GST Council Meeting",
+    "url": null,
+    "archived_pdf": null,
+    "summary": "Place of supply for intra-state transactions — CGST+SGST applies when supplier and recipient are in the same state"
+  },
+  "rule": {
+    "kind": "place_of_supply",
+    "result": "CGST_SGST",
+    "condition": "supplier_state == recipient_state"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": null,
+  "tests": [],
+  "hash": "sha256-placeholder"
+}

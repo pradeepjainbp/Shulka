@@ -1,0 +1,26 @@
+{
+  "rule_id": "THRESHOLD_COMPOSITION_150CR_v1",
+  "domain": "threshold",
+  "key": "composition_scheme",
+  "effective_from": "2019-04-01",
+  "effective_to": null,
+  "supersedes": null,
+  "source": {
+    "type": "notification",
+    "id": "14/2019-Central Tax",
+    "council_meeting": "34th GST Council Meeting",
+    "url": null,
+    "archived_pdf": null,
+    "summary": "Composition scheme turnover threshold raised to ₹1.5 Cr"
+  },
+  "rule": {
+    "kind": "threshold",
+    "amount_paise": 1500000000,
+    "description": "Composition scheme turnover threshold ₹1.5 Cr"
+  },
+  "submitted_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "approved_by": { "name": "Pradeep Jain", "membership_no": null, "user_id": "system" },
+  "interpretation_note": "₹1.5 Cr = ₹1,50,00,000 = 1,50,00,000 × 100 paise = 1,500,000,000 paise. Applies to manufacturers, traders and restaurants from FY 2019-20 onwards.",
+  "tests": [],
+  "hash": "sha256-placeholder"
+}
