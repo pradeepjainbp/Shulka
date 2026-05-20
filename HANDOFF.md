@@ -5,6 +5,77 @@
 
 ---
 
+## Session: 2026-05-20 — P2-04: PDF generation via pdf-lib + R2 (Sonnet)
+
+### What this session did
+
+**P2-04 is complete. Phase 2 is 4/8.**
+
+**`apps/web/lib/pdf/amount-in-words.ts`** — Pure function `amountInWords(paise: number): string`. Indian English, handles crores/lakhs/thousands. Output: "Rupees One Lakh Twenty-Three Thousand Four Hundred Fifty-Six and 78 Paise Only".
+
+**`apps/web/lib/pdf/invoice-pdf.ts`** — `generateInvoicePdf(input: InvoicePdfInput): Promise<Uint8Array>`. A4 pdf-lib PDF with: primary-dark header band (business name + GSTIN), address + invoice meta box, Bill To block (party name + GSTIN + address), line items table (alternating rows, CGST/SGST or IGST split per posKind), tax summary box (emerald Total row), amount-in-words, UPI QR code (if `business.upiVpa` set, `upi://pay?pa=...` string), always-on footer CTA. Uses Helvetica/HelveticaBold (built-in, no embed).
+
+**`apps/web/lib/r2.ts`** — `getInvoiceBucket(): Promise<R2Bucket | null>`. Uses `getCloudflareContext({ async: true })` from `@opennextjs/cloudflare`; returns null in local dev (graceful fallback — PDF bytes returned directly without caching).
+
+**`apps/web/app/api/sales/[id]/pdf/route.ts`** — `GET /api/sales/:id/pdf`. Auth required. Accessible to sender (owns invoice's business) OR recipient (owns `linked_to_business_id` business). R2 cache hit → returns `arrayBuffer()`. Cache miss → generate fresh, store in R2, update `pdfR2Key`, return `Buffer.from(pdfBytes)`.
+
+**`apps/web/app/api/invoice-pdf/[token]/route.ts`** — `GET /api/invoice-pdf/:token`. No auth. Lookup by `pdfShareToken`. Returns 410 if `pdfShareTokenExpiresAt < now()`. Same R2 cache hit/miss pattern.
+
+**`apps/web/app/api/sales/[id]/route.ts`** — PATCH finalise: after transaction + audit, generates PDF best-effort (try/catch wraps entire block). Stores in R2, sets `pdfR2Key` + `pdfShareToken` (UUID) + `pdfShareTokenExpiresAt` (now + 7 days).
+
+**`packages/db/src/schema/businesses.ts`** — Added `upiVpa: text('upi_vpa')`.
+
+**`packages/db/src/schema/sales-invoices.ts`** — Added `pdfShareToken: text('pdf_share_token')` + `pdfShareTokenExpiresAt: timestamp(...)`.
+
+**`packages/db/drizzle/0009_pdf_upi.sql`** — Migration: `ALTER TABLE businesses ADD COLUMN upi_vpa text`, `ALTER TABLE sales_invoices ADD COLUMN pdf_share_token text, pdf_share_token_expires_at timestamptz`, partial index on `pdf_share_token WHERE NOT NULL`. **Applied to Neon ✓.**
+
+**`apps/web/wrangler.toml`** — Added `[[r2_buckets]] binding = "INVOICE_PDFS" bucket_name = "shulka-prod"`.
+
+**`apps/web/components/BusinessForm.tsx` + `EditBusinessForm.tsx`** — UPI VPA field ("UPI ID for invoice QR code"), optional, help text below.
+
+**`apps/web/app/[locale]/sales/page.tsx`** — Sales list: extra 40px column, FileDown icon link for `status === 'final'` rows.
+
+**`apps/web/app/[locale]/sales/[invoiceId]/page.tsx`** — Detail page: "Download PDF" button (secondary, sm) alongside "Finalise Invoice", only shown when `status === 'final'`.
+
+**Total tests: 232 passing (unchanged).**
+
+### Critical before testing live
+
+Migration 0009 is applied to Neon ✓. No further DB steps needed.
+
+To test PDF end-to-end in production (CF Pages), ensure:
+- `INVOICE_PDFS` R2 bucket binding is visible in CF Pages project settings (automatic from wrangler.toml after next deploy).
+- In local dev, `getCloudflareContext()` throws → PDF bytes returned directly (no R2) → works fine for development.
+
+### Known limitation (P2-04)
+
+- PDF share token is generated on finalise only. Re-finalise is not possible (status is already 'final'), so if token expires the only way to get a fresh one is `GET /api/sales/:id/pdf` (authenticated). A future ticket can add a "Resend" or "Regenerate link" action.
+- `pdfR2Key` was already in the `sales_invoices` schema (added in P2-01 schema spec, never populated until now).
+
+### What's next
+
+**P2-05 — Invoice share: WhatsApp Web link, email via Resend, copy URL.** Run `/work-on P2-05`.
+
+Key things P2-05 needs:
+- `pdfShareToken` is now stored — use `/api/invoice-pdf/:token` as the shareable PDF URL.
+- WhatsApp share: `wa.me/?text=` URL with pre-filled message + PDF link.
+- Email: Resend + `@shulka/email-templates` package (check if it exists). Recipient is `party.email`.
+- Copy URL: clipboard API.
+
+### Open questions for Pradeep
+
+- The UPI QR code in the PDF uses `upi://pay?pa=...&am=...`. Does your UPI VPA (`businesses.upiVpa`) need to be set before testing? Add it in the business edit form at `/en/businesses/:id/edit`.
+- Should the 7-day share token auto-renew when the recipient views it (extend expiry on GET)? Currently it does not.
+
+### Sacred rules sanity check
+
+- Money BIGINT paise: ✓ PDF displays paise÷100 for display only; never stores floats
+- PDF generation is best-effort: ✓ wrapped in try/catch in finalise route — a PDF failure never rolls back the finalise
+- No financial mutations in the PDF routes: ✓ GET-only, only `pdfR2Key` update (not a financial field)
+- DPDP ownership: ✓ sender/recipient check before serving PDF; public route is token-gated with expiry
+
+---
+
 ## Session: 2026-05-20 — P2-03: Network-effect mirrored rows + business_trusts (Sonnet)
 
 ### What this session did
